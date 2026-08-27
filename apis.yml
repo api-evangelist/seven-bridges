@@ -38,61 +38,6 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 apis:
-- name: Seven Bridges Platform API
-  description: >-
-    Public REST API for the Seven Bridges Platform. Covers projects and project membership, files,
-    folders, file metadata and tags, multipart upload, cloud storage volumes (AWS S3, Google Cloud
-    Storage, Azure, OSS) with import and export jobs, CWL/Nextflow apps and app revisions, draft and
-    batch task creation, execution, abort and rerun, billing groups, invoices and analysis/storage/egress
-    cost breakdowns, rate limit status and advanced file search. JSON over HTTPS, authenticated with the
-    X-SBG-Auth-Token header. Deployed on AWS US (api.sbgenomics.com) and AWS EU (eu-api.sbgenomics.com).
-  humanURL: https://docs.sevenbridges.com/reference/the-api
-  baseURL: https://api.sbgenomics.com/v2
-  tags:
-  - Genomics
-  - Bioinformatics
-  - Cloud Computing
-  - Workflow Automation
-  - File Storage
-  - Data Analysis
-  properties:
-  - type: OpenAPI
-    url: openapi/seven-bridges-platform-openapi.json
-  - type: Documentation
-    url: https://docs.sevenbridges.com/docs/the-api
-  - type: APIReference
-    url: https://docs.sevenbridges.com/reference/the-api
-  - type: Authentication
-    url: authentication/seven-bridges-authentication.yml
-  - type: Conventions
-    url: conventions/seven-bridges-conventions.yml
-  - type: ErrorCatalog
-    url: errors/seven-bridges-error-codes.yml
-  - type: DataModel
-    url: data-model/seven-bridges-data-model.yml
-  - type: RateLimits
-    url: rate-limits/seven-bridges-rate-limits.yml
-  - type: Overlay
-    url: overlays/seven-bridges-platform-overlay.yaml
-- name: Seven Bridges Cancer Genomics Cloud API
-  description: >-
-    The Cancer Genomics Cloud (CGC), an NCI-funded Cloud Resource developed and operated by Seven Bridges,
-    runs the same v2 REST API on its own host. The published contract covers projects, files, apps, tasks,
-    volumes, imports/exports, billing and rate limit for the CGC deployment.
-  humanURL: https://docs.cancergenomicscloud.org/reference/
-  baseURL: https://cgc-api.sbgenomics.com/v2
-  tags:
-  - Genomics
-  - Cancer Research
-  - Cloud Computing
-  - Bioinformatics
-  properties:
-  - type: OpenAPI
-    url: openapi/seven-bridges-cgc-openapi.json
-  - type: Documentation
-    url: https://docs.cancergenomicscloud.org/
-  - type: LLMsTxt
-    url: https://docs.cancergenomicscloud.org/llms.txt
 - name: Seven Bridges CAVATICA API
   description: >-
     CAVATICA is a pediatric-research data analysis platform Seven Bridges operates with the Children's
@@ -110,6 +55,455 @@ apis:
     url: https://docs.cavatica.org/
   - type: LLMsTxt
     url: https://docs.cavatica.org/llms.txt
+- aid: seven-bridges:seven-bridges-action-api
+  name: Seven Bridges Action API
+  description: The Action API from Seven Bridges — 3 operation(s) for action.
+  humanURL: https://docs.sevenbridges.com/reference/the-api
+  baseURL: https://api.sbgenomics.com/v2
+  tags:
+  - Action
+  properties:
+  - type: OpenAPI
+    url: openapi/seven-bridges-action-api-openapi.yml
+  - type: Documentation
+    url: https://docs.sevenbridges.com/docs/the-api
+  - type: APIReference
+    url: https://docs.sevenbridges.com/reference/the-api
+  - type: Authentication
+    url: authentication/seven-bridges-authentication.yml
+  - type: Conventions
+    url: conventions/seven-bridges-conventions.yml
+  - type: ErrorCatalog
+    url: errors/seven-bridges-error-codes.yml
+  - type: DataModel
+    url: data-model/seven-bridges-data-model.yml
+  - type: RateLimits
+    url: rate-limits/seven-bridges-rate-limits.yml
+  - type: Documentation
+    url: https://docs.cancergenomicscloud.org/
+  - type: LLMsTxt
+    url: https://docs.cancergenomicscloud.org/llms.txt
+- aid: seven-bridges:seven-bridges-api-settings-api
+  name: Seven Bridges API Settings API
+  description: The API Settings API from Seven Bridges — 1 operation(s) for api settings.
+  humanURL: https://docs.sevenbridges.com/reference/the-api
+  baseURL: https://api.sbgenomics.com/v2
+  tags:
+  - API Settings
+  properties:
+  - type: OpenAPI
+    url: openapi/seven-bridges-api-settings-api-openapi.yml
+  - type: Documentation
+    url: https://docs.sevenbridges.com/docs/the-api
+  - type: APIReference
+    url: https://docs.sevenbridges.com/reference/the-api
+  - type: Authentication
+    url: authentication/seven-bridges-authentication.yml
+  - type: Conventions
+    url: conventions/seven-bridges-conventions.yml
+  - type: ErrorCatalog
+    url: errors/seven-bridges-error-codes.yml
+  - type: DataModel
+    url: data-model/seven-bridges-data-model.yml
+  - type: RateLimits
+    url: rate-limits/seven-bridges-rate-limits.yml
+  - type: Documentation
+    url: https://docs.cancergenomicscloud.org/
+  - type: LLMsTxt
+    url: https://docs.cancergenomicscloud.org/llms.txt
+- aid: seven-bridges:seven-bridges-apps-api
+  name: Seven Bridges Apps API
+  description: The Apps API from Seven Bridges — 8 operation(s) for apps.
+  humanURL: https://docs.sevenbridges.com/reference/the-api
+  baseURL: https://api.sbgenomics.com/v2
+  tags:
+  - Apps
+  properties:
+  - type: OpenAPI
+    url: openapi/seven-bridges-apps-api-openapi.yml
+  - type: Documentation
+    url: https://docs.sevenbridges.com/docs/the-api
+  - type: APIReference
+    url: https://docs.sevenbridges.com/reference/the-api
+  - type: Authentication
+    url: authentication/seven-bridges-authentication.yml
+  - type: Conventions
+    url: conventions/seven-bridges-conventions.yml
+  - type: ErrorCatalog
+    url: errors/seven-bridges-error-codes.yml
+  - type: DataModel
+    url: data-model/seven-bridges-data-model.yml
+  - type: RateLimits
+    url: rate-limits/seven-bridges-rate-limits.yml
+  - type: Documentation
+    url: https://docs.cancergenomicscloud.org/
+  - type: LLMsTxt
+    url: https://docs.cancergenomicscloud.org/llms.txt
+- aid: seven-bridges:seven-bridges-billing-api
+  name: Seven Bridges Billing API
+  description: The Billing API from Seven Bridges — 8 operation(s) for billing.
+  humanURL: https://docs.sevenbridges.com/reference/the-api
+  baseURL: https://api.sbgenomics.com/v2
+  tags:
+  - Billing
+  properties:
+  - type: OpenAPI
+    url: openapi/seven-bridges-billing-api-openapi.yml
+  - type: Documentation
+    url: https://docs.sevenbridges.com/docs/the-api
+  - type: APIReference
+    url: https://docs.sevenbridges.com/reference/the-api
+  - type: Authentication
+    url: authentication/seven-bridges-authentication.yml
+  - type: Conventions
+    url: conventions/seven-bridges-conventions.yml
+  - type: ErrorCatalog
+    url: errors/seven-bridges-error-codes.yml
+  - type: DataModel
+    url: data-model/seven-bridges-data-model.yml
+  - type: RateLimits
+    url: rate-limits/seven-bridges-rate-limits.yml
+  - type: Documentation
+    url: https://docs.cancergenomicscloud.org/
+  - type: LLMsTxt
+    url: https://docs.cancergenomicscloud.org/llms.txt
+- aid: seven-bridges:seven-bridges-bulk-api
+  name: Seven Bridges Bulk API
+  description: The Bulk API from Seven Bridges — 1 operation(s) for bulk.
+  humanURL: https://docs.sevenbridges.com/reference/the-api
+  baseURL: https://api.sbgenomics.com/v2
+  tags:
+  - Bulk
+  properties:
+  - type: OpenAPI
+    url: openapi/seven-bridges-bulk-api-openapi.yml
+  - type: Documentation
+    url: https://docs.sevenbridges.com/docs/the-api
+  - type: APIReference
+    url: https://docs.sevenbridges.com/reference/the-api
+  - type: Authentication
+    url: authentication/seven-bridges-authentication.yml
+  - type: Conventions
+    url: conventions/seven-bridges-conventions.yml
+  - type: ErrorCatalog
+    url: errors/seven-bridges-error-codes.yml
+  - type: DataModel
+    url: data-model/seven-bridges-data-model.yml
+  - type: RateLimits
+    url: rate-limits/seven-bridges-rate-limits.yml
+  - type: Documentation
+    url: https://docs.cancergenomicscloud.org/
+  - type: LLMsTxt
+    url: https://docs.cancergenomicscloud.org/llms.txt
+- aid: seven-bridges:seven-bridges-files-api
+  name: Seven Bridges Files API
+  description: The Files API from Seven Bridges — 10 operation(s) for files.
+  humanURL: https://docs.sevenbridges.com/reference/the-api
+  baseURL: https://api.sbgenomics.com/v2
+  tags:
+  - Files
+  properties:
+  - type: OpenAPI
+    url: openapi/seven-bridges-files-api-openapi.yml
+  - type: Documentation
+    url: https://docs.sevenbridges.com/docs/the-api
+  - type: APIReference
+    url: https://docs.sevenbridges.com/reference/the-api
+  - type: Authentication
+    url: authentication/seven-bridges-authentication.yml
+  - type: Conventions
+    url: conventions/seven-bridges-conventions.yml
+  - type: ErrorCatalog
+    url: errors/seven-bridges-error-codes.yml
+  - type: DataModel
+    url: data-model/seven-bridges-data-model.yml
+  - type: RateLimits
+    url: rate-limits/seven-bridges-rate-limits.yml
+  - type: Documentation
+    url: https://docs.cancergenomicscloud.org/
+  - type: LLMsTxt
+    url: https://docs.cancergenomicscloud.org/llms.txt
+- aid: seven-bridges:seven-bridges-https-api
+  name: 'Seven Bridges Https: API'
+  description: 'The Https: API from Seven Bridges — 1 operation(s) for https:.'
+  humanURL: https://docs.sevenbridges.com/reference/the-api
+  baseURL: https://api.sbgenomics.com/v2
+  tags:
+  - 'Https:'
+  properties:
+  - type: OpenAPI
+    url: openapi/seven-bridges-https-api-openapi.yml
+  - type: Documentation
+    url: https://docs.sevenbridges.com/docs/the-api
+  - type: APIReference
+    url: https://docs.sevenbridges.com/reference/the-api
+  - type: Authentication
+    url: authentication/seven-bridges-authentication.yml
+  - type: Conventions
+    url: conventions/seven-bridges-conventions.yml
+  - type: ErrorCatalog
+    url: errors/seven-bridges-error-codes.yml
+  - type: DataModel
+    url: data-model/seven-bridges-data-model.yml
+  - type: RateLimits
+    url: rate-limits/seven-bridges-rate-limits.yml
+  - type: Documentation
+    url: https://docs.cancergenomicscloud.org/
+  - type: LLMsTxt
+    url: https://docs.cancergenomicscloud.org/llms.txt
+- aid: seven-bridges:seven-bridges-projects-api
+  name: Seven Bridges Projects API
+  description: The Projects API from Seven Bridges — 9 operation(s) for projects.
+  humanURL: https://docs.sevenbridges.com/reference/the-api
+  baseURL: https://api.sbgenomics.com/v2
+  tags:
+  - Projects
+  properties:
+  - type: OpenAPI
+    url: openapi/seven-bridges-projects-api-openapi.yml
+  - type: Documentation
+    url: https://docs.sevenbridges.com/docs/the-api
+  - type: APIReference
+    url: https://docs.sevenbridges.com/reference/the-api
+  - type: Authentication
+    url: authentication/seven-bridges-authentication.yml
+  - type: Conventions
+    url: conventions/seven-bridges-conventions.yml
+  - type: ErrorCatalog
+    url: errors/seven-bridges-error-codes.yml
+  - type: DataModel
+    url: data-model/seven-bridges-data-model.yml
+  - type: RateLimits
+    url: rate-limits/seven-bridges-rate-limits.yml
+  - type: Documentation
+    url: https://docs.cancergenomicscloud.org/
+  - type: LLMsTxt
+    url: https://docs.cancergenomicscloud.org/llms.txt
+- aid: seven-bridges:seven-bridges-rate-limit-api
+  name: Seven Bridges Rate Limit API
+  description: The Rate Limit API from Seven Bridges — 1 operation(s) for rate limit.
+  humanURL: https://docs.sevenbridges.com/reference/the-api
+  baseURL: https://api.sbgenomics.com/v2
+  tags:
+  - Rate Limit
+  properties:
+  - type: OpenAPI
+    url: openapi/seven-bridges-rate-limit-api-openapi.yml
+  - type: Documentation
+    url: https://docs.sevenbridges.com/docs/the-api
+  - type: APIReference
+    url: https://docs.sevenbridges.com/reference/the-api
+  - type: Authentication
+    url: authentication/seven-bridges-authentication.yml
+  - type: Conventions
+    url: conventions/seven-bridges-conventions.yml
+  - type: ErrorCatalog
+    url: errors/seven-bridges-error-codes.yml
+  - type: DataModel
+    url: data-model/seven-bridges-data-model.yml
+  - type: RateLimits
+    url: rate-limits/seven-bridges-rate-limits.yml
+  - type: Documentation
+    url: https://docs.cancergenomicscloud.org/
+  - type: LLMsTxt
+    url: https://docs.cancergenomicscloud.org/llms.txt
+- aid: seven-bridges:seven-bridges-search-api
+  name: Seven Bridges Search API
+  description: The Search API from Seven Bridges — 1 operation(s) for search.
+  humanURL: https://docs.sevenbridges.com/reference/the-api
+  baseURL: https://api.sbgenomics.com/v2
+  tags:
+  - Search
+  properties:
+  - type: OpenAPI
+    url: openapi/seven-bridges-search-api-openapi.yml
+  - type: Documentation
+    url: https://docs.sevenbridges.com/docs/the-api
+  - type: APIReference
+    url: https://docs.sevenbridges.com/reference/the-api
+  - type: Authentication
+    url: authentication/seven-bridges-authentication.yml
+  - type: Conventions
+    url: conventions/seven-bridges-conventions.yml
+  - type: ErrorCatalog
+    url: errors/seven-bridges-error-codes.yml
+  - type: DataModel
+    url: data-model/seven-bridges-data-model.yml
+  - type: RateLimits
+    url: rate-limits/seven-bridges-rate-limits.yml
+  - type: Documentation
+    url: https://docs.cancergenomicscloud.org/
+  - type: LLMsTxt
+    url: https://docs.cancergenomicscloud.org/llms.txt
+- aid: seven-bridges:seven-bridges-seven-bridges-platform-api
+  name: Seven Bridges Seven Bridges Platform API
+  description: >-
+    The Seven Bridges Platform API from Seven Bridges — 1 operation(s) for seven bridges platform.
+  humanURL: https://docs.sevenbridges.com/reference/the-api
+  baseURL: https://api.sbgenomics.com/v2
+  tags:
+  - Seven Bridges Platform
+  properties:
+  - type: OpenAPI
+    url: openapi/seven-bridges-seven-bridges-platform-api-openapi.yml
+  - type: Documentation
+    url: https://docs.sevenbridges.com/docs/the-api
+  - type: APIReference
+    url: https://docs.sevenbridges.com/reference/the-api
+  - type: Authentication
+    url: authentication/seven-bridges-authentication.yml
+  - type: Conventions
+    url: conventions/seven-bridges-conventions.yml
+  - type: ErrorCatalog
+    url: errors/seven-bridges-error-codes.yml
+  - type: DataModel
+    url: data-model/seven-bridges-data-model.yml
+  - type: RateLimits
+    url: rate-limits/seven-bridges-rate-limits.yml
+  - type: Documentation
+    url: https://docs.cancergenomicscloud.org/
+  - type: LLMsTxt
+    url: https://docs.cancergenomicscloud.org/llms.txt
+- aid: seven-bridges:seven-bridges-storage-api
+  name: Seven Bridges Storage API
+  description: The Storage API from Seven Bridges — 14 operation(s) for storage.
+  humanURL: https://docs.sevenbridges.com/reference/the-api
+  baseURL: https://api.sbgenomics.com/v2
+  tags:
+  - Storage
+  properties:
+  - type: OpenAPI
+    url: openapi/seven-bridges-storage-api-openapi.yml
+  - type: Documentation
+    url: https://docs.sevenbridges.com/docs/the-api
+  - type: APIReference
+    url: https://docs.sevenbridges.com/reference/the-api
+  - type: Authentication
+    url: authentication/seven-bridges-authentication.yml
+  - type: Conventions
+    url: conventions/seven-bridges-conventions.yml
+  - type: ErrorCatalog
+    url: errors/seven-bridges-error-codes.yml
+  - type: DataModel
+    url: data-model/seven-bridges-data-model.yml
+  - type: RateLimits
+    url: rate-limits/seven-bridges-rate-limits.yml
+  - type: Documentation
+    url: https://docs.cancergenomicscloud.org/
+  - type: LLMsTxt
+    url: https://docs.cancergenomicscloud.org/llms.txt
+- aid: seven-bridges:seven-bridges-tasks-api
+  name: Seven Bridges Tasks API
+  description: The Tasks API from Seven Bridges — 8 operation(s) for tasks.
+  humanURL: https://docs.sevenbridges.com/reference/the-api
+  baseURL: https://api.sbgenomics.com/v2
+  tags:
+  - Tasks
+  properties:
+  - type: OpenAPI
+    url: openapi/seven-bridges-tasks-api-openapi.yml
+  - type: Documentation
+    url: https://docs.sevenbridges.com/docs/the-api
+  - type: APIReference
+    url: https://docs.sevenbridges.com/reference/the-api
+  - type: Authentication
+    url: authentication/seven-bridges-authentication.yml
+  - type: Conventions
+    url: conventions/seven-bridges-conventions.yml
+  - type: ErrorCatalog
+    url: errors/seven-bridges-error-codes.yml
+  - type: DataModel
+    url: data-model/seven-bridges-data-model.yml
+  - type: RateLimits
+    url: rate-limits/seven-bridges-rate-limits.yml
+  - type: Documentation
+    url: https://docs.cancergenomicscloud.org/
+  - type: LLMsTxt
+    url: https://docs.cancergenomicscloud.org/llms.txt
+- aid: seven-bridges:seven-bridges-upload-api
+  name: Seven Bridges Upload API
+  description: The Upload API from Seven Bridges — 8 operation(s) for upload.
+  humanURL: https://docs.sevenbridges.com/reference/the-api
+  baseURL: https://api.sbgenomics.com/v2
+  tags:
+  - Upload
+  properties:
+  - type: OpenAPI
+    url: openapi/seven-bridges-upload-api-openapi.yml
+  - type: Documentation
+    url: https://docs.sevenbridges.com/docs/the-api
+  - type: APIReference
+    url: https://docs.sevenbridges.com/reference/the-api
+  - type: Authentication
+    url: authentication/seven-bridges-authentication.yml
+  - type: Conventions
+    url: conventions/seven-bridges-conventions.yml
+  - type: ErrorCatalog
+    url: errors/seven-bridges-error-codes.yml
+  - type: DataModel
+    url: data-model/seven-bridges-data-model.yml
+  - type: RateLimits
+    url: rate-limits/seven-bridges-rate-limits.yml
+  - type: Documentation
+    url: https://docs.cancergenomicscloud.org/
+  - type: LLMsTxt
+    url: https://docs.cancergenomicscloud.org/llms.txt
+- aid: seven-bridges:seven-bridges-user-api
+  name: Seven Bridges User API
+  description: The User API from Seven Bridges — 1 operation(s) for user.
+  humanURL: https://docs.sevenbridges.com/reference/the-api
+  baseURL: https://api.sbgenomics.com/v2
+  tags:
+  - User
+  properties:
+  - type: OpenAPI
+    url: openapi/seven-bridges-user-api-openapi.yml
+  - type: Documentation
+    url: https://docs.sevenbridges.com/docs/the-api
+  - type: APIReference
+    url: https://docs.sevenbridges.com/reference/the-api
+  - type: Authentication
+    url: authentication/seven-bridges-authentication.yml
+  - type: Conventions
+    url: conventions/seven-bridges-conventions.yml
+  - type: ErrorCatalog
+    url: errors/seven-bridges-error-codes.yml
+  - type: DataModel
+    url: data-model/seven-bridges-data-model.yml
+  - type: RateLimits
+    url: rate-limits/seven-bridges-rate-limits.yml
+  - type: Documentation
+    url: https://docs.cancergenomicscloud.org/
+  - type: LLMsTxt
+    url: https://docs.cancergenomicscloud.org/llms.txt
+- aid: seven-bridges:seven-bridges-users-api
+  name: Seven Bridges Users API
+  description: The Users API from Seven Bridges — 1 operation(s) for users.
+  humanURL: https://docs.sevenbridges.com/reference/the-api
+  baseURL: https://api.sbgenomics.com/v2
+  tags:
+  - Users
+  properties:
+  - type: OpenAPI
+    url: openapi/seven-bridges-users-api-openapi.yml
+  - type: Documentation
+    url: https://docs.sevenbridges.com/docs/the-api
+  - type: APIReference
+    url: https://docs.sevenbridges.com/reference/the-api
+  - type: Authentication
+    url: authentication/seven-bridges-authentication.yml
+  - type: Conventions
+    url: conventions/seven-bridges-conventions.yml
+  - type: ErrorCatalog
+    url: errors/seven-bridges-error-codes.yml
+  - type: DataModel
+    url: data-model/seven-bridges-data-model.yml
+  - type: RateLimits
+    url: rate-limits/seven-bridges-rate-limits.yml
+  - type: Documentation
+    url: https://docs.cancergenomicscloud.org/
+  - type: LLMsTxt
+    url: https://docs.cancergenomicscloud.org/llms.txt
 common:
 - type: TrustCenter
   url: security/seven-bridges-trust-center.yml
