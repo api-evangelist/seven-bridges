@@ -1,0 +1,34 @@
+generated: '2026-08-27'
+method: searched
+source: https://www.sevenbridges.com/
+note: >-
+  Seven Bridges publishes no self-serve pricing page and no public plan tiers. https://www.sevenbridges.com/pricing/
+  returns 404, the site navigation carries no pricing entry, and the account signup URL
+  (https://accounts.sbgenomics.com/auth/register) redirects to the sales contact form rather than a checkout or
+  free tier. Commercial terms are quoted through sales. Platform usage is metered - the API exposes billing
+  groups, invoices and analysis/storage/egress cost breakdowns - but no published rate card ties those meters to
+  prices. Recorded as a measured absence, not an omission.
+plan_count: 0
+pricing_model: contact-sales
+metered: true
+metered_dimensions:
+- analysis (compute)
+- storage
+- egress
+metering_api:
+  operations:
+  - get-analysis-breakdown-for-a-billing-group
+  - get-storage-breakdown-for-a-billing-group
+  - get-egress-breakdown-for-a-billing-group
+  - list-invoices
+  - get-a-specific-invoice
+  docs: https://docs.sevenbridges.com/reference/the-api
+plans: []
+evidence:
+- url: https://www.sevenbridges.com/pricing/
+  status: 404
+- url: https://accounts.sbgenomics.com/auth/register
+  status: 200
+  note: Redirects to https://www.sevenbridges.com/contact/ - signup is a sales gate, not self-serve.
+- url: https://www.sevenbridges.com/contact/
+  status: 200

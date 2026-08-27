@@ -1,0 +1,49 @@
+generated: '2026-08-27'
+method: searched
+source: https://docs.sevenbridges.com/docs/api-rate-limit
+docs: https://docs.sevenbridges.com/docs/api-rate-limit
+note: >-
+  Seven Bridges publishes a single documented rate limit for the whole public API, plus a live
+  GET /rate_limit operation that returns the caller's current standing and their concurrent instance limit.
+limit_count: 1
+rate_limits:
+- scope: per-token
+  window: 5m
+  limit: 1000
+  burst: null
+  unit: requests
+  description: >-
+    1000 requests per five minutes against the Seven Bridges public API. When the limit is reached no
+    further calls are accepted until the five-minute interval ends.
+  source: https://docs.sevenbridges.com/docs/api-rate-limit
+headers:
+- name: X-RateLimit-Limit
+  meaning: The rate limit ceiling, currently 1000 requests per five minutes.
+- name: X-RateLimit-Remaining
+  meaning: Remaining calls before the limit is hit.
+- name: X-RateLimit-Reset
+  meaning: Unix timestamp at which the limit resets.
+exhaustion:
+  status: 429
+  platform_error_codes:
+  - code: 1000
+    message: Rate limit exceeded! Check response headers.
+  - code: 10371
+    message: Rate limit exceeded. (file import/manifest service)
+  retry_after_header: false
+  note: >-
+    The docs direct callers to the X-RateLimit-Reset header rather than Retry-After; no Retry-After header
+    is documented.
+introspection:
+  operationId: get-your-current-rate-limit-status
+  method: GET
+  path: /rate_limit
+  description: >-
+    Returns the caller's current rate limit standing and their instance (concurrent compute) limit.
+  docs: https://docs.sevenbridges.com/reference/get-your-current-rate-limit-status
+optimization_guidance:
+  docs: https://docs.sevenbridges.com/docs/api-rate-limit
+  note: >-
+    The rate-limit page links eight worked optimization recipes (task submission, file copy, volume import,
+    metadata update, bulk delete, volume export, maximum pagination limit, project lookup by name) showing
+    un-optimized versus optimized client code against the limit.

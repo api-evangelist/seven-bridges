@@ -1,0 +1,85 @@
+generated: '2026-08-27'
+method: searched
+source: >-
+  https://pypi.org/pypi/sevenbridges-python/json, https://pypi.org/pypi/sevenbridges-cwl/json,
+  https://pypi.org/pypi/sbpack/json, https://crandb.r-pkg.org/sevenbridges2, https://github.com/sbg,
+  https://docs.sevenbridges.com/docs/command-line-interface
+note: >-
+  First-party clients are published by the sbg GitHub organization. Python clients are on PyPI and the
+  current R client is on CRAN; the `sb` CLI binary is distributed only as a signed download from
+  igor.sbgenomics.com (no package registry), so its version cannot be read from registry metadata.
+  Registry versions and dates were read from the registries' own metadata endpoints on 2026-08-27.
+packages:
+- name: sevenbridges-python
+  registry: pypi
+  url: https://pypi.org/project/sevenbridges-python/
+  repository: https://github.com/sbg/sevenbridges-python
+  language: python
+  official: true
+  version: 2.11.2
+  published: '2025-02-14'
+  note: >-
+    The primary Python client for the Seven Bridges Platform, the Cancer Genomics Cloud and CAVATICA.
+    Docs at https://sevenbridges-python.readthedocs.io/.
+- name: sevenbridges-cwl
+  registry: pypi
+  url: https://pypi.org/project/sevenbridges-cwl/
+  repository: https://github.com/sbg/sevenbridges-cwl
+  language: python
+  official: true
+  version: 1.1.4
+  published: '2021-04-28'
+  note: Programmatic generation of CWL workflows for the Platform. Last release predates the current API docs by four years.
+- name: sbpack
+  registry: pypi
+  url: https://pypi.org/project/sbpack/
+  language: python
+  official: true
+  version: 2024.12.17
+  published: '2024-12-20'
+  note: >-
+    Packs and uploads CWL and Nextflow apps to the Platform; `sbpack_nf` is documented in the Seven Bridges
+    docs at https://docs.sevenbridges.com/docs/sbpack_nf-command-reference.
+- name: sevenbridges2
+  registry: cran
+  url: https://cran.r-project.org/package=sevenbridges2
+  repository: https://github.com/sbg/sevenbridges2
+  language: r
+  official: true
+  version: 0.4.0
+  published: '2025-03-25'
+  note: Current R client. Package site at https://sbg.github.io/sevenbridges2/.
+- name: sevenbridges
+  registry: bioconductor
+  url: https://bioconductor.org/packages/release/bioc/html/sevenbridges.html
+  repository: https://github.com/sbg/sevenbridges-r
+  language: r
+  official: true
+  version: null
+  published: null
+  note: >-
+    Superseded R/Bioconductor client (repository sbg/sevenbridges-r, last pushed 2022-01-28). Bioconductor's
+    package page did not respond within the probe budget on 2026-08-27, so no version or release date was read
+    - checked, nothing to record, rather than not checked.
+- name: sevenbridges-java
+  registry: none
+  url: https://github.com/sbg/sevenbridges-java
+  language: java
+  official: true
+  version: null
+  published: null
+  note: >-
+    Java library published only as a GitHub repository, with no Maven Central coordinates; last pushed
+    2017-08-20 and effectively abandoned.
+- name: sb
+  registry: cdn
+  url: https://igor.sbgenomics.com/downloads/sb/install.sh
+  language: go
+  official: true
+  version: null
+  published: null
+  note: >-
+    The `sb` command line interface is distributed as an unversioned per-platform binary download from
+    igor.sbgenomics.com (with .shasum files alongside). The download URLs are unpinned and float to the
+    latest build, so a consumer cannot tell which version they are installing either.
+sdk_count: 5

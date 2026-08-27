@@ -1,0 +1,137 @@
+generated: '2026-08-27'
+method: searched
+source: >-
+  openapi/seven-bridges-platform-openapi.json, https://docs.sevenbridges.com/reference/api-status-codes,
+  https://www.sevenbridges.com/security/, https://www.sevenbridges.com/library/white-papers/compliance/,
+  https://www.sevenbridges.com/press/releases/seven-bridges-announces-iso-certifications-highlighting-commitment-to-genomic-data-security/
+note: >-
+  Cross-cutting and domain-standard conformance for the Seven Bridges Platform API. Domain-standard entries
+  cite the exact location in the contract or the published error registry that declares them, not a marketing
+  claim. Security certifications are recorded from the provider's own security and compliance pages; the
+  underlying attestation reports are not public.
+conformance:
+- id: rest
+  conforms: true
+  evidence: >-
+    JSON over HTTPS with resource-oriented paths and HTTP verbs; the provider's own overview page states the
+    API uses the REST architectural style (https://docs.sevenbridges.com/docs/the-api).
+- id: openapi
+  conforms: true
+  version: 3.1.0
+  evidence: >-
+    OpenAPI 3.1.0 document published on the provider's ReadMe developer hub, 64 paths and 91 operations,
+    servers[] https://api.sbgenomics.com/v2. Saved to openapi/seven-bridges-platform-openapi.json.
+- id: hateoas
+  conforms: true
+  evidence: >-
+    GET / returns a hypermedia index of resource URLs (rate_limit_url, user_url, projects_url, files_url,
+    tasks_url, apps_url, storage_url, upload_url, action_url, markers_url); list responses carry per-item href
+    and a links[] array of {href, rel, method} objects with next/prev relations. Verified live 2026-08-27.
+- id: pagination
+  conforms: true
+  evidence: >-
+    limit/offset query parameters on all list operations (default 50, maximum 100) plus the
+    X-Total-Matching-Query response header - documented at https://docs.sevenbridges.com/docs/the-api.
+- id: sparse-fieldsets
+  conforms: true
+  evidence: >-
+    A `fields` query parameter on every operation supporting allow-lists, ! negation, dotted nested paths and
+    _all - documented at https://docs.sevenbridges.com/docs/the-api.
+- id: rfc9457
+  conforms: false
+  evidence: >-
+    Errors use a vendor JSON envelope with a numeric platform code, not application/problem+json. No
+    problem+json media type appears in the OpenAPI or the docs.
+- id: idempotency
+  conforms: false
+  evidence: >-
+    No Idempotency-Key header or replay semantics is documented; the string does not appear in the OpenAPI or
+    the documentation index.
+- id: oauth2
+  conforms: false
+  evidence: >-
+    Authentication is a per-user X-SBG-Auth-Token API key header. No OAuth 2.0 or OpenID Connect surface is
+    documented and /.well-known/oauth-authorization-server and /.well-known/openid-configuration return 404 on
+    every host (probed 2026-08-27).
+- id: rate-limit-headers
+  conforms: true
+  evidence: >-
+    X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset are documented at
+    https://docs.sevenbridges.com/docs/api-rate-limit. These are the pre-RFC 9331 X- prefixed forms, not the
+    RateLimit-* fields of the IETF draft.
+- id: rfc8594-sunset
+  conforms: false
+  evidence: No Deprecation or Sunset headers and no deprecation policy are published.
+domain_standards:
+- id: cwl
+  name: Common Workflow Language
+  conforms: true
+  evidence: >-
+    The contract itself is CWL-native. The apps resource exposes raw CWL as a first-class representation -
+    GET /apps/{project_owner}/{project}/{app_short_name}/raw and GET /apps/{app_id}/{revision_number}/raw
+    return the raw CWL document, and POST on the same paths adds an app or an app revision from raw CWL
+    (operationIds get-raw-cwl-for-an-app, get-raw-cwl-for-an-app-revision, add-an-app-using-raw-cwl,
+    add-an-app-revision-using-raw-cwl). The published error registry declares CWL as the required task
+    description language: code 7017, "Only Common Workflow Language (CWL) tasks are supported"
+    (https://docs.sevenbridges.com/reference/api-status-codes). The string CWL occurs 55 times in the
+    published OpenAPI.
+  spec_location: openapi/seven-bridges-platform-openapi.json paths /apps/**/raw
+  standard_url: https://www.commonwl.org/
+  note: >-
+    Seven Bridges is a CWL co-author organisation; a caller who already speaks CWL can move an existing
+    workflow onto the Platform through the API without a bespoke translation layer.
+- id: ga4gh-drs
+  name: GA4GH Data Repository Service
+  conforms: partial
+  evidence: >-
+    The published error registry declares DRS-specific failure modes on the file import surface - code 10276
+    "Malformed DRS bundle" and code 10278 "Malformed DRS blob"
+    (https://docs.sevenbridges.com/reference/api-status-codes) - which shows the import path accepts GA4GH DRS
+    bundle and blob identifiers. The sbg GitHub organization also publishes
+    https://github.com/sbg/data-repository-service-schemas. Recorded as partial because no DRS server endpoint
+    (/ga4gh/drs/v1/*) appears in the published OpenAPI, so the platform consumes DRS references rather than
+    demonstrably serving the DRS API.
+  spec_location: https://docs.sevenbridges.com/reference/api-status-codes (codes 10276, 10278)
+  standard_url: https://www.ga4gh.org/product/data-repository-service-drs/
+- id: nextflow
+  name: Nextflow
+  conforms: true
+  evidence: >-
+    The docs publish a full Nextflow app lifecycle on the Platform (bring-nextflow-apps-to-the-platform,
+    add-nextflow-apps-through-the-command-line-interface-cli, manage-nextflow-apps-on-the-platform,
+    set-execution-mode-for-nextflow-apps, sbpack_nf-command-reference), and the first-party sbpack package
+    ships the sbpack_nf packer. Listed in https://docs.sevenbridges.com/llms.txt.
+  standard_url: https://www.nextflow.io/
+  note: A de-facto community workflow standard rather than a chartered specification, recorded for completeness.
+- id: biocompute-object
+  name: IEEE 2791 BioCompute Object
+  conforms: partial
+  evidence: >-
+    The sbg GitHub organization publishes first-party tooling for BioCompute Objects - https://github.com/sbg/biocompute
+    (R package to create and manipulate BioCompute Objects) and https://github.com/sbg/bco-app. No BCO endpoint
+    appears in the published API contract, so this is tooling-level rather than contract-level conformance.
+  standard_url: https://standards.ieee.org/ieee/2791/7337/
+certifications:
+- name: ISO 27001
+  scope: Information Security Management System
+  evidence: https://www.sevenbridges.com/security/
+- name: ISO 27017
+  scope: Information security for cloud services
+  evidence: https://www.sevenbridges.com/press/releases/seven-bridges-announces-iso-certifications-highlighting-commitment-to-genomic-data-security/
+- name: ISO 27018
+  scope: Protection of personally identifiable information in the cloud
+  evidence: https://www.sevenbridges.com/press/releases/seven-bridges-announces-iso-certifications-highlighting-commitment-to-genomic-data-security/
+- name: HIPAA
+  scope: Protected health information, including HITECH breach notification
+  evidence: https://www.sevenbridges.com/library/white-papers/compliance/
+- name: GDPR
+  scope: EU personal data; an AWS EU deployment is offered at eu-api.sbgenomics.com
+  evidence: https://www.sevenbridges.com/library/white-papers/compliance/
+security_controls:
+  source: https://www.sevenbridges.com/security/
+  published:
+  - End-to-end encryption for data at rest, in transit and during computation
+  - AES-256 encryption for all disk volumes
+  - TLS-encrypted channels
+  - RSA keys of 2048 and 4096 bit length
+  - Two-factor authentication for user accounts

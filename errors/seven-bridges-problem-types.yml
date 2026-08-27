@@ -1,0 +1,29 @@
+generated: '2026-08-27'
+method: derived
+source: openapi/seven-bridges-platform-openapi.json
+note: 'Derived from the declared responses in the provider-published OpenAPI. The contract is thin on error documentation:
+  of 91 operations only 2 declare any 4xx/5xx response at all and 12 declare no responses whatsoever, so the machine-readable
+  contract cannot be used to enumerate failure modes. The real, exhaustive failure surface is the published numeric registry
+  captured in errors/seven-bridges-error-codes.yml (277 codes), which the spec does not reference. This file records that
+  gap rather than inventing responses the provider did not declare.'
+format: vendor-numeric
+rfc9457: false
+related: errors/seven-bridges-error-codes.yml
+coverage:
+  operations: 91
+  operations_declaring_error_responses: 2
+  operations_declaring_no_responses: 12
+  declared_error_status_codes:
+    '404': 1
+    '409': 1
+problem_types:
+- operationId: get-details-of-an-import-job-v2
+  method: GET
+  path: /storage/imports/{import_id}
+  status: 404
+  description: '404'
+- operationId: get-details-of-an-export-job-v2
+  method: GET
+  path: /storage/exports/{export_id}
+  status: 409
+  description: '409'

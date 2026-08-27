@@ -1,0 +1,40 @@
+generated: '2026-08-27'
+method: generated
+source: openapi/seven-bridges-platform-openapi.json, https://docs.sevenbridges.com/reference/api-status-codes
+note: >-
+  Packaged Agent Skills for the Seven Bridges Platform API, authored by API Evangelist. Seven Bridges does not
+  publish skills or an AGENTS.md of its own - probed and not found. Every operationId referenced below is
+  present in the provider's published OpenAPI, and every numeric platform error code cited is transcribed from
+  the provider's published API status-code registry. No endpoint, parameter, error code or reversal window is
+  invented.
+skills:
+- name: seven-bridges-run-analysis-task
+  file: seven-bridges-run-analysis-task.md
+  description: >-
+    Find an app, build inputs from its raw CWL, create a DRAFT task, run it, poll to completion within the rate
+    limit, abort or rerun, and collect the output files.
+  operations: 10
+- name: seven-bridges-upload-large-file
+  file: seven-bridges-upload-large-file.md
+  description: >-
+    Multipart upload of a large genomic file - initialize, per-part presigned PUT, part reporting, finalize,
+    metadata attachment, and the abort path for a half-finished upload.
+  operations: 10
+- name: seven-bridges-attach-volume-and-import
+  file: seven-bridges-attach-volume-and-import.md
+  description: >-
+    Register an S3/GCS/Azure volume, browse it, bulk-import up to 100 items into a project, export results back
+    out, and read the bucket-permission error classes literally.
+  operations: 14
+- name: seven-bridges-track-project-spend
+  file: seven-bridges-track-project-spend.md
+  description: >-
+    Read analysis, storage and egress breakdowns for a billing group, reconcile against invoices, and attribute
+    cost back to task execution details.
+  operations: 8
+cross_cutting:
+  authentication: authentication/seven-bridges-authentication.yml
+  conventions: conventions/seven-bridges-conventions.yml
+  errors: errors/seven-bridges-error-codes.yml
+  rate_limits: rate-limits/seven-bridges-rate-limits.yml
+  data_model: data-model/seven-bridges-data-model.yml

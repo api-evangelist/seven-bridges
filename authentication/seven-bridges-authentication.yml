@@ -1,0 +1,50 @@
+generated: '2026-08-27'
+method: searched
+source: https://docs.sevenbridges.com/docs/the-api
+docs: https://docs.sevenbridges.com/docs/get-your-authentication-token
+note: >-
+  The ReadMe-exported OpenAPI carries an empty components.securitySchemes block, so the auth model was read
+  from the provider's own API overview and token documentation rather than derived from the spec. Every
+  operation in the spec except GET / does carry an X-SBG-Auth-Token header parameter (82 of 91 operations),
+  which corroborates the documented model.
+model: api-key
+schemes:
+- name: X-SBG-Auth-Token
+  type: apiKey
+  in: header
+  parameter: X-SBG-Auth-Token
+  description: >-
+    Per-user authentication token issued from the Platform developer dashboard. Sent as an HTTP request
+    header on every call. The only documented exemption is GET / (list all API paths), which is anonymous.
+  where_to_get: https://igor.sbgenomics.com/developer#token
+  rotation: >-
+    Tokens are regenerated from the developer dashboard; the docs do not publish an expiry, a scope model,
+    or a programmatic token-issuance endpoint.
+oauth2: false
+openid_connect: false
+mutual_tls: false
+scopes: false
+scopes_note: >-
+  Authorization is not scope-based. Access is governed by per-project and per-volume member permissions
+  (read, write, copy, execute, admin) managed through the /projects/{owner}/{project}/members and
+  /storage/volumes/{owner}/{name}/members operations, and the API returns 403 with a numeric platform
+  error code when a caller lacks the required permission.
+anonymous_endpoints:
+- operationId: list-all-api-paths
+  path: /
+  method: GET
+  note: Returns the hypermedia index of API resource URLs without a token; verified live 2026-08-27 (HTTP 200).
+token_storage: >-
+  The Seven Bridges client libraries and the `sb` CLI read credentials from a shared configuration file;
+  see https://docs.sevenbridges.com/docs/store-credentials-to-access-seven-bridges-client-applications-and-libraries
+regional_endpoints:
+- region: AWS US
+  base: https://api.sbgenomics.com/v2
+- region: AWS EU
+  base: https://eu-api.sbgenomics.com/v2
+- region: Cancer Genomics Cloud
+  base: https://cgc-api.sbgenomics.com/v2
+  token_source: https://cgc.sbgenomics.com/developer
+- region: CAVATICA
+  base: https://cavatica-api.sbgenomics.com/v2
+  token_source: https://cavatica.sbgenomics.com/developer

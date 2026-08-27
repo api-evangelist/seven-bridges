@@ -1,0 +1,194 @@
+generated: '2026-08-27'
+method: derived
+source: openapi/seven-bridges-platform-openapi.json
+note: >-
+  Entity graph derived from the path hierarchy, path parameters and identifier conventions of the published
+  OpenAPI, cross-read against the resource identifiers documented at https://docs.sevenbridges.com/docs/the-api.
+  The published contract declares no components.schemas at all (0 schemas for 91 operations), so no field-level
+  model can be derived from it - the relationships below are read from path structure and documented ID forms,
+  and nothing is inferred beyond that.
+schema_coverage:
+  components_schemas: 0
+  operations: 91
+  note: >-
+    The provider's OpenAPI carries no reusable schema components and no request/response bodies are modelled,
+    which is the single largest contract-quality gap on this API.
+entities:
+- name: User
+  path: /user, /users/{username}
+  identifier: username
+  operations: [get-my-information, list-user-resources]
+- name: BillingGroup
+  path: /billing/groups/{billing_group}
+  identifier: UUID
+  note: A malformed or non-UUID billing group id is rejected with platform error 4005.
+  operations: [list-your-billing-groups, get-a-single-billing-group, get-analysis-breakdown-for-a-billing-group,
+    get-storage-breakdown-for-a-billing-group, get-egress-breakdown-for-a-billing-group]
+- name: Invoice
+  path: /billing/invoices/{invoice_id}
+  identifier: invoice_id
+  operations: [list-invoices, get-a-specific-invoice]
+- name: Project
+  path: /projects/{project_owner}/{project}
+  identifier: owner/short-name
+  note: Addressed by a derived short name, not the display name; malformed ids raise platform error 3012.
+  operations: [list-all-your-projects, create-a-new-project, get-project-details, edit-a-project, delete-a-project,
+    list-projects-owned-by-a-particular-user]
+- name: ProjectMember
+  path: /projects/{project_owner}/{project}/members/{username}
+  identifier: username within a project
+  operations: [list-members-of-a-project, add-a-member-to-a-project, get-a-project-members-permissions,
+    modify-a-project-members-permissions, overwrite-a-project-members-permissions, remove-a-project-member]
+- name: File
+  path: /files/{file_id}
+  identifier: file_id (hexadecimal)
+  operations: [list-files-primary-method, get-file-details, update-file-details, delete-a-file, copy-a-file,
+    move-a-file-between-folders, get-downloadable-url-for-a-file]
+- name: Folder
+  path: /files/{folder_id}
+  identifier: file_id with type folder
+  note: >-
+    Folders are files with type=folder. The contract refuses several file operations on them - download (5017),
+    copy (5018), archive (5019), restore (5020), delete when non-empty (5021), metadata update (5025), tag
+    update (5027).
+  operations: [create-a-folder, list-folder-contents, delete-a-folder]
+- name: FileMetadata
+  path: /files/{file_id}/metadata
+  identifier: owned by a File
+  operations: [get-a-files-metadata, modify-a-files-metadata, overwrite-a-files-metadata]
+- name: FileTags
+  path: /files/{file_id}/tags
+  identifier: owned by a File
+  operations: [add-tags-to-a-file]
+- name: MultipartUpload
+  path: /upload/multipart/{upload_id}
+  identifier: upload_id
+  operations: [initialize-a-multipart-upload, list-current-multipart-uploads, get-details-of-a-multipart-upload,
+    get-the-upload-url-for-a-file-part, report-an-uploaded-file-part, report-that-all-file-parts-have-uploaded,
+    finalize-a-multipart-upload, abort-a-multipart-upload]
+- name: App
+  path: /apps/{project_owner}/{project}/{app_short_name}
+  identifier: owner/project/app_name/revision
+  note: The raw representation of an App is a CWL document; malformed ids raise platform error 6011.
+  operations: [list-all-apps-available-to-you, get-details-of-an-app, get-raw-cwl-for-an-app, copy-an-app,
+    add-an-app-using-raw-cwl, synchronize-a-copied-app-with-its-parent-app]
+- name: AppRevision
+  path: /apps/{app_id}/{revision_number}
+  identifier: revision_number within an App
+  operations: [get-details-of-an-app-revision, get-raw-cwl-for-an-app-revision, add-an-app-revision-using-raw-cwl]
+- name: Task
+  path: /tasks/{task_id}
+  identifier: UUID
+  states: [DRAFT, CREATING, QUEUED, RUNNING, COMPLETED, ABORTED, FAILED]
+  note: >-
+    States and their allowed transitions are published in the error registry (7006-7011, 7026); a non-UUID
+    task id is rejected with 7005.
+  operations: [list-tasks-you-can-access, create-a-new-task, get-details-of-a-task, modify-a-task, delete-a-task,
+    perform-an-action-on-a-specific-task, abort-a-task, rerun-a-task, get-task-execution-details,
+    get-task-inputs, modify-task-inputs, list-tasks-in-a-project-secondary-method]
+- name: Volume
+  path: /storage/volumes/{volume_owner}/{volume_name}
+  identifier: owner/volume_name
+  note: >-
+    A cloud storage bucket attached to the Platform (AWS S3, Google Cloud Storage, Azure, OSS) with an
+    access_mode of RO or RW.
+  operations: [list-volumes-v2, create-a-volume-v2, get-details-of-a-volume-v2, update-a-volume-v2,
+    delete-a-volume-v2, deactivate-a-volume-1, list-the-contents-of-a-volume, get-details-of-a-file-within-a-volume]
+- name: VolumeMember
+  path: /storage/volumes/{volume_owner}/{volume_name}/members/{username}
+  identifier: username within a Volume
+  operations: [list-members-of-a-volume, add-members-to-a-volume, get-a-volume-members-permissions,
+    modify-a-volume-members-permissions, overwrite-a-volume-members-permissions, remove-members-from-a-volume]
+- name: ImportJob
+  path: /storage/imports/{import_id}
+  identifier: import_id
+  operations: [start-an-import-job-v2, list-import-jobs, get-details-of-an-import-job-v2]
+- name: ExportJob
+  path: /storage/exports/{export_id}
+  identifier: export_id
+  operations: [start-an-export-job-v2, list-export-jobs-v2, get-details-of-an-export-job-v2]
+- name: RateLimit
+  path: /rate_limit
+  identifier: singleton, per token
+  operations: [get-your-current-rate-limit-status]
+relationships:
+- from: Project
+  to: User
+  type: belongs_to
+  via: project_owner path segment
+- from: Project
+  to: BillingGroup
+  type: belongs_to
+  via: billing group id supplied on project creation (platform error 3008 when missing)
+- from: Project
+  to: ProjectMember
+  type: has_many
+  via: /projects/{project_owner}/{project}/members
+- from: Project
+  to: File
+  type: has_many
+  via: project query parameter on /files and /projects/{owner}/{project}/files
+- from: Project
+  to: App
+  type: has_many
+  via: /apps/{project_owner}/{project}/{app_short_name}
+- from: Project
+  to: Task
+  type: has_many
+  via: /projects/{project_owner}/{project}/tasks
+- from: File
+  to: Folder
+  type: belongs_to
+  via: parent query parameter
+- from: File
+  to: FileMetadata
+  type: has_one
+  via: /files/{file_id}/metadata
+- from: File
+  to: FileTags
+  type: has_one
+  via: /files/{file_id}/tags
+- from: File
+  to: Task
+  type: belongs_to
+  via: origin.task field documented as filterable on list-files-primary-method
+- from: App
+  to: AppRevision
+  type: has_many
+  via: /apps/{app_id}/{revision_number}
+- from: Task
+  to: App
+  type: belongs_to
+  via: app id on task creation (platform errors 7015, 7016)
+- from: Task
+  to: Project
+  type: belongs_to
+  via: project on task creation
+- from: Volume
+  to: VolumeMember
+  type: has_many
+  via: /storage/volumes/{volume_owner}/{volume_name}/members
+- from: ImportJob
+  to: Volume
+  type: belongs_to
+  via: source volume
+- from: ImportJob
+  to: Project
+  type: belongs_to
+  via: destination project or folder
+- from: ExportJob
+  to: File
+  type: belongs_to
+  via: source file
+- from: ExportJob
+  to: Volume
+  type: belongs_to
+  via: destination volume
+- from: BillingGroup
+  to: Invoice
+  type: has_many
+  via: /billing/invoices
+- from: MultipartUpload
+  to: File
+  type: has_one
+  via: the file produced on finalize-a-multipart-upload

@@ -1,0 +1,58 @@
+generated: '2026-08-27'
+method: searched
+source: https://docs.sevenbridges.com/docs/command-line-interface
+docs: https://docs.sevenbridges.com/docs/command-line-interface
+name: sb
+description: >-
+  The Seven Bridges Command Line Interface, invoked as `sb`, gives programmatic access to the Platform over the
+  same public v2 API. It is distributed as a per-platform native binary from igor.sbgenomics.com, with a shell
+  installer, bash completion and man pages.
+official: true
+binary: sb
+install:
+- method: script
+  platforms: [linux, macos]
+  command: "bash -c 'curl https://igor.sbgenomics.com/downloads/sb/install.sh -sSf | sudo -H sh'"
+  note: Downloads and installs the binary, enables bash completion (v4) and installs man pages.
+- method: direct-download
+  platforms: [linux-amd64, linux-386, linux-arm64, linux-arm, darwin-amd64, darwin-arm64, freebsd-amd64, windows-386, windows-amd64]
+  url_pattern: https://igor.sbgenomics.com/downloads/sb/<platform>/sb
+  note: Each binary is published with a matching .shasum file for verification.
+uninstall:
+  command: "bash -c 'curl https://igor.sbgenomics.com/downloads/sb/install.sh -sSf | sudo sh -s -- --uninstall'"
+authentication:
+  command: sb configure
+  inputs:
+  - The API endpoint, read from the developer dashboard (https://igor.sbgenomics.com/developer/#/token)
+  - The user's authentication token
+  profiles:
+    supported: true
+    flag: --profile <profile_name>
+    note: >-
+      Multiple named credential profiles, each pairing an endpoint with a token, so one install can address the
+      Platform, the CGC and CAVATICA. Credentials live in the shared Seven Bridges configuration file.
+commands:
+- group: gen
+  documented_subcommands:
+  - "sb gen completion --type bash --completionfile <path>"
+  - "sb gen man --dir <path>"
+  note: Generates shell completion and man pages.
+- group: configure
+  documented_subcommands:
+  - sb configure
+  note: Stores endpoint and token credentials.
+- group: troubleshoot
+  documented_subcommands:
+  - sb troubleshoot
+  note: Diagnostic command referenced in the CLI troubleshooting section.
+command_surface_note: >-
+  The published CLI page documents installation, credential configuration, profiles, upgrade, uninstall and
+  troubleshooting. It does not publish a full command reference, so the resource-level command groups are not
+  enumerated here rather than guessed from the API's resource list.
+upgrade:
+  note: The CLI notifies the user when a new version is available; upgrading means re-running the install procedure.
+versioning:
+  version: null
+  note: >-
+    No version number is published on the download page and the download URLs are unpinned, so a consumer cannot
+    determine which build they are installing.

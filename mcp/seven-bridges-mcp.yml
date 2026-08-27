@@ -1,0 +1,98 @@
+generated: '2026-08-27'
+method: derived
+source: openapi/seven-bridges-platform-openapi.json
+status: candidate
+note: >-
+  Seven Bridges publishes no MCP server. No hosted endpoint, no stdio package under the sbg GitHub organization
+  or on npm/PyPI, and no mention of MCP in the documentation index at https://docs.sevenbridges.com/llms.txt.
+  The tools below are a CANDIDATE surface derived from operations in the provider's own OpenAPI - they describe
+  what an MCP server for this API could expose, not anything Seven Bridges ships. No MCPServer pointer is wired
+  into apis.yml for this reason.
+deployment:
+  mode: none
+  endpoint: null
+  install: null
+  package: null
+  auth: api-key
+  verified: derived
+auth_note: >-
+  Any MCP server over this API would carry the per-user X-SBG-Auth-Token header; see
+  authentication/seven-bridges-authentication.yml.
+tools:
+- name: list_projects
+  rest: [list-all-your-projects]
+  description: List every project the caller can access.
+- name: get_project
+  rest: [get-project-details]
+  description: Get the details of one project by owner/short-name.
+- name: create_project
+  rest: [create-a-new-project]
+  description: Create a project against a billing group.
+- name: list_project_members
+  rest: [list-members-of-a-project]
+  description: List the members of a project and their permissions.
+- name: list_files
+  rest: [list-files-primary-method]
+  description: List files and subdirectories in a project or folder, filterable by name, metadata, tags and origin task.
+- name: search_files
+  rest: [search-for-files]
+  description: Advanced file search across the Platform.
+- name: get_file
+  rest: [get-file-details]
+  description: Get the details of one file.
+- name: get_file_metadata
+  rest: [get-a-files-metadata]
+  description: Read a file's metadata document.
+- name: get_file_download_url
+  rest: [get-downloadable-url-for-a-file]
+  description: Obtain a time-limited download URL for a file.
+- name: copy_files
+  rest: [copy-files-between-projects, copy-a-file]
+  description: Copy one or many files between projects.
+- name: list_apps
+  rest: [list-all-apps-available-to-you]
+  description: List CWL and Nextflow apps available to the caller.
+- name: get_app
+  rest: [get-details-of-an-app]
+  description: Get an app's details.
+- name: get_app_cwl
+  rest: [get-raw-cwl-for-an-app, get-raw-cwl-for-an-app-revision]
+  description: Fetch the raw CWL document for an app or app revision.
+- name: list_tasks
+  rest: [list-tasks-you-can-access]
+  description: List analysis tasks the caller can access.
+- name: get_task
+  rest: [get-details-of-a-task]
+  description: Get the status and details of one task.
+- name: get_task_execution_details
+  rest: [get-task-execution-details]
+  description: Get per-job execution detail for a task.
+- name: create_task
+  rest: [create-a-new-task]
+  description: Create a draft analysis task from an app and inputs.
+- name: run_task
+  rest: [perform-an-action-on-a-specific-task]
+  description: Run a draft task.
+- name: abort_task
+  rest: [abort-a-task]
+  description: Abort a running task.
+- name: rerun_task
+  rest: [rerun-a-task]
+  description: Clone and rerun a completed or failed task.
+- name: list_volumes
+  rest: [list-volumes-v2]
+  description: List attached cloud storage volumes.
+- name: start_import
+  rest: [start-an-import-job-v2]
+  description: Import files from a cloud storage volume into a project.
+- name: start_export
+  rest: [start-an-export-job-v2]
+  description: Export files from a project to a cloud storage volume.
+- name: get_billing_breakdown
+  rest: [get-analysis-breakdown-for-a-billing-group, get-storage-breakdown-for-a-billing-group,
+    get-egress-breakdown-for-a-billing-group]
+  description: Read analysis, storage and egress cost breakdowns for a billing group.
+- name: get_rate_limit
+  rest: [get-your-current-rate-limit-status]
+  description: Read the caller's current rate limit and instance limit.
+tool_count: 25

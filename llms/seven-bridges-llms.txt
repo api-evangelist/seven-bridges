@@ -1,0 +1,76 @@
+# Seven Bridges Documentation
+
+> Documentation for Seven Bridges
+
+Append .md to any documentation page URL to get its markdown version.
+
+## Guides
+- [About the Seven Bridges Platform](https://docs.sevenbridges.com/docs/about-the-seven-bridges-platform.md)
+- [QuickStart](https://docs.sevenbridges.com/docs/quickstart.md)
+- [Troubleshooting tutorial](https://docs.sevenbridges.com/docs/troubleshooting-tutorial.md)
+- [Comprehensive tips for reliable and efficient analysis set-up](https://docs.sevenbridges.com/docs/comprehensive-user-guide.md)
+- [Create a project](https://docs.sevenbridges.com/docs/create-a-project.md)
+- [Set file download restriction](https://docs.sevenbridges.com/docs/define-download-restriction.md)
+- [About datasets](https://docs.sevenbridges.com/docs/about-datasets.md)
+- [Upload via the command line](https://docs.sevenbridges.com/docs/upload-via-the-command-line.md)
+- [Import from an FTP/HTTP(S) server](https://docs.sevenbridges.com/docs/upload-from-an-ftp-server.md)
+- [Import from a Volume](https://docs.sevenbridges.com/docs/upload-from-a-volume.md)
+- [Metadata on the Seven Bridges Platform](https://docs.sevenbridges.com/docs/metadata-on-the-seven-bridges-platform.md): <a name="top"></a>
+- [Search files on the Platform](https://docs.sevenbridges.com/docs/search-files-on-the-platform.md): <a name="top"></a>
+- [Available actions](https://docs.sevenbridges.com/docs/organize-files.md)
+- [Activity center](https://docs.sevenbridges.com/docs/activity-center.md)
+- [New File Browser](https://docs.sevenbridges.com/docs/new-file-browser.md)
+- [Interactive Web Apps](https://docs.sevenbridges.com/docs/interactive-web-apps.md)
+- [Bring Nextflow apps to the Platform](https://docs.sevenbridges.com/docs/bring-nextflow-apps-to-the-platform.md)
+- [Add Nextflow apps through the command line interface (CLI)](https://docs.sevenbridges.com/docs/add-nextflow-apps-through-the-command-line-interface-cli.md)
+- [Add Nextflow apps through the visual interface](https://docs.sevenbridges.com/docs/add-nextflow-apps-through-the-visual-interface.md)
+- [Manage Nextflow apps on the Platform](https://docs.sevenbridges.com/docs/manage-nextflow-apps-on-the-platform.md)
+- [Set execution mode for Nextflow apps](https://docs.sevenbridges.com/docs/set-execution-mode-for-nextflow-apps.md)
+- [sbpack_nf command reference](https://docs.sevenbridges.com/docs/sbpack_nf-command-reference.md)
+- [Nextflow Quickstart Tutorial](https://docs.sevenbridges.com/docs/nextflow-quickstart-tutorial.md)
+- [Nexttflow CLI app upload tutorial](https://docs.sevenbridges.com/docs/nexttflow-cli-app-upload-tutorial.md)
+- [Using Sample Sheets with Nextflow Apps on the SevenBridges Platform](https://docs.sevenbridges.com/docs/using-sample-sheets-with-nextflow-apps.md)
+- [Important Points](https://docs.sevenbridges.com/docs/important-points.md)
+- [Create and upload a Docker image](https://docs.sevenbridges.com/docs/upload-your-docker-image-1.md): <a name="top"></a>
+- [About analyses](https://docs.sevenbridges.com/docs/about-analyses.md)
+- [Run a task](https://docs.sevenbridges.com/docs/run-a-task.md)
+- [About task execution](https://docs.sevenbridges.com/docs/about-task-execution.md)
+- [Project and file locations (Multi-cloud)](https://docs.sevenbridges.com/docs/project-and-file-locations.md)
+- [List of available Amazon Web Services US instances](https://docs.sevenbridges.com/docs/list-of-available-amazon-web-services-instances.md)
+- [List of available Amazon Web Services EU instances](https://docs.sevenbridges.com/docs/list-of-available-amazon-web-services-eu-instances.md)
+- [Manage via CLI](https://docs.sevenbridges.com/docs/manage-automations-via-cli.md)
+- [Graph Germline Variant Detection Workflow tutorial](https://docs.sevenbridges.com/docs/graph-germline-variant-detection-workflow-tutorial.md): Start using Seven Bridges' GRAF Germline Variant Detection Workflow.
+- [Data Studio analysis details](https://docs.sevenbridges.com/docs/view-and-edit-data-cruncher-analysis-details.md)
+- [Data Studio environments and libraries](https://docs.sevenbridges.com/docs/about-libraries-in-a-data-cruncher-analysis.md)
+- [Data Studio Session Activity and Automatic Logout](https://docs.sevenbridges.com/docs/data-studio-session-activity-and-automatic-logout.md)
+- [Download results](https://docs.sevenbridges.com/docs/download-results.md): <a name="top"></a>
+- [About the Enterprise feature](https://docs.sevenbridges.com/docs/about-the-enterprise-feature.md)
+- [Collaboration within an Enterprise](https://docs.sevenbridges.com/docs/collaboration-within-an-enterprise.md)
+- [Manage an Enterprise](https://docs.sevenbridges.com/docs/manage-an-enterprise.md)
+- [Create a Division](https://docs.sevenbridges.com/docs/create-a-division.md)
+- [Manage Division administrators](https://docs.sevenbridges.com/docs/manage-division-administrators.md)
+- [Review billing information for all Divisions](https://docs.sevenbridges.com/docs/review-billing-information-for-all-divisions.md)
+- [Review Enterprise data throughput](https://docs.sevenbridges.com/docs/review-enterprise-data-throughput.md)
+- [Manage a Division](https://docs.sevenbridges.com/docs/manage-a-division.md)
+- [Manage Division members](https://docs.sevenbridges.com/docs/manage-division-members.md)
+- [Manage teams](https://docs.sevenbridges.com/docs/manage-teams.md)
+- [Review billing information for your Division](https://docs.sevenbridges.com/docs/review-billing-information-for-your-division.md)
+- [Set credit card as payment method](https://docs.sevenbridges.com/docs/set-credit-card-as-payment-method.md)
+- [Manage Division notifications](https://docs.sevenbridges.com/docs/manage-division-notifications.md)
+- [Add a collaborator to an Enterprise project](https://docs.sevenbridges.com/docs/adding-a-collaborator-to-an-enterprise-project.md)
+- [Switch between Divisions](https://docs.sevenbridges.com/docs/switching-between-divisions.md)
+- [Manage two-factor authentication](https://docs.sevenbridges.com/docs/manage-two-factor-authentication.md)
+- [Manage Docker repositories](https://docs.sevenbridges.com/docs/manage-docker-repositories-1.md)
+- [API Overview](https://docs.sevenbridges.com/docs/the-api.md)
+- [R library](https://docs.sevenbridges.com/docs/api-r-library.md)
+- [Volumes](https://docs.sevenbridges.com/docs/volumes.md)
+
+## API Reference
+- [Get details of a project](https://docs.sevenbridges.com/reference/get-project-details.md): This call returns the details of a specified project.
+- [List files (primary method)](https://docs.sevenbridges.com/reference/list-files-primary-method.md): This call returns a list of files and subdirectories in a specified project or directory within a project, with specified properties that you can access. The project or directory whose contents you want to list is specified as a query parameter in the call. Further properties to filter by can also be specified as query parameters.   Note that this call lists both files and subdirectories in the specified project or directory within a project, but not the contents of the subdirectories. To list the contents of a subdirectory, make a new call and specify the subdirectory ID as the `parent` parameter.  Don't forget that projects on the Platform are specified by their [short names](doc:the-api#identifying-projects-users-apps-files-tasks-and-inputs).  Further file properties to filter by can also be specified as query parameters.
+- [Get your current rate limit status](https://docs.sevenbridges.com/reference/get-your-current-rate-limit-status.md): This call returns information about your current rate limit. This is the number of API calls you can make in five minutes. This call also returns information about your current instance limit.
+- [API status codes](https://docs.sevenbridges.com/reference/api-status-codes.md)
+- [Start a bulk import job](https://docs.sevenbridges.com/reference/start-a-bulk-import-job.md): This call lets you perform a bulk import of files from your volume (either Amazon Web Services or Google Cloud Storage) into your project on the Platform.  You can use this call to either import files to a specific folder or a project but you can also use it to import a folder and its files into another destination folder while preserving folder structure (see below). One call can contain up to 100 items.   Learn more about using the Volumes API for [Amazon S3](doc:aws-cloud-storage-tutorial) and for [Google Cloud Storage](doc:google-cloud-storage-tutorial).
+
+## Pages
+- [Elastic Disk](https://docs.sevenbridges.com/page/elastic-disk.md)

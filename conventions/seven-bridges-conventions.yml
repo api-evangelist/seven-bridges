@@ -1,0 +1,189 @@
+generated: '2026-08-27'
+method: searched
+source: https://docs.sevenbridges.com/docs/the-api
+docs: https://docs.sevenbridges.com/docs/the-api
+note: >-
+  Cross-cutting runtime semantics for the Seven Bridges Platform v2 REST API, read from the provider's API
+  overview page and corroborated against the published OpenAPI. Cross-links
+  errors/seven-bridges-error-codes.yml, rate-limits/seven-bridges-rate-limits.yml,
+  authentication/seven-bridges-authentication.yml and lifecycle/seven-bridges-lifecycle.yml.
+media_type:
+  request: application/json
+  response: application/json
+  note: The docs instruct callers to set both the accept and content headers to application/json.
+authentication:
+  style: api-key-header
+  header: X-SBG-Auth-Token
+  detail: authentication/seven-bridges-authentication.yml
+versioning:
+  style: uri-path
+  current: v2
+  example: https://api.sbgenomics.com/v2
+  note: >-
+    The major version is carried in the base path. The docs record that versions before v2 are not compatible
+    with the Common Workflow Language and are not supported by the current client libraries. No date-based or
+    header-based version negotiation is documented.
+pagination:
+  style: limit-offset
+  parameters:
+  - name: limit
+    in: query
+    default: 50
+    maximum: 100
+    description: Number of items returned. Defaults to 50; the documented maximum is 100.
+  - name: offset
+    in: query
+    default: 0
+    description: Zero-based starting point for the returned items.
+  response_fields:
+  - href
+  - items
+  - links
+  link_relations:
+  - next
+  - prev
+  headers:
+  - name: X-Total-Matching-Query
+    description: Total number of results matching the query; returned on calls made with offset.
+  note: >-
+    List responses are hypermedia-shaped - each item carries its own href, and a links array carries
+    {href, rel, method} objects for next/prev navigation.
+field_selection:
+  parameter: fields
+  applies_to: all operations
+  capabilities:
+  - Comma-separated allow-list, e.g. fields=id,name,size
+  - Negation with a ! prefix to exclude a field, e.g. fields=!metadata
+  - Dotted paths for nested fields, e.g. metadata.sample_id or origin.task
+  - fields=_all to return every field when listing many resources
+  - Inclusions and exclusions may be combined freely
+  note: >-
+    A genuine sparse-fieldsets implementation available on every call; the docs warn that _all on bulky
+    fields such as an app's raw CWL will produce very large responses.
+filtering:
+  note: >-
+    The list-files operation additionally filters by filename, arbitrary metadata fields, tags and
+    originating task, passed as query parameters. A separate POST /search operation provides advanced
+    file search.
+identifiers:
+  projects: >-
+    Projects are addressed by a derived human-readable short name in the form owner/project (lower-cased,
+    special characters removed, spaces and underscores replaced with hyphens, _1 appended on collision),
+    not by the display name.
+  files: Opaque hexadecimal file IDs.
+  tasks: UUIDs; the API rejects a non-UUID task ID with platform error 7005.
+  apps: owner/project/app_name/revision; a malformed app ID raises platform error 6011.
+  volumes: owner/volume_name.
+metadata:
+  note: >-
+    Files carry a first-class metadata document addressed at /files/{file_id}/metadata, with GET, PATCH
+    (merge) and PUT (overwrite) semantics, plus a separate tags collection at /files/{file_id}/tags.
+error_envelope:
+  content_type: application/json
+  fields:
+  - status
+  - message
+  - code
+  - more_info
+  standard: vendor-numeric
+  rfc9457: false
+  detail: errors/seven-bridges-error-codes.yml
+  note: >-
+    Responses carry a Platform-specific numeric code in addition to the HTTP status. 277 codes are published,
+    grouped by the service that raises them.
+rate_limit_signaling:
+  headers:
+  - X-RateLimit-Limit
+  - X-RateLimit-Remaining
+  - X-RateLimit-Reset
+  status_on_exhaustion: 429
+  detail: rate-limits/seven-bridges-rate-limits.yml
+request_id_tracing:
+  supported: unknown
+  note: >-
+    No request-correlation or trace header is documented on the API overview page and none appears as a
+    declared parameter or response header in the published OpenAPI. Recorded as undocumented rather than absent.
+idempotency:
+  supported: false
+  key_header: null
+  note: >-
+    No Idempotency-Key header, idempotency scope or replay-retention window is documented anywhere in the
+    Seven Bridges docs, and the string "idempoten" does not occur in the published OpenAPI or in the docs
+    index. Write operations such as create-a-new-task, initialize-a-multipart-upload and copy-files-between-projects
+    therefore carry no documented replay protection; the API does surface 409 Conflict with a specific numeric
+    code when a resource already exists, which is the only collision signal a client can act on. No Idempotency
+    pointer is emitted for this provider.
+dry_run_mode:
+  supported: false
+  note: >-
+    No validate-only or dry-run parameter is documented. The closest published behaviour is the task lifecycle
+    itself - POST /tasks creates a DRAFT task that is not executed until POST /tasks/{task_id}/actions/run is
+    called, and a draft that fails validation is rejected with platform error 7024 before any compute is billed.
+    That is a two-phase commit, not a dry run, so it is recorded here rather than claimed as one.
+reversibility:
+  grade: documented
+  note: >-
+    The write surface has real, named reversal operations, but Seven Bridges does not publish a time window
+    for any of them, so this grades as documented rather than verified. No window is asserted here that the
+    docs do not state.
+  surfaces:
+  - write_operation: create-a-new-task / perform-an-action-on-a-specific-task
+    action: Create and run an analysis task
+    reversal: abort-a-task
+    reversal_path: POST /tasks/{task_id}/actions/abort
+    window: null
+    window_stated: false
+    note: >-
+      Documented as available only while the task is in a RUNNING state (platform error 7008 otherwise) and
+      the abort action is restricted to CREATING/RUNNING tasks (error 7011). That is a state precondition, not
+      a stated time window. Compute already consumed before the abort is not documented as refunded.
+  - write_operation: create-a-new-task
+    action: Create a draft task
+    reversal: delete-a-task
+    reversal_path: DELETE /tasks/{task_id}
+    window: null
+    window_stated: false
+  - write_operation: create-a-new-project
+    action: Create a project
+    reversal: delete-a-project
+    reversal_path: DELETE /projects/{project_owner}/{project}
+    window: null
+    window_stated: false
+    note: No restore or undelete operation for a deleted project appears in the published contract.
+  - write_operation: add-a-member-to-a-project
+    action: Grant a user access to a project
+    reversal: remove-a-project-member
+    reversal_path: DELETE /projects/{project_owner}/{project}/members/{username}
+    window: null
+    window_stated: false
+  - write_operation: create-a-folder / copy-a-file / move-a-file-between-folders
+    action: Create or place a file or folder
+    reversal: delete-a-file / delete-a-folder
+    reversal_path: DELETE /files/{file_id}, DELETE /files/{folder_id}
+    window: null
+    window_stated: false
+    note: >-
+      Deleting a non-empty folder is refused (platform error 5021). The published contract has no undelete or
+      restore operation for files, though the error registry references archive/restore semantics as
+      unsupported for folders (5019, 5020).
+  - write_operation: initialize-a-multipart-upload
+    action: Begin a multipart upload
+    reversal: abort-a-multipart-upload
+    reversal_path: DELETE /upload/multipart/{upload_id}
+    window: null
+    window_stated: false
+  - write_operation: start-an-import-job-v2 / start-an-export-job-v2
+    action: Import from or export to a cloud storage volume
+    reversal: null
+    reversal_path: null
+    window: null
+    window_stated: false
+    note: >-
+      No cancel or reverse operation is published for a storage import or export job; the contract exposes only
+      list and get-details for these jobs.
+  - write_operation: add-members-to-a-volume
+    action: Grant access to a cloud storage volume
+    reversal: remove-members-from-a-volume
+    reversal_path: DELETE /storage/volumes/{volume_owner}/{volume_name}/members/{username}
+    window: null
+    window_stated: false

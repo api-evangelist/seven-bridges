@@ -1,23 +1,174 @@
 aid: seven-bridges
 name: Seven Bridges
-description: 'Seven Bridges is a company surfaced via the API Evangelist harvest backlog (source: secondary-market)
-  and added to the network as a stub for full-pipeline profiling.'
+description: >-
+  Seven Bridges (a Velsera company) is a biomedical data analysis company whose cloud platform lets
+  research organizations store, organize and analyze genomic and multi-omic data at scale. The Seven
+  Bridges Platform exposes a public REST API at api.sbgenomics.com/v2 (AWS US) and eu-api.sbgenomics.com/v2
+  (AWS EU) covering projects, members and permissions, files and folders, file metadata and tags,
+  multipart uploads, cloud storage volumes with import/export jobs, CWL and Nextflow apps and their
+  revisions, task creation/execution/batching, billing groups, invoices and cost breakdowns, plus rate
+  limit and advanced file search. The same API powers two NIH/NCI-funded deployments Seven Bridges
+  operates - the Cancer Genomics Cloud (cgc-api.sbgenomics.com) and CAVATICA (cavatica-api.sbgenomics.com).
+  Authentication is a per-user X-SBG-Auth-Token header, first-party Python and R client libraries and an
+  `sb` command line interface are published, and the API is documented on a ReadMe developer hub that
+  also serves an llms.txt index.
+image: https://www.sevenbridges.com/wp-content/uploads/2016/09/fb-image.png
 url: https://raw.githubusercontent.com/api-evangelist/seven-bridges/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:secondary-market
-x-tier: stub
-x-tier-reason: harvest
 specificationVersion: '0.20'
 created: '2026-08-27'
 modified: '2026-08-27'
 tags:
+- Genomics
+- Bioinformatics
+- Life Sciences
+- Healthcare
+- Cloud Computing
+- Data Analysis
+- Workflow Automation
+- Research
+- Precision Medicine
+- Common Workflow Language
+- File Storage
 - Company
-apis: []
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+apis:
+- name: Seven Bridges Platform API
+  description: >-
+    Public REST API for the Seven Bridges Platform. Covers projects and project membership, files,
+    folders, file metadata and tags, multipart upload, cloud storage volumes (AWS S3, Google Cloud
+    Storage, Azure, OSS) with import and export jobs, CWL/Nextflow apps and app revisions, draft and
+    batch task creation, execution, abort and rerun, billing groups, invoices and analysis/storage/egress
+    cost breakdowns, rate limit status and advanced file search. JSON over HTTPS, authenticated with the
+    X-SBG-Auth-Token header. Deployed on AWS US (api.sbgenomics.com) and AWS EU (eu-api.sbgenomics.com).
+  humanURL: https://docs.sevenbridges.com/reference/the-api
+  baseURL: https://api.sbgenomics.com/v2
+  tags:
+  - Genomics
+  - Bioinformatics
+  - Cloud Computing
+  - Workflow Automation
+  - File Storage
+  - Data Analysis
+  properties:
+  - type: OpenAPI
+    url: openapi/seven-bridges-platform-openapi.json
+  - type: Documentation
+    url: https://docs.sevenbridges.com/docs/the-api
+  - type: APIReference
+    url: https://docs.sevenbridges.com/reference/the-api
+  - type: Authentication
+    url: authentication/seven-bridges-authentication.yml
+  - type: Conventions
+    url: conventions/seven-bridges-conventions.yml
+  - type: ErrorCatalog
+    url: errors/seven-bridges-error-codes.yml
+  - type: DataModel
+    url: data-model/seven-bridges-data-model.yml
+  - type: RateLimits
+    url: rate-limits/seven-bridges-rate-limits.yml
+  - type: Overlay
+    url: overlays/seven-bridges-platform-overlay.yaml
+- name: Seven Bridges Cancer Genomics Cloud API
+  description: >-
+    The Cancer Genomics Cloud (CGC), an NCI-funded Cloud Resource developed and operated by Seven Bridges,
+    runs the same v2 REST API on its own host. The published contract covers projects, files, apps, tasks,
+    volumes, imports/exports, billing and rate limit for the CGC deployment.
+  humanURL: https://docs.cancergenomicscloud.org/reference/
+  baseURL: https://cgc-api.sbgenomics.com/v2
+  tags:
+  - Genomics
+  - Cancer Research
+  - Cloud Computing
+  - Bioinformatics
+  properties:
+  - type: OpenAPI
+    url: openapi/seven-bridges-cgc-openapi.json
+  - type: Documentation
+    url: https://docs.cancergenomicscloud.org/
+  - type: LLMsTxt
+    url: https://docs.cancergenomicscloud.org/llms.txt
+- name: Seven Bridges CAVATICA API
+  description: >-
+    CAVATICA is a pediatric-research data analysis platform Seven Bridges operates with the Children's
+    Hospital of Philadelphia and the NIH Common Fund. It exposes the same v2 REST API surface on its own
+    host, documented on its own ReadMe hub.
+  humanURL: https://docs.cavatica.org/
+  baseURL: https://cavatica-api.sbgenomics.com/v2
+  tags:
+  - Genomics
+  - Pediatric Research
+  - Cloud Computing
+  - Bioinformatics
+  properties:
+  - type: Documentation
+    url: https://docs.cavatica.org/
+  - type: LLMsTxt
+    url: https://docs.cavatica.org/llms.txt
 common:
+- type: TrustCenter
+  url: security/seven-bridges-trust-center.yml
+- type: DomainSecurity
+  url: security/seven-bridges-domain-security.yml
 - type: Website
-  url: https://forgeglobal.com/seven-bridges_stock/
+  url: https://www.sevenbridges.com/
+- type: DeveloperPortal
+  url: https://docs.sevenbridges.com/
+- type: Documentation
+  url: https://docs.sevenbridges.com/
+- type: APIReference
+  url: https://docs.sevenbridges.com/reference/the-api
+- type: GettingStarted
+  url: https://docs.sevenbridges.com/docs/quickstart
+- type: Support
+  url: https://www.sevenbridges.com/contact/
+- type: Blog
+  url: https://www.sevenbridges.com/blog/
+- type: GitHubOrganization
+  url: https://github.com/sbg
+- type: Login
+  url: https://accounts.sbgenomics.com/auth/login
+- type: TermsOfService
+  url: https://www.sevenbridges.com/terms-of-service/
+- type: PrivacyPolicy
+  url: https://www.sevenbridges.com/privacy-policy/
+- type: Lifecycle
+  url: lifecycle/seven-bridges-lifecycle.yml
+- type: LLMsTxt
+  url: llms/seven-bridges-llms.txt
+- type: Packages
+  url: packages/seven-bridges-packages.yml
+- type: SDKs
+  url: packages/seven-bridges-packages.yml
+- type: CLI
+  url: cli/seven-bridges-cli.yml
+- type: Authentication
+  url: authentication/seven-bridges-authentication.yml
+- type: Conventions
+  url: conventions/seven-bridges-conventions.yml
+- type: ErrorCatalog
+  url: errors/seven-bridges-error-codes.yml
+- type: RateLimits
+  url: rate-limits/seven-bridges-rate-limits.yml
+- type: Plans
+  url: plans/seven-bridges-plans-pricing.yml
+- type: DataModel
+  url: data-model/seven-bridges-data-model.yml
+- type: Conformance
+  url: conformance/seven-bridges-conformance.yml
+- type: Compliance
+  url: conformance/seven-bridges-conformance.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: Overlay
+  url: overlays/seven-bridges-platform-overlay.yaml
+x-enrichment:
+  date: '2026-08-27'
+  status: enriched
+  artifacts_added: 24
+  pass: local-v1

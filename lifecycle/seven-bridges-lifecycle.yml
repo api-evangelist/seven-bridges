@@ -1,0 +1,69 @@
+generated: '2026-08-27'
+method: searched
+source: https://docs.sevenbridges.com/docs/the-api
+note: >-
+  Versioning is published. The status page has been DEACTIVATED and a deprecation policy does not exist, so
+  neither a StatusPage nor a Deprecation pointer is emitted - both would assert a surface the provider no
+  longer serves.
+versioning:
+  style: uri-path
+  current_version: v2
+  base_urls:
+  - https://api.sbgenomics.com/v2
+  - https://eu-api.sbgenomics.com/v2
+  - https://cgc-api.sbgenomics.com/v2
+  - https://cavatica-api.sbgenomics.com/v2
+  source: https://docs.sevenbridges.com/docs/the-api
+  note: >-
+    The docs state that API versions prior to v2 are not compatible with the Common Workflow Language and are
+    not supported by the current client libraries, which is the only public statement about a superseded version.
+status_page:
+  present: false
+  url: https://status.sevenbridges.com/
+  provider: Atlassian Statuspage
+  http_status: 200
+  live: false
+  machine_readable: false
+  note: >-
+    The status subdomain still resolves and returns HTTP 200, but it 302-redirects to
+    https://sevenbridges.statuspage.io/inactive and the page body reads "Seven Bridges Platform Status - Page
+    Inactive". The Statuspage account has been deactivated: there are no components, no incident history and no
+    current state. The JSON API endpoints (/api/v2/summary.json, /api/v2/status.json) return 401. This is a soft
+    dead surface - a 200 that carries no document - so NO StatusPage pointer is emitted for this provider, and
+    the status link still shown in the sevenbridges.com site footer no longer leads to a working status page.
+    Probed 2026-08-27.
+  probed:
+  - url: https://status.sevenbridges.com/
+    status: 200
+    resolved_to: https://sevenbridges.statuspage.io/inactive
+    body: Seven Bridges Platform Status - Page Inactive
+  - url: https://sevenbridges.statuspage.io/api/v2/summary.json
+    status: 401
+  - url: https://status.sevenbridges.com/api/v2/status.json
+    status: 401
+deprecation_policy:
+  present: false
+  sunset_header: false
+  deprecation_header: false
+  rfc8594: false
+  note: >-
+    No deprecation policy, sunset schedule, Deprecation/Sunset response headers, or end-of-life notice period
+    is published on the docs hub, the marketing site or in the OpenAPI. The spec declares no operation as
+    deprecated (no `deprecated: true` appears in the contract).
+sla:
+  published: false
+  note: >-
+    No public SLA or uptime commitment was found. Commercial terms are handled through sales
+    (https://www.sevenbridges.com/contact/).
+changelog:
+  present: false
+  note: >-
+    No dated changelog or release-notes surface exists on the docs hub - /changelog and /docs/release-notes
+    both return 404 and the llms.txt documentation index lists no changelog page. Client-library changes are
+    visible only in the GitHub release history of the sbg org repositories.
+  probed:
+  - url: https://docs.sevenbridges.com/changelog
+    status: 404
+  - url: https://docs.sevenbridges.com/docs/release-notes
+    status: 404
+deprecated_operations: []

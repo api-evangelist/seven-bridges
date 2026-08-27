@@ -1,0 +1,33 @@
+generated: '2026-08-27'
+method: probed
+source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
+hosts:
+- host: www.sevenbridges.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Oct 14 23:59:59 2026 GMT
+  hsts: false
+- host: docs.sevenbridges.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Oct  2 13:03:30 2026 GMT
+  hsts: true
+  hsts_max_age: 31536000
+- host: api.sbgenomics.com
+  https: true
+  tls_version: TLSv1.2
+  cert_expires: Nov  7 23:59:59 2026 GMT
+  hsts: null
+domains:
+- domain: sevenbridges.com
+  dnssec: false
+  caa: []
+  spf: true
+  dmarc: true
+  dmarc_policy: quarantine
+- domain: sbgenomics.com
+  dnssec: true
+  caa: []
+  spf: true
+  dmarc: true
+  dmarc_policy: quarantine

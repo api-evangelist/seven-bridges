@@ -1,0 +1,1451 @@
+generated: '2026-08-27'
+method: searched
+source: https://docs.sevenbridges.com/reference/api-status-codes
+docs: https://docs.sevenbridges.com/reference/api-status-codes
+note: Seven Bridges publishes an exhaustive numeric error-code registry alongside HTTP status codes. Codes are grouped by
+  the API service that raises them (the leading digits identify the service), and the docs describe them as an exhaustive
+  list of every error response the API may return. This catalog is a faithful transcription of that published table - no code,
+  status or message was authored here.
+format: vendor-numeric
+rfc9457: false
+envelope:
+  content_type: application/json
+  fields:
+  - status
+  - message
+  - code
+  - more_info
+  example_observed: '{"status":"NOT_FOUND","message":"HTTP 404 Not Found"}'
+  example_source: live GET https://api.sbgenomics.com/openapi.json on 2026-08-27 (HTTP 404)
+  note: The docs state that responses include Platform-specific error codes in addition to standard HTTP codes. The envelope
+    shape above is the one observed on an unauthenticated 404 from api.sbgenomics.com.
+groups:
+- prefix: 0xxx
+  label: Platform maintenance errors
+- prefix: 1xxx
+  label: General errors
+- prefix: 2xxx
+  label: User errors
+- prefix: 3xxx
+  label: Projects errors
+- prefix: 4xxx
+  label: Billing errors
+- prefix: 5xxx
+  label: Files errors
+- prefix: 6xxx
+  label: Apps errors
+- prefix: 7xxx
+  label: Tasks errors
+- prefix: 8xxx
+  label: Upload errors
+- prefix: 9xxx
+  label: Volumes errors
+- prefix: 10xxx
+  label: Manifest file errors
+- prefix: 57xxx
+  label: Bulk file system operations
+- prefix: 90xxx
+  label: General validation errors
+error_count: 277
+errors:
+- code: 0
+  http_status: 503
+  http: 503 Service Unavavailable
+  message: The Platform is currently under maintenance.
+  group: 0xxx
+- code: 1000
+  http_status: 429
+  http: 429 Too Many Requests
+  message: Rate limit exceeded! Check response headers.
+  group: 1xxx
+- code: 2000
+  http_status: 503
+  http: 503 Service Unavavailable
+  message: User service is currently unavailable.
+  group: 2xxx
+- code: 2001
+  http_status: 403
+  http: 403 Forbidden
+  message: Not enough privileges to access requested user info.
+  group: 2xxx
+- code: 2002
+  http_status: 404
+  http: 404 Not Found
+  message: Requested user does not exist.
+  group: 2xxx
+- code: 2003
+  http_status: 409
+  http: 409 Conflict
+  message: Requested user already exists.
+  group: 2xxx
+- code: 2105
+  http_status: 400
+  http: 400 Bad Request
+  message: Please specify the division you are listing the users or teams for.
+  group: 2xxx
+- code: 3000
+  http_status: 503
+  http: 503 Service Unavavailable
+  message: Project service is currently unavailable.
+  group: 3xxx
+- code: 3001
+  http_status: 403
+  http: 403 Forbidden
+  message: Not enough privileges to access the requested project/member.
+  group: 3xxx
+- code: 3002
+  http_status: 404
+  http: 404 Not Found
+  message: Requested project or member does not exist.
+  group: 3xxx
+- code: 3003
+  http_status: 409
+  http: 409 Conflict
+  message: Requested project/member already exists
+  group: 3xxx
+- code: 3004
+  http_status: 400
+  http: 400 Bad Request
+  message: Owner's username must not be null or empty string.
+  group: 3xxx
+- code: 3005
+  http_status: 400
+  http: 400 Bad Request
+  message: Member username must not be null or empty string.
+  group: 3xxx
+- code: 3006
+  http_status: 400
+  http: 400 Bad Request
+  message: Project id must not be null or an empty string.
+  group: 3xxx
+- code: 3007
+  http_status: 400
+  http: 400 Bad Request
+  message: Project name must not be null or empty string.
+  group: 3xxx
+- code: 3008
+  http_status: 400
+  http: 400 Bad Request
+  message: Billing group id must not be null or empty string
+  group: 3xxx
+- code: 3009
+  http_status: 400
+  http: 400 Bad Request
+  message: Project type must not be null or empty string.
+  group: 3xxx
+- code: 3010
+  http_status: 400
+  http: 400 Bad Request
+  message: Project type can be either v2 for standard projects or v1 for LEGACY projects
+  group: 3xxx
+- code: 3011
+  http_status: 400
+  http: 400 Bad Request
+  message: Project permissions must not null or an empty value
+  group: 3xxx
+- code: 3012
+  http_status: 400
+  http: 400 Bad Request
+  message: Malformed project id. Expecting `owner/project`
+  group: 3xxx
+- code: 3013
+  http_status: 400
+  http: 400 Bad Request
+  message: Please provide all permissions data.
+  group: 3xxx
+- code: 4000
+  http_status: 503
+  http: 503 Service Unavavailable
+  message: Billing service is currently unavailable.
+  group: 4xxx
+- code: 4001
+  http_status: 403
+  http: 403 Forbidden
+  message: Insufficient privileges to access the requested billing group/invoice.
+  group: 4xxx
+- code: 4002
+  http_status: 404
+  http: 404 Not Found
+  message: Requested billing group/invoice does not exist.
+  group: 4xxx
+- code: 4003
+  http_status: 409
+  http: 409 Conflict
+  message: Requested billing group/invoice already exist.
+  group: 4xxx
+- code: 4004
+  http_status: 400
+  http: 400 Bad Request
+  message: Billing group id must not be null or an empty string.
+  group: 4xxx
+- code: 4005
+  http_status: 400
+  http: 400 Bad Request
+  message: Billing group id must be a valid UUID.
+  group: 4xxx
+- code: 4006
+  http_status: 403
+  http: 403 Forbidden
+  message: You are not a member of this billing group.
+  group: 4xxx
+- code: 4007
+  http_status: 400
+  http: 400 Bad Request
+  message: Invoice id must not be null or an empty string.
+  group: 4xxx
+- code: 5000
+  http_status: 503
+  http: 503 Service Unavavailable
+  message: File service is currently unavailable.
+  group: 5xxx
+- code: 5001
+  http_status: 403
+  http: 403 Forbidden
+  message: Insufficient privileges to access the requested file.
+  group: 5xxx
+- code: 5002
+  http_status: 404
+  http: 404 Not Found
+  message: Requested file does not exist.
+  group: 5xxx
+- code: 5003
+  http_status: 409
+  http: 409 Conflict
+  message: Requested file already exists.
+  group: 5xxx
+- code: 5004
+  http_status: 400
+  http: 400 Bad Request
+  message: File id must not be null or an empty string.
+  group: 5xxx
+- code: 5005
+  http_status: 400
+  http: 400 Bad Request
+  message: Malformed project query parameter. Expecting `?project=owner/project`
+  group: 5xxx
+- code: 5006
+  http_status: 400
+  http: 400 Bad Request
+  message: Metadata validation failed.
+  group: 5xxx
+- code: 5007
+  http_status: 400
+  http: 400 Bad Request
+  message: File copy failed.
+  group: 5xxx
+- code: 5008
+  http_status: 403
+  http: 403 Forbidden
+  message: File renaming not allowed.
+  group: 5xxx
+- code: 5009
+  http_status: 403
+  http: 403 Forbidden
+  message: Modifying metadata is not allowed.
+  group: 5xxx
+- code: 5010
+  http_status: 503
+  http: 503 Service Unavavailable
+  message: Metadata service is currently unavailable.
+  group: 5xxx
+- code: 5011
+  http_status: 403
+  http: 403 Forbidden
+  message: Modifying file tags is not allowed.
+  group: 5xxx
+- code: 5012
+  http_status: 400
+  http: 400 Bad Request
+  message: 'Invalid "type" supplied. Allowed values: [folder].'
+  group: 5xxx
+- code: 5014
+  http_status: 403
+  http: 403 Forbidden
+  message: Insufficient privileges to copy the requested file.
+  group: 5xxx
+- code: 5015
+  http_status: 400
+  http: 400 Bad Request
+  message: Moving files between projects is not supported.
+  group: 5xxx
+- code: 5017
+  http_status: 400
+  http: 400 Bad Request
+  message: Downloading folders is not supported.
+  group: 5xxx
+- code: 5018
+  http_status: 400
+  http: 400 Bad Request
+  message: Copying folders is not supported.
+  group: 5xxx
+- code: 5019
+  http_status: 400
+  http: 400 Bad Request
+  message: Archiving folders is not supported.
+  group: 5xxx
+- code: 5020
+  http_status: 400
+  http: 400 Bad Request
+  message: Restoring folders is not supported.
+  group: 5xxx
+- code: 5021
+  http_status: 400
+  http: 400 Bad Request
+  message: Deleting non-empty folders is not supported.
+  group: 5xxx
+- code: 5022
+  http_status: 400
+  http: 400 Bad Request
+  message: The parent specified is not a folder.
+  group: 5xxx
+- code: 5023
+  http_status: 400
+  http: 400 Bad Request
+  message: Updating folder details is not supported.
+  group: 5xxx
+- code: 5024
+  http_status: 400
+  http: 400 Bad Request
+  message: Invalid name parameter. Check the documentation.
+  group: 5xxx
+- code: 5025
+  http_status: 400
+  http: 400 Bad Request
+  message: Updating folder metadata is not supported.
+  group: 5xxx
+- code: 5026
+  http_status: 404
+  http: 404 Not Found
+  message: Destination folder is not found.
+  group: 5xxx
+- code: 5027
+  http_status: 400
+  http: 400 Bad Request
+  message: Updating folder tags is not supported.
+  group: 5xxx
+- code: 5029
+  http_status: 400
+  http: 400 Bad Request
+  message: Missing "parent" or "project" field. These fields must be included together.
+  group: 5xxx
+- code: 5030
+  http_status: 409
+  http: 409 Conflict
+  message: Requested folder already exists.
+  group: 5xxx
+- code: 5031
+  http_status: 400
+  http: 400 Bad Request
+  message: Providing both "parent" and "project" is not allowed.
+  group: 5xxx
+- code: 5032
+  http_status: 403
+  http: 403 Forbidden
+  message: Insufficient privileges to move the requested file.
+  group: 5xxx
+- code: 5033
+  http_status: 400
+  http: 400 Bad Request
+  message: Invalid request please check the documentation.
+  group: 5xxx
+- code: 5034
+  http_status: 409
+  http: 409 Conflict
+  message: Downloading files from an inactive volume is not supported.
+  group: 5xxx
+- code: 5035
+  http_status: 400
+  http: 400 Bad Request
+  message: Key must not be null or an empty string.
+  group: 5xxx
+- code: 6000
+  http_status: 503
+  http: 503 Service Unavavailable
+  message: App service is currently unavailable.
+  group: 6xxx
+- code: 6001
+  http_status: 403
+  http: 403 Forbidden
+  message: Insufficient privileges to access the requested app/revision.
+  group: 6xxx
+- code: 6002
+  http_status: 404
+  http: 404 Not Found
+  message: Requested app/revision does not exist.
+  group: 6xxx
+- code: 6003
+  http_status: 409
+  http: 409 Conflict
+  message: Requested app/revision already exists.
+  group: 6xxx
+- code: 6004
+  http_status: 400
+  http: 400 Bad Request
+  message: App name must not be null or an empty string.
+  group: 6xxx
+- code: 6006
+  http_status: 400
+  http: 400 Bad Request
+  message: Project owner must not be null or an empty string.
+  group: 6xxx
+- code: 6007
+  http_status: 400
+  http: 400 Bad Request
+  message: Project must not be null or an empty string.
+  group: 6xxx
+- code: 6008
+  http_status: 400
+  http: 400 Bad Request
+  message: App revision must not be null or an empty string.
+  group: 6xxx
+- code: 6009
+  http_status: 400
+  http: 400 Bad Request
+  message: Destination project must not be null or an empty string.
+  group: 6xxx
+- code: 6010
+  http_status: 400
+  http: 400 Bad Request
+  message: Source app must not be null or an empty string.
+  group: 6xxx
+- code: 6011
+  http_status: 400
+  http: 400 Bad Request
+  message: Malformed app id. Expecting `owner/project/app_name/revision`.
+  group: 6xxx
+- code: 6012
+  http_status: 400
+  http: 400 Bad Request
+  message: 'Invalid visibility query parameter. Allowed values: [`PUBLIC`,` PRIVATE`].'
+  group: 6xxx
+- code: 7000
+  http_status: 503
+  http: 503 Service Unavailable
+  message: Task service is currently unavailable.
+  group: 7xxx
+- code: 7001
+  http_status: 403
+  http: 403 Forbidden
+  message: Insufficient privileges to access the requested task.
+  group: 7xxx
+- code: 7002
+  http_status: 404
+  http: 404 Not Found
+  message: Requested task does not exist.
+  group: 7xxx
+- code: 7003
+  http_status: 409
+  http: 409 Conflict
+  message: Requested task already exists.
+  group: 7xxx
+- code: 7004
+  http_status: 400
+  http: 400 Bad Request
+  message: Task ID must not be empty or null or an empty string.
+  group: 7xxx
+- code: 7005
+  http_status: 400
+  http: 400 Bad Request
+  message: Task ID must be a valid UUID.
+  group: 7xxx
+- code: 7006
+  http_status: 400
+  http: 400 Bad Request
+  message: 'Invalid task status. Allowed values: [`QUEUED`, `DRAFT`, `RUNNING`, `COMPLETED`, `ABORTED`, `ABORTING`, `FAILED`]'
+  group: 7xxx
+- code: 7007
+  http_status: 403
+  http: 403 Forbidden
+  message: This action is only available for `DRAFT` tasks.
+  group: 7xxx
+- code: 7008
+  http_status: 403
+  http: 403 Forbidden
+  message: This action is only available for `RUNNING` tasks.
+  group: 7xxx
+- code: 7009
+  http_status: 400
+  http: 400 Bad Request
+  message: Invalid task action. Action can be performed only on `DRAFT` or `RUNNING` tasks.
+  group: 7xxx
+- code: 7010
+  http_status: 400
+  http: 400 Bad Request
+  message: Invalid task action. Action can be performed on `DRAFT` tasks.
+  group: 7xxx
+- code: 7011
+  http_status: 400
+  http: 400 Bad Request
+  message: 'Invalid task action. Action can be performed on tasks in the states: `CREATING`, `RUNNING` or `QUEUED`.'
+  group: 7xxx
+- code: 7012
+  http_status: 400
+  http: 400 Bad Request
+  message: Missing inputs.
+  group: 7xxx
+- code: 7013
+  http_status: 400
+  http: 400 Bad Request
+  message: Invalid task action.
+  group: 7xxx
+- code: 7014
+  http_status: 400
+  http: 400 Bad Request
+  message: Action parameter must not be null or an empty string.
+  group: 7xxx
+- code: 7015
+  http_status: 400
+  http: 400 Bad Request
+  message: App Id must not be null or an empty string.
+  group: 7xxx
+- code: 7016
+  http_status: 400
+  http: 400 Bad Request
+  message: Invalid app url.
+  group: 7xxx
+- code: 7017
+  http_status: 400
+  http: 400 Bad Request
+  message: Only Common Workflow Language (CWL) tasks are supported.
+  group: 7xxx
+- code: 7018
+  http_status: 400
+  http: 400 Bad Request
+  message: Batch input property should reference input identifier or omitted. Empty value is not allowed.
+  group: 7xxx
+- code: 7019
+  http_status: 400
+  http: 400 Bad Request
+  message: Missing batch criteria.
+  group: 7xxx
+- code: 7020
+  http_status: 400
+  http: 400 Bad Request
+  message: 'Invalid batch type supplied. Allowed values: `[criteria, item]`.'
+  group: 7xxx
+- code: 7021
+  http_status: 400
+  http: 400 Bad Request
+  message: Batching can only be disabled if the task is submitted for execution.
+  group: 7xxx
+- code: 7022
+  http_status: 400
+  http: 400 Bad Request
+  message: Disabling batching action is only available for `BATCH` tasks.
+  group: 7xxx
+- code: 7023
+  http_status: 400
+  http: 400 Bad Request
+  message: Missing `batch_by` or `batch_input` fields. These fields must be included together.
+  group: 7xxx
+- code: 7024
+  http_status: 400
+  http: 400 Bad Request
+  message: Task can not be started due to validation errors.
+  group: 7xxx
+- code: 7026
+  http_status: 403
+  http: 403 Forbidden
+  message: Editing is available only for tasks which are in `DRAFT` status. Tasks which are in `RUNNING` and `COMPLETED` states
+    can only be renamed.
+  group: 7xxx
+- code: 8000
+  http_status: 503
+  http: 503 Service Unavavailable
+  message: Upload service is currently unavailable.
+  group: 8xxx
+- code: 8001
+  http_status: 403
+  http: 403 Forbidden
+  message: Insufficient privileges to access the requested upload.
+  group: 8xxx
+- code: 8002
+  http_status: 403
+  http: 403 Forbidden
+  message: Insufficient privileges to access the requested file.
+  group: 8xxx
+- code: 8003
+  http_status: 404
+  http: 404 Not Found
+  message: Requested upload does not exist.
+  group: 8xxx
+- code: 8004
+  http_status: 404
+  http: 404 Not Found
+  message: Requested file does not exist
+  group: 8xxx
+- code: 8005
+  http_status: 409
+  http: 409 Conflict
+  message: Requested file already exists
+  group: 8xxx
+- code: 8006
+  http_status: 409
+  http: 409 Conflict
+  message: Requested upload already exists.
+  group: 8xxx
+- code: 8007
+  http_status: 409
+  http: 409 Conflict
+  message: Failed to complete upload.
+  group: 8xxx
+- code: 8008
+  http_status: 409
+  http: 409 Conflict
+  message: Failed to reserve part for upload. Try again.
+  group: 8xxx
+- code: 8009
+  http_status: 409
+  http: 409 Conflict
+  message: Failed to abort upload.
+  group: 8xxx
+- code: 8010
+  http_status: 400
+  http: 400 Bad Request
+  message: Malformed project id. Expecting `owner/project`.
+  group: 8xxx
+- code: 8011
+  http_status: 400
+  http: 400 Bad Request
+  message: Upload id must not be null or an empty string.
+  group: 8xxx
+- code: 8012
+  http_status: 400
+  http: 400 Bad Request
+  message: Part number is missing or invalid.
+  group: 8xxx
+- code: 8013
+  http_status: 400
+  http: 400 Bad Request
+  message: Invalid `init` request.
+  group: 8xxx
+- code: 8014
+  http_status: 400
+  http: 400 Bad Request
+  message: Invalid `part` report.
+  group: 8xxx
+- code: 8015
+  http_status: 400
+  http: 400 Bad Request
+  message: 'Invalid list of parts. Expecting an object with "parts": [ array of part reports ].'
+  group: 8xxx
+- code: 9001
+  http_status: 403
+  http: 403 Forbidden
+  message: Could not obtain read access on the service.
+  group: 9xxx
+- code: 9002
+  http_status: 403
+  http: 403 Forbidden
+  message: Could not obtain cross-write access on the service.
+  group: 9xxx
+- code: 9003
+  http_status: 403
+  http: 403 Forbidden
+  message: Insufficient privileges to access the requested project.
+  group: 9xxx
+- code: 9004
+  http_status: 403
+  http: 403 Forbidden
+  message: Insufficient privileges to access the requested file.
+  group: 9xxx
+- code: 9005
+  http_status: 403
+  http: 403 Forbidden
+  message: Insufficient privileges to access the requested job.
+  group: 9xxx
+- code: 9006
+  http_status: 403
+  http: 403 Forbidden
+  message: Requested file cannot be exported.
+  group: 9xxx
+- code: 9007
+  http_status: 404
+  http: 404 Not Found
+  message: Requested volume does not exist.
+  group: 9xxx
+- code: 9008
+  http_status: 404
+  http: 404 Not Found
+  message: Requested job does not exist.
+  group: 9xxx
+- code: 9009
+  http_status: 404
+  http: 404 Not Found
+  message: Requested file does not exist.
+  group: 9xxx
+- code: 9010
+  http_status: 409
+  http: 409 Conflict
+  message: Requested volume name already exists.
+  group: 9xxx
+- code: 9011
+  http_status: 400
+  http: 400 Bad Request
+  message: Invalid request syntax. Check the documentation.
+  group: 9xxx
+- code: 9012
+  http_status: 400
+  http: 400 Bad Request
+  message: Requested project does not exist.
+  group: 9xxx
+- code: 9013
+  http_status: 400
+  http: 400 Bad Request
+  message: Volume name must not be null or an empty string.
+  group: 9xxx
+- code: 9014
+  http_status: 400
+  http: 400 Bad Request
+  message: Volume name must consist of up to 32 English letters, numbers and underscores.
+  group: 9xxx
+- code: 9015
+  http_status: 400
+  http: 400 Bad Request
+  message: '"access_mode" must be provided (either "RO" or "RW").'
+  group: 9xxx
+- code: 9016
+  http_status: 400
+  http: 400 Bad Request
+  message: '"service" object must be provided.'
+  group: 9xxx
+- code: 9017
+  http_status: 400
+  http: 400 Bad Request
+  message: '"service" object is invalid. Check the documentation.'
+  group: 9xxx
+- code: 9018
+  http_status: 400
+  http: 400 Bad Request
+  message: Cannot infer file name and none given.
+  group: 9xxx
+- code: 9019
+  http_status: 400
+  http: 400 Bad Request
+  message: '"service" object is invalid. Check the documentation.'
+  group: 9xxx
+- code: 9020
+  http_status: 403
+  http: 403 Forbidden
+  message: Insufficient privileges to access the requested volume.
+  group: 9xxx
+- code: 9021
+  http_status: 400
+  http: 400 Bad Request
+  message: Invalid time format. Check the documentation.
+  group: 9xxx
+- code: 9022
+  http_status: 400
+  http: 400 Bad Request
+  message: Invalid canned ACL (`aws_canned_acl`) selected. Check the documentation.
+  group: 9xxx
+- code: 9023
+  http_status: 400
+  http: 400 Bad Request
+  message: Invalid server-side encryption (`sse_algorithm`) selected. Check the documentation.
+  group: 9xxx
+- code: 9024
+  http_status: 400
+  http: 400 Bad Request
+  message: Invalid S3 storage class (`aws_storage_class`) selected. Check the documentation.
+  group: 9xxx
+- code: 9025
+  http_status: 400
+  http: 400 Bad Request
+  message: Invalid private key (`private_key`) given. Check the documentation.
+  group: 9xxx
+- code: 9026
+  http_status: 403
+  http: 403 Forbidden
+  message: The volume is not configured for writing access (`access mode` is not set to `RW`).
+  group: 9xxx
+- code: 9027
+  http_status: 403
+  http: 403 Forbidden
+  message: Exporting files across different cloud services is not yet supported.
+  group: 9xxx
+- code: 9028
+  http_status: 400
+  http: 400 Bad Request
+  message: Invalid access configuration given. Check the documentation.
+  group: 9xxx
+- code: 9029
+  http_status: 400
+  http: 400 Bad Request
+  message: Unrecognized google credential type.
+  group: 9xxx
+- code: 9030
+  http_status: 400
+  http: 400 Bad Request
+  message: Volume name must consist of no more than 32 alphanumeric characters, that can be separated with single underscores
+    only.
+  group: 9xxx
+- code: 9031
+  http_status: 400
+  http: 400 Bad Request
+  message: Unrecognized azure credential type.
+  group: 9xxx
+- code: 9034
+  http_status: 400
+  http: 400 Bad Request
+  message: Unrecognized s3 credential type.
+  group: 9xxx
+- code: 9038
+  http_status: 403
+  http: 403 Forbidden
+  message: This environment only supports RO buckets of type 'OSS'
+  group: 9xxx
+- code: 9039
+  http_status: 403
+  http: 403 Forbidden
+  message: This environment only supports RO buckets of type 'Azure'
+  group: 9xxx
+- code: 9040
+  http_status: 403
+  http: 403 Forbidden
+  message: GCP over EC2 authentication is not allowed
+  group: 9xxx
+- code: 9057
+  http_status: 403
+  http: 403 Forbidden
+  message: This environment only supports `RO` buckets of type `GCS`.
+  group: 9xxx
+- code: 9058
+  http_status: 403
+  http: 403 Forbidden
+  message: This environment only supports `RO` buckets of type `S3`.
+  group: 9xxx
+- code: 9069
+  http_status: 409
+  http: 409 Conflict
+  message: Volume inactive
+  group: 9xxx
+- code: 9072
+  http_status: 400
+  http: 400 Bad Request
+  message: File path ending with slash is not valid.
+  group: 9xxx
+- code: 9100
+  http_status: 503
+  http: 503 Service Unavailable
+  message: There was an error communicating with the service.
+  group: 9xxx
+- code: 9101
+  http_status: 403
+  http: 403 Forbidden
+  message: The volume is not configured for writing (`access mode` is not set to `RW`).
+  group: 9xxx
+- code: 9102
+  http_status: 403
+  http: 403 Forbidden
+  message: Insufficient privileges to access the requested project
+  group: 9xxx
+- code: 9103
+  http_status: 403
+  http: 403 Forbidden
+  message: Insufficient privileges to access the requested item. See the documentation.
+  group: 9xxx
+- code: 9104
+  http_status: 404
+  http: 404 Not found.
+  message: Requested volume does not exist.
+  group: 9xxx
+- code: 9105
+  http_status: 404
+  http: 404 Not Found
+  message: Item not found on the volume.
+  group: 9xxx
+- code: 9106
+  http_status: 404
+  http: 404 Not Found
+  message: Requested file does not exist.
+  group: 9xxx
+- code: 9107
+  http_status: 409
+  http: 409 Conflict
+  message: Location on volume already contains a file.
+  group: 9xxx
+- code: 9108
+  http_status: 409
+  http: 409 Conflict
+  message: Requested file already exists.
+  group: 9xxx
+- code: 9109
+  http_status: 404
+  http: 404 Not Found
+  message: Requested file does not exist or not accessible.
+  group: 9xxx
+- code: 9200
+  http_status: 404
+  http: 404 Not Found
+  message: Requested cloud storage bucket does not exist. Check if the bucket name is correct.
+  group: 9xxx
+- code: 9201
+  http_status: 403
+  http: 403 Forbidden
+  message: Provided access key is not valid.
+  group: 9xxx
+- code: 9202
+  http_status: 403
+  http: 403 Forbidden
+  message: Provided secret key is not valid.
+  group: 9xxx
+- code: 9203
+  http_status: 403
+  http: 403 Forbidden
+  message: Provided IAM role is not valid or not properly configured. Check [IAM role setup instructions](https://docs.sevenbridges.com/page/amazon-web-services-simple-storage-service-aws-s3-volumes#set-up-an-iam-role).
+    Learn more about [AWS IAM roles](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html).
+  group: 9xxx
+- code: 9204
+  http_status: 403
+  http: 403 Forbidden
+  message: The provided IAM user/role does not have permissions to LIST the bucket. The policy attached to the IAM user/role
+    should have the `s3:ListBucket` permission over `arn:aws:s3:::{bucket_name}`. See [an example of the policy](https://docs.sevenbridges.com/docs/amazon-web-services-simple-storage-service-aws-s3-volumes#create-a-custom-iam-policy).
+    Learn more about [AWS S3 bucket permissions](https://docs.aws.amazon.com/config/latest/developerguide/s3-bucket-policy.html).
+  group: 9xxx
+- code: 9205
+  http_status: 403
+  http: 403 Forbidden
+  message: The provided IAM user/role does not have permissions to GET object from the provided bucket. The policy attached
+    to the IAM user/role should have the `s3:GetObject` permission over `arn:aws:s3:::{bucket_name}/{prefix}/*`. See [an example
+    of the policy](https://docs.sevenbridges.com/docs/amazon-web-services-simple-storage-service-aws-s3-volumes#create-a-custom-iam-policy).
+    Learn more about [AWS S3 bucket permissions](https://docs.aws.amazon.com/config/latest/developerguide/s3-bucket-policy.html).
+  group: 9xxx
+- code: 9206
+  http_status: 403
+  http: 403 Forbidden
+  message: The provided IAM user/role does not have permissions to PUT object to the provided bucket. The policy attached
+    to the IAM user/role should have `s3:PutObject` and `s3:PutObjectAcl` permissions over `arn:aws:s3:::{bucket_name}/{prefix}/*`.
+    See [an example of the policy](https://docs.sevenbridges.com/docs/amazon-web-services-simple-storage-service-aws-s3-volumes#create-a-custom-iam-policy).
+    Learn more about [AWS S3 bucket permissions](https://docs.aws.amazon.com/config/latest/developerguide/s3-bucket-policy.html).
+  group: 9xxx
+- code: 9207
+  http_status: 403
+  http: 403 Forbidden
+  message: The provided IAM user/role does not have permissions to GET OBJECT ACL from the provided bucket. The policy attached
+    to the IAM user/role should have the `s3:GetObjectAcl` permission over `arn:aws:s3:::{bucket_name}/{prefix}/*`. See [an
+    example of the policy](https://docs.sevenbridges.com/docs/amazon-web-services-simple-storage-service-aws-s3-volumes#create-a-custom-iam-policy).
+    Learn more about [AWS S3 bucket permissions](https://docs.aws.amazon.com/config/latest/developerguide/s3-bucket-policy.html).
+  group: 9xxx
+- code: 9208
+  http_status: 403
+  http: 403 Forbidden
+  message: The provided IAM user/role does not have permissions to GET object from the Seven Bridges bucket. The policy attached
+    to the IAM user/role should have the `s3:GetObject` permission over Seven Bridges buckets. See [an example of the policy](https://docs.sevenbridges.com/docs/amazon-web-services-simple-storage-service-aws-s3-volumes#create-a-custom-iam-policy).
+    Learn more about [AWS S3 bucket permissions](https://docs.aws.amazon.com/config/latest/developerguide/s3-bucket-policy.html).
+  group: 9xxx
+- code: 9209
+  http_status: 403
+  http: 403 Forbidden
+  message: Cannot attach RW volume in the provided bucket region.
+  group: 9xxx
+- code: 10101
+  http_status: 400
+  http: 400 Bad Request
+  message: Manifest file is not a valid .csv file.
+  group: 10xxx
+- code: 10102
+  http_status: 400
+  http: 400 Bad Request
+  message: Invalid manifest file header row format.
+  group: 10xxx
+- code: 10105
+  http_status: 400
+  http: 400 Bad Request
+  message: Manifest file contains too many rows.
+  group: 10xxx
+- code: 10110
+  http_status: 400
+  http: 400 Bad Request
+  message: Failed to submit manifest file.
+  group: 10xxx
+- code: 10208
+  http_status: 403
+  http: 403 Forbidden
+  message: Invalid or missing session ID.
+  group: 10xxx
+- code: 10210
+  http_status: 403
+  http: 403 Forbidden
+  message: Insufficient privileges on destination.
+  group: 10xxx
+- code: 10211
+  http_status: 404
+  http: 404 Not found
+  message: Job with provided id not found.
+  group: 10xxx
+- code: 10212
+  http_status: 405
+  http: 405 Method not allowed
+  message: Resource not found.
+  group: 10xxx
+- code: 10213
+  http_status: 404
+  http: 404 Not found
+  message: Destination path not found.
+  group: 10xxx
+- code: 10214
+  http_status: 405
+  http: 405 Method not allowed
+  message: The requested resource does not support wanted http method.
+  group: 10xxx
+- code: 10215
+  http_status: 503
+  http: 503 Service Unavavailable
+  message: External resource unavailable.
+  group: 10xxx
+- code: 10216
+  http_status: 409
+  http: 409 Conflict
+  message: Job is already hidden.
+  group: 10xxx
+- code: 10217
+  http_status: 422
+  http: 422 Unprocessable entity
+  message: Unprocessable json error.
+  group: 10xxx
+- code: 10218
+  http_status: 422
+  http: 422 Unprocessable entity
+  message: Unprocessable json - end of file.
+  group: 10xxx
+- code: 10220
+  http_status: 503
+  http: 503 Service Unavavailable
+  message: Unexpected error occurred.
+  group: 10xxx
+- code: 10221
+  http_status: 403
+  http: 403 Forbidden
+  message: Insufficient privileges to access the requested destination.
+  group: 10xxx
+- code: 10222
+  http_status: 404
+  http: 404 Not found
+  message: Requested folder does not exist.
+  group: 10xxx
+- code: 10223
+  http_status: 409
+  http: 409 Conflict
+  message: Requested file already exists.
+  group: 10xxx
+- code: 10224
+  http_status: 409
+  http: 409 Conflict
+  message: Requested folder already exists.
+  group: 10xxx
+- code: 10225
+  http_status: 404
+  http: 404 Not found
+  message: Submitted source does not exist.
+  group: 10xxx
+- code: 10226
+  http_status: 403
+  http: 403 Forbidden
+  message: Insufficient privileges to access the requested source.
+  group: 10xxx
+- code: 10227
+  http_status: 400
+  http: 400 Bad Request
+  message: Destination path must be a folder.
+  group: 10xxx
+- code: 10228
+  http_status: 400
+  http: 400 Bad Request
+  message: Destination for source is missing.
+  group: 10xxx
+- code: 10229
+  http_status: 400
+  http: 400 Bad Request
+  message: Cannot copy to parent directory.
+  group: 10xxx
+- code: 10230
+  http_status: 400
+  http: 400 Bad Request
+  message: Sources cannot be empty or null.
+  group: 10xxx
+- code: 10231
+  http_status: 400
+  http: 400 Bad Request
+  message: There are duplicate sources.
+  group: 10xxx
+- code: 10232
+  http_status: 400
+  http: 400 Bad Request
+  message: Invalid request syntax. Check the documentation.
+  group: 10xxx
+- code: 10233
+  http_status: 400
+  http: 400 Bad Request
+  message: Provide full paths instead of file IDs.
+  group: 10xxx
+- code: 10234
+  http_status: 400
+  http: 400 Bad Request
+  message: List of paths for query deleting state is empty.
+  group: 10xxx
+- code: 10235
+  http_status: 400
+  http: 400 Bad Request
+  message: Invalid file name.
+  group: 10xxx
+- code: 10236
+  http_status: 400
+  http: 400 Bad Request
+  message: Invalid folder name.
+  group: 10xxx
+- code: 10246
+  http_status: 400
+  http: 400 Bad Request
+  message: Invalid file import uri.
+  group: 10xxx
+- code: 10248
+  http_status: 400
+  http: 400 Bad Request
+  message: Invalid metadata.
+  group: 10xxx
+- code: 10276
+  http_status: 400
+  http: 400 Bad Request
+  message: Malformed DRS bundle.
+  group: 10xxx
+- code: 10277
+  http_status: 400
+  http: 400 Bad Request
+  message: Empty bundle name.
+  group: 10xxx
+- code: 10278
+  http_status: 400
+  http: 400 Bad Request
+  message: Malformed DRS blob.
+  group: 10xxx
+- code: 10371
+  http_status: 429
+  http: 429 Too Many Requests
+  message: Rate limit exceeded.
+  group: 10xxx
+- code: 10372
+  http_status: 409
+  http: 409 Conflict
+  message: Conflict while importing file or bundle.
+  group: 10xxx
+- code: 13000
+  http_status: 503
+  http: 503 Service Unavailable
+  message: Search service is currently unavailable.
+  group: 13xxx
+- code: 13001
+  http_status: 403
+  http: 403 Forbidden
+  message: Insufficient privileges to access the requested file.
+  group: 13xxx
+- code: 13002
+  http_status: 404
+  http: 404 Not Found
+  message: Requested file does not exist.
+  group: 13xxx
+- code: 13003
+  http_status: 409
+  http: 409 Conflict
+  message: Requested file already exists.
+  group: 13xxx
+- code: 13004
+  http_status: 503
+  http: 503 Service Unavailable
+  message: Consistency has been violated, please retry.
+  group: 13xxx
+- code: 57000
+  http_status: 400
+  http: 400 Bad request
+  message: Provided continuation token is not formatted properly
+  group: 57xxx
+- code: 57001
+  http_status: 400
+  http: 400 Bad request
+  message: Provided continuation token is not valid
+  group: 57xxx
+- code: 57002
+  http_status: 400
+  http: 400 Bad request
+  message: Source location must be specified
+  group: 57xxx
+- code: 57003
+  http_status: 400
+  http: 400 Bad request
+  message: Destination location must be specified
+  group: 57xxx
+- code: 57004
+  http_status: 400
+  http: 400 Bad request
+  message: Naming strategy must be specified
+  group: 57xxx
+- code: 57005
+  http_status: 400
+  http: 400 Bad request
+  message: Found duplicate sources for the same destination
+  group: 57xxx
+- code: 57006
+  http_status: 400
+  http: 400 Bad request
+  message: Cycle detected (e.g. `copy ; copy `)
+  group: 57xxx
+- code: 57007
+  http_status: 400
+  http: 400 Bad request
+  message: Destination location must be undefined
+  group: 57xxx
+- code: 57008
+  http_status: 400
+  http: 400 Bad request
+  message: Found duplicate source locations
+  group: 57xxx
+- code: 57009
+  http_status: 400
+  http: 400 Bad request
+  message: Unable to copy folder to its parent
+  group: 57xxx
+- code: 57010
+  http_status: 400
+  http: 400 Bad request
+  message: Unable to copy folder to itself or to a subfolder
+  group: 57xxx
+- code: 57011
+  http_status: 400
+  http: 400 Bad request
+  message: Unable to move folder to its parent
+  group: 57xxx
+- code: 57012
+  http_status: 400
+  http: 400 Bad request
+  message: Unable to move folder to itself or to a subfolder
+  group: 57xxx
+- code: 57013
+  http_status: 400
+  http: 400 Bad request
+  message: Provided job origin is not valid
+  group: 57xxx
+- code: 57014
+  http_status: 400
+  http: 400 Bad request
+  message: Request must not be undefined
+  group: 57xxx
+- code: 57015
+  http_status: 400
+  http: 400 Bad request
+  message: Unspecified job type
+  group: 57xxx
+- code: 57016
+  http_status: 400
+  http: 400 Bad request
+  message: Cycle detected (e.g. `move ; move `)
+  group: 57xxx
+- code: 57017
+  http_status: 400
+  http: 400 Bad request
+  message: Destination must be a folder
+  group: 57xxx
+- code: 57018
+  http_status: 400
+  http: 400 Bad request
+  message: Invalid file name
+  group: 57xxx
+- code: 57019
+  http_status: 400
+  http: 400 Bad request
+  message: Invalid folder name
+  group: 57xxx
+- code: 57020
+  http_status: 400
+  http: 400 Bad request
+  message: Cannot copy project root
+  group: 57xxx
+- code: 57021
+  http_status: 400
+  http: 400 Bad request
+  message: Destination is not a folder
+  group: 57xxx
+- code: 57022
+  http_status: 400
+  http: 400 Bad request
+  message: Cannot move project root
+  group: 57xxx
+- code: 57023
+  http_status: 400
+  http: 400 Bad request
+  message: Job request object must not be undefined
+  group: 57xxx
+- code: 57024
+  http_status: 400
+  http: 400 Bad request
+  message: Job origin must be specified
+  group: 57xxx
+- code: 57025
+  http_status: 400
+  http: 400 Bad request
+  message: '"hidden" property must be specified'
+  group: 57xxx
+- code: 57026
+  http_status: 400
+  http: 400 Bad request
+  message: Incorrect job type
+  group: 57xxx
+- code: 57027
+  http_status: 400
+  http: 400 Bad request
+  message: Source path must not be blank
+  group: 57xxx
+- code: 57028
+  http_status: 400
+  http: 400 Bad request
+  message: Source id must be undefined
+  group: 57xxx
+- code: 57029
+  http_status: 400
+  http: 400 Bad request
+  message: Source query must be undefined
+  group: 57xxx
+- code: 57030
+  http_status: 400
+  http: 400 Bad request
+  message: Source id must not be blank
+  group: 57xxx
+- code: 57031
+  http_status: 400
+  http: 400 Bad request
+  message: Source path must be undefined
+  group: 57xxx
+- code: 57032
+  http_status: 400
+  http: 400 Bad request
+  message: Source query must not be blank
+  group: 57xxx
+- code: 57033
+  http_status: 400
+  http: 400 Bad request
+  message: Destination path must not be blank
+  group: 57xxx
+- code: 57034
+  http_status: 400
+  http: 400 Bad request
+  message: Destination id must be undefined
+  group: 57xxx
+- code: 57035
+  http_status: 400
+  http: 400 Bad request
+  message: Destination query must be undefined
+  group: 57xxx
+- code: 57036
+  http_status: 400
+  http: 400 Bad request
+  message: Destination id must not be blank
+  group: 57xxx
+- code: 57037
+  http_status: 400
+  http: 400 Bad request
+  message: Destination path must be undefined
+  group: 57xxx
+- code: 57038
+  http_status: 400
+  http: 400 Bad request
+  message: At least one request must be present
+  group: 57xxx
+- code: 57039
+  http_status: 404
+  http: 404 Not found
+  message: Unable to find job
+  group: 57xxx
+- code: 57040
+  http_status: 409
+  http: 409 Conflict
+  message: Unable to abort job due to job state conflict
+  group: 57xxx
+- code: 57429
+  http_status: 400
+  http: 400 Bad request
+  message: Bad request
+  group: 57xxx
+- code: 57430
+  http_status: 401
+  http: 401 Unauthorized
+  message: Unauthorized access
+  group: 57xxx
+- code: 57431
+  http_status: 403
+  http: 403 Access forbidden
+  message: Access forbidden
+  group: 57xxx
+- code: 57432
+  http_status: 404
+  http: 404 Not found
+  message: Resource not found
+  group: 57xxx
+- code: 57433
+  http_status: 409
+  http: 409 Conflict
+  message: Conflict occurred
+  group: 57xxx
+- code: 57434
+  http_status: 500
+  http: 500 Internal server error
+  message: Internal server error
+  group: 57xxx
+- code: 90000
+  http_status: 400
+  http: 400 Bad Request
+  message: Bad request.
+  group: 90xxx
+- code: 90001
+  http_status: 401
+  http: 401 Unauthorized
+  message: Unauthorized.
+  group: 90xxx
+- code: 90002
+  http_status: 403
+  http: 403 Forbidden
+  message: Forbidden.
+  group: 90xxx
+- code: 90003
+  http_status: 404
+  http: 404 Not Found
+  message: Not found.
+  group: 90xxx
+- code: 90004
+  http_status: 503
+  http: 503 Service Unavailable
+  message: Unexpected error occurred.
+  group: 90xxx
+- code: 90005
+  http_status: 503
+  http: 503 Service Unavailable
+  message: Service unavailable.
+  group: 90xxx
+- code: 90006
+  http_status: 405
+  http: 405 Method Not Allowed
+  message: Method not allowed.
+  group: 90xxx
+- code: 90007
+  http_status: 409
+  http: 409 Conflict
+  message: Conflict.
+  group: 90xxx
+- code: 90008
+  http_status: 415
+  http: 415 Unsupported Media Type
+  message: Unsupported Media Type.
+  group: 90xxx
+- code: 90009
+  http_status: 500
+  http: 500 Server Error
+  message: An error occurred during the decoding of the request content.
+  group: 90xxx
+- code: 90010
+  http_status: 501
+  http: 501 Not Implemented
+  message: Not implemented, COPY and DELETE bulk operations are available.
+  group: 90xxx
+- code: 90011
+  http_status: 400
+  http: 400 Bad Request
+  message: Import failed. Please review your import links and FTP/HTTP server credentials.
+  group: 90xxx

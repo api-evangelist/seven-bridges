@@ -1,0 +1,16 @@
+generated: '2026-08-27'
+method: searched
+probe: true
+source: https://www.sevenbridges.com/library/white-papers/compliance/
+url: https://www.sevenbridges.com/library/white-papers/compliance/
+certifications:
+- ISO 27001
+- HIPAA
+- GDPR
+evidence:
+- source: https://www.sevenbridges.com/library/white-papers/compliance/
+  keywords:
+  - iso 27001
+  - iso/iec 27001
+  - hipaa
+  - gdpr

@@ -1,0 +1,111 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the Seven Bridges Platform API
+  version: 1.0.0
+x-provenance:
+  generated: '2026-08-27'
+  method: generated
+  extends: openapi/seven-bridges-platform-openapi.json
+  source: >-
+    https://docs.sevenbridges.com/docs/the-api, https://docs.sevenbridges.com/docs/api-rate-limit,
+    https://docs.sevenbridges.com/reference/api-status-codes,
+    https://docs.sevenbridges.com/docs/get-your-authentication-token
+  note: >-
+    Non-destructive overlay of facts the provider publishes in prose but omits from the machine-readable
+    contract. The provider's OpenAPI is left untouched. Every value below is transcribed from a Seven Bridges
+    documentation page cited in `source`; nothing is invented. Applying it will not change the raw contract
+    score, which is computed from the original document.
+actions:
+- target: $.info
+  description: Add a real description, contact and licence-free terms link; the published info block carries only a title and "unknown" version.
+  update:
+    description: >-
+      Public REST API for the Seven Bridges Platform. Projects, project membership and permissions, files,
+      folders, file metadata and tags, multipart upload, cloud storage volumes with import and export jobs,
+      CWL and Nextflow apps and revisions, analysis task creation, execution, abort and rerun, billing groups,
+      invoices, cost breakdowns, rate limit status and advanced file search.
+    contact:
+      name: Seven Bridges Support
+      url: https://www.sevenbridges.com/contact/
+    termsOfService: https://www.sevenbridges.com/terms-of-service/
+- target: $
+  description: Add the documented AWS EU regional server; the published contract lists only the AWS US host.
+  update:
+    servers:
+    - url: https://api.sbgenomics.com/v2
+      description: Seven Bridges Platform, AWS US
+    - url: https://eu-api.sbgenomics.com/v2
+      description: Seven Bridges Platform, AWS EU
+    externalDocs:
+      description: Seven Bridges API overview
+      url: https://docs.sevenbridges.com/docs/the-api
+- target: $.components.securitySchemes
+  description: >-
+    Declare the documented authentication scheme. The ReadMe export ships an empty securitySchemes object even
+    though 82 of 91 operations carry an X-SBG-Auth-Token header parameter.
+  update:
+    sbgAuthToken:
+      type: apiKey
+      in: header
+      name: X-SBG-Auth-Token
+      description: >-
+        Per-user authentication token from the Platform developer dashboard
+        (https://igor.sbgenomics.com/developer#token). Required on every operation except GET /.
+- target: $
+  description: Apply the authentication scheme as the default security requirement.
+  update:
+    security:
+    - sbgAuthToken: []
+- target: $.paths['/'].get
+  description: GET / is the one documented anonymous operation.
+  update:
+    security: []
+- target: $.info
+  description: Record the documented rate limit as a machine-readable extension.
+  update:
+    x-rate-limit:
+      scope: per-token
+      limit: 1000
+      window: 5m
+      headers:
+      - X-RateLimit-Limit
+      - X-RateLimit-Remaining
+      - X-RateLimit-Reset
+      status_on_exhaustion: 429
+      docs: https://docs.sevenbridges.com/docs/api-rate-limit
+- target: $.info
+  description: Point at the published numeric error registry, which the contract does not reference.
+  update:
+    x-error-catalog:
+      format: vendor-numeric
+      count: 277
+      docs: https://docs.sevenbridges.com/reference/api-status-codes
+      artifact: errors/seven-bridges-error-codes.yml
+- target: $.info
+  description: Record the documented pagination and sparse-fieldset conventions.
+  update:
+    x-pagination:
+      style: limit-offset
+      limit_default: 50
+      limit_maximum: 100
+      total_header: X-Total-Matching-Query
+      link_relations:
+      - next
+      - prev
+    x-field-selection:
+      parameter: fields
+      negation_prefix: '!'
+      all_token: _all
+      nested: dotted-path
+- target: $.info
+  description: Record the domain standards the contract itself declares.
+  update:
+    x-domain-standards:
+    - id: cwl
+      name: Common Workflow Language
+      url: https://www.commonwl.org/
+      evidence: /apps/**/raw operations exchange raw CWL; platform error 7017 requires CWL tasks.
+    - id: nextflow
+      name: Nextflow
+      url: https://www.nextflow.io/
+      evidence: Nextflow app lifecycle documented on the Platform and packed with the first-party sbpack_nf tool.
