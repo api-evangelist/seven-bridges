@@ -12,6 +12,17 @@ description: >-
   Authentication is a per-user X-SBG-Auth-Token header, first-party Python and R client libraries and an
   `sb` command line interface are published, and the API is documented on a ReadMe developer hub that
   also serves an llms.txt index.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 image: https://www.sevenbridges.com/wp-content/uploads/2016/09/fb-image.png
 url: https://raw.githubusercontent.com/api-evangelist/seven-bridges/refs/heads/main/apis.yml
 x-type: company
