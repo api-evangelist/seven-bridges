@@ -1,0 +1,111 @@
+openapi: 3.2.0
+info:
+  title: Seven Bridges Platform Users API
+  version: unknown
+servers:
+- url: https://api.sbgenomics.com/v2
+security:
+- {}
+tags:
+- name: Users
+paths:
+  /users/{username}:
+    get:
+      summary: List user resources
+      description: ''
+      operationId: list-user-resources
+      parameters:
+      - name: username
+        in: path
+        description: Username of the user you are querying. You can currently view only your own user information.
+        schema:
+          type: string
+        required: true
+      - name: fields
+        in: query
+        description: Selector specifying a subset of fields to include in the response.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: X-SBG-Auth-Token
+        in: header
+        description: Your Platform [authentication token](doc:get-your-authentication-token). For security reasons, token will not be automatically populated in the generated code sample. Please replace `<your-token-here>` with your token before executing this call.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{\n    \"href\": \"https://api.sbgenomics.com/v2/users/rfranklin\",\n    \"username\": \"rfranklin\",\n    \"email\": \"rosalind.franklin@sbgenomics.com\",\n    \"first_name\": \"Rosalind\",\n    \"last_name\": \"Franklin\",\n    \"role\": \"MEMBER\",\n    \"tags\": [\n        {\n            \"tag\": \"automations\",\n            \"expires_at\": 2555971200000\n        },\n        {\n            \"tag\": \"beta-web-uploader\",\n            \"expires_at\": 2535545447000\n        }\n    ],\n    \"affiliation\": \"Seven Bridges Genomics\",\n    \"phone\": \"\",\n    \"address\": \"\",\n    \"city\": \"\",\n    \"state\": \"\",\n    \"country\": \"USA\",\n    \"zip_code\": \"\"\n}"
+              schema:
+                type: object
+                properties:
+                  href:
+                    type: string
+                    example: https://api.sbgenomics.com/v2/users/rfranklin
+                  username:
+                    type: string
+                    example: rfranklin
+                  email:
+                    type: string
+                    example: rosalind.franklin@sbgenomics.com
+                  first_name:
+                    type: string
+                    example: Rosalind
+                  last_name:
+                    type: string
+                    example: Franklin
+                  role:
+                    type: string
+                    example: MEMBER
+                  tags:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        tag:
+                          type: string
+                          example: automations
+                        expires_at:
+                          type: integer
+                          example: 2555971200000
+                          default: 0
+                  affiliation:
+                    type: string
+                    example: Seven Bridges Genomics
+                  phone:
+                    type: string
+                    example: ''
+                  address:
+                    type: string
+                    example: ''
+                  city:
+                    type: string
+                    example: ''
+                  state:
+                    type: string
+                    example: ''
+                  country:
+                    type: string
+                    example: USA
+                  zip_code:
+                    type: string
+                    example: ''
+      deprecated: false
+      x-readme:
+        code-samples:
+        - language: python
+          code: "from sevenbridges import Api\n\napi = Api(url='https://api.sbgenomics.com/v2',\n          token='3210a98c1db9318fa9d9273156740f74')\n\n# send GET request to SB API\nuser = api.users.get(user='RFranklin')\n\nprint(user.first_name, user.last_name, user.email)"
+        samples-languages:
+        - python
+      tags:
+      - Users
+x-readme:
+  headers:
+  - key: X-SBG-Auth-Token
+    value: <your-token-here>
+x-readme-fauxas: true

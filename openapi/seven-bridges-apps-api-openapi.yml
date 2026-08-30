@@ -1,0 +1,2136 @@
+openapi: 3.2.0
+info:
+  title: Seven Bridges Platform Apps API
+  version: unknown
+servers:
+- url: https://api.sbgenomics.com/v2
+security:
+- {}
+tags:
+- name: Apps
+paths:
+  /apps:
+    get:
+      summary: List all apps available to you
+      description: This call lists all the apps available to you.
+      operationId: list-all-apps-available-to-you
+      parameters:
+      - name: X-SBG-Auth-Token
+        in: header
+        description: Your Seven Bridges Platform [authentication token](doc:get-your-authentication-token).
+        required: true
+        schema:
+          type: string
+      - name: fields
+        in: query
+        description: Selector specifying a subset of fields to include in the response.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: project
+        in: query
+        description: Enter a project, in the form `{project_owner}/{project_short_name}` to restrict the results to apps from that project only.
+        schema:
+          type: string
+      - name: visibility
+        in: query
+        description: Set this to `public` to see all public apps on the Seven Bridges Platform.
+        schema:
+          type: string
+      - name: q
+        in: query
+        description: Enter one or more search terms to query apps using the `q` parameter. Learn more about querying above.
+        schema:
+          type: string
+      - name: id
+        in: query
+        description: Use this parameter to query apps based on their ID.
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: The maximum number of collection items to return for a single request. Minimum value is 1. The maximum value is 100 and the default value is 50. This is a pagination-specific attribute.
+        schema:
+          type: integer
+          format: int32
+          default: 50
+      - name: offset
+        in: query
+        description: The zero-based starting index in the entire collection of the first item to return. The default value is 0. This is a pagination-specific attribute.
+        schema:
+          type: integer
+          format: int32
+          default: 0
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{\n  \"href\": \"https://api.sbgenomics.com/v2/apps/\",\n  \"items\": [\n    {\n      \"href\": \"https://api.sbgenomics.com/v2/apps/RFranklin/my-project/workflow-9\",\n      \"id\": \"RFranklin/my-project/workflow-9\",\n      \"name\": \"workflow\"\n    },\n    {\n      \"href\": \"https://api.sbgenomics.com/v2/apps/RFranklin/my-project/fusion-transcript-detection-chimeras\",\n      \"id\": \"RFranklin/my-project/fusion-transcript-detection-chimeras\",\n      \"name\": \"fusion-transcript-detection-chimerascan\"\n    },\n    {\n      \"href\": \"https://api.sbgenomics.com/v2/apps/RFranklin/my-project/somatic-filters\",\n      \"id\": \"RFranklin/my-project/somatic-filters\",\n      \"name\": \"somaticsniper-filters\"\n    },\n    {\n      \"href\": \"https://api.sbgenomics.com/v2/apps/RFranklin/my-project/command-line-tool-3\",\n      \"id\": \"RFranklin/my-project/command-line-tool-3\",\n      \"name\": \"command-line-tool\"\n    },\n    {\n      \"href\": \"https://api.sbgenomics.com/v2/apps/RFranklin/my-project/delly2-workflow-test\",\n      \"id\": \"RFranklin/my-project/delly2-workflow-test\",\n      \"name\": \"delly2-workflow\"\n    }\n  ]\n}"
+              schema:
+                type: object
+                properties:
+                  href:
+                    type: string
+                    example: https://api.sbgenomics.com/v2/apps/
+                  items:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        href:
+                          type: string
+                          example: https://api.sbgenomics.com/v2/apps/RFranklin/my-project/workflow-9
+                        id:
+                          type: string
+                          example: RFranklin/my-project/workflow-9
+                        name:
+                          type: string
+                          example: workflow
+      deprecated: false
+      x-readme:
+        code-samples:
+        - language: python
+          code: "from sevenbridges import Api\n\napi = Api(url='https://api.sbgenomics.com/v2',\n          token='3210a98c1db9318fa9d9273156740f74')\n\n# send GET request to SB API\napps = api.apps.query()\n\nfor app in apps:\n    print(app.name, app.id)"
+        samples-languages:
+        - python
+      tags:
+      - Apps
+  /apps/{project_owner}/{project}/{app_short_name}:
+    get:
+      summary: Get details of an app
+      description: This call returns information about the specified app. The app should be one in a project that you can access; this could be an app that has been uploaded to the Seven Bridges Platform by a project member, or a publicly available app that has been copied to the project.
+      operationId: get-details-of-an-app
+      parameters:
+      - name: project_owner
+        in: path
+        description: If you are using [Enterprise](doc:about-the-enterprise-feature), use the name of the Division that owns the project in which the app is located; otherwise, enter the Platform username of the project owner.
+        schema:
+          type: string
+        required: true
+      - name: project
+        in: path
+        description: The name of the project in which the app is located.
+        schema:
+          type: string
+        required: true
+      - name: app_short_name
+        in: path
+        description: The short name of the app you are querying. Optionally, to get details of a specific revision of the app, use the `{app_short_name}/{revision_number}` format, for example `bamtools-index-2-4-0/1`
+        schema:
+          type: string
+        required: true
+      - name: fields
+        in: query
+        description: Selector specifying a subset of fields to include in the response.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: X-SBG-Auth-Token
+        in: header
+        description: Your Seven Bridges Platform [authentication token](doc:get-your-authentication-token).
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{\n    \"href\": \"https://api.sbgenomics.com/v2/apps/rfranklin/my-project/bamtools-index-2/0\",\n    \"id\": \"rfranklin/my-project/bamtools-index-2/0\",\n    \"project\": \"rfranklin/my-project\",\n    \"name\": \"BamTools Index\",\n    \"revision\": 0,\n    \"raw\": {\n        \"sbg:categories\": [\n            \"SAM/BAM-Processing\",\n            \"Indexing\"\n        ],\n        \"sbg:image_url\": null,\n        \"requirements\": [\n            {\n                \"class\": \"ExpressionEngineRequirement\",\n                \"id\": \"#cwl-js-engine\",\n                \"requirements\": [\n                    {\n                        \"class\": \"DockerRequirement\",\n                        \"dockerPull\": \"rabix/js-engine\"\n                    }\n                ]\n            }\n        ],\n        \"baseCommand\": [\n            {\n                \"class\": \"Expression\",\n                \"script\": \"{\\n  if ($job.inputs.input_bai_file){\\n \\treturn\\\"echo Skipping index step because BAI file is provided on the input.\\\"\\n  }\\n  else{\\n    return \\\"/opt/bamtools/bin/bamtools index\\\"\\n  }\\n}\",\n                \"engine\": \"#cwl-js-engine\"\n            }\n        ],\n        \"class\": \"CommandLineTool\",\n        \"sbg:cmdPreview\": \"/opt/bamtools/bin/bamtools index  -in input_bam.bam\",\n        \"sbg:homepage\": \"https://github.com/pezmaster31/bamtools/wiki\",\n        \"label\": \"BamTools Index\",\n        \"outputs\": [\n            {\n                \"description\": \"Output BAM file with index (BAI or BTI) file as a secondary file (not visible in the output list of the task).\",\n                \"type\": [\n                    \"null\",\n                    \"File\"\n                ],\n                \"id\": \"#output_bam_file\",\n                \"label\": \"Output BAM file\",\n                \"outputBinding\": {\n                    \"glob\": {\n                        \"class\": \"Expression\",\n                        \"script\": \"{\\n  if ($job.inputs.indexed_data === true){\\n\\treturn ''\\n  } else {\\n    return $job.inputs.input_bam_file.path.split(\\\"/\\\").pop()\\n  }\\n}\\n\\n\\n\",\n                        \"engine\": \"#cwl-js-engine\"\n                    },\n                    \"secondaryFiles\": [\n                        \".bai\",\n                        \".bti\"\n                    ],\n                    \"sbg:inheritMetadataFrom\": \"#input_bam_file\"\n                },\n                \"sbg:fileTypes\": \"BAM\"\n            },\n            {\n                \"description\": \"Generated index file (without the indexed data).\",\n                \"type\": [\n                    \"null\",\n                    \"File\"\n                ],\n                \"id\": \"#generated_index\",\n                \"label\": \"Generated index file\",\n                \"outputBinding\": {\n                    \"glob\": \"{*.bai,*.bti}\",\n                    \"sbg:inheritMetadataFrom\": \"#input_bam_file\"\n                },\n                \"sbg:fileTypes\": \"BAI,BTI\"\n            }\n        ],\n        \"cwlVersion\": \"sbg:draft-2\",\n        \"temporaryFailCodes\": [],\n        \"sbg:job\": {\n            \"inputs\": {\n                \"bti_format\": false,\n                \"indexed_data\": false,\n                \"input_bam_file\": {\n                    \"class\": \"File\",\n                    \"path\": \"input/input_bam.bam\",\n                    \"size\": 0,\n                    \"secondaryFiles\": []\n                }\n            },\n            \"allocatedResources\": {\n                \"mem\": 1000,\n                \"cpu\": 1\n            }\n        },\n        \"sbg:toolkitVersion\": \"2.4.0\",\n        \"arguments\": [\n            {\n                \"position\": 0,\n                \"separate\": true,\n                \"valueFrom\": {\n                    \"class\": \"Expression\",\n                    \"script\": \"{\\n  if (!(typeof $job.inputs.input_bai_file !== \\\"undefined\\\")){\\n    return \\\"-in \\\" + $job.inputs.input_bam_file.path.split('/').pop() \\n  }\\n}\",\n                    \"engine\": \"#cwl-js-engine\"\n                }\n            },\n            {\n                \"position\": 1,\n                \"separate\": true,\n                \"valueFrom\": {\n                    \"class\": \"Expression\",\n                    \"script\": \"{\\n  if (!(typeof $job.inputs.input_bai_file !== \\\"undefined\\\"))\\n    if ((typeof $job.inputs.bti_format !== \\\"undefined\\\") && ($job.inputs.bti_format))\\n    \\treturn \\\"-bti\\\"  \\n}\",\n                    \"engine\": \"#cwl-js-engine\"\n                }\n            }\n        ],\n        \"sbg:license\": \"The MIT License\",\n        \"hints\": [\n            {\n                \"dockerImageId\": \"f808163d4cd3\",\n                \"class\": \"DockerRequirement\",\n                \"dockerPull\": \"images.sbgenomics.com/markop/bamtools:2.4.0\"\n            },\n            {\n                \"value\": 1,\n                \"class\": \"sbg:CPURequirement\"\n            },\n            {\n                \"value\": 1000,\n                \"class\": \"sbg:MemRequirement\"\n            }\n        ],\n        \"sbg:links\": [\n            {\n                \"label\": \"Homepage\",\n                \"id\": \"https://github.com/pezmaster31/bamtools\"\n            },\n            {\n                \"label\": \"Wiki\",\n                \"id\": \"https://github.com/pezmaster31/bamtools/wiki\"\n            }\n        ],\n        \"stdout\": \"\",\n        \"description\": \"BamTools Index creates an index file (BAI or BTI) for a BAM file. If BAI file is present on the input the tool will skip indexing step and output BAM with provided BAI file.\\n\\n**Common issues:** Providing a BAI file on input will result in a pass-through without execution, even if a different index format is requested on the output (BTI instead of BAI).\",\n        \"sbg:toolkit\": \"BamTools\",\n        \"successCodes\": [],\n        \"inputs\": [\n            {\n                \"description\": \"The input BAM file.\",\n                \"type\": [\n                    \"File\"\n                ],\n                \"id\": \"#input_bam_file\",\n                \"sbg:stageInput\": \"link\",\n                \"label\": \"Input BAM file\",\n                \"sbg:category\": \"Input & Output\",\n                \"sbg:fileTypes\": \"BAM\"\n            },\n            {\n                \"type\": [\n                    \"null\",\n                    \"boolean\"\n                ],\n                \"label\": \"BTI format\",\n                \"id\": \"#bti_format\",\n                \"sbg:category\": \"Input & Output\",\n                \"description\": \"Create (non-standard) BamTools index file (*.BTI). Default behavior is to create standard BAM index (*.BAI).\"\n            },\n            {\n                \"description\": \"Input BAI(BAM index) file.\",\n                \"type\": [\n                    \"null\",\n                    \"File\"\n                ],\n                \"id\": \"#input_bai_file\",\n                \"sbg:stageInput\": \"link\",\n                \"label\": \"Input BAI(BAM index) file\",\n                \"sbg:category\": \"File input\",\n                \"sbg:fileTypes\": \"BAI\"\n            },\n            {\n                \"type\": [\n                    \"null\",\n                    \"boolean\"\n                ],\n                \"label\": \"Don't output indexed data file\",\n                \"id\": \"#indexed_data\",\n                \"sbg:category\": \"Input & Output\",\n                \"description\": \"Don't output indexed data file. The default value is [FALSE].\"\n            }\n        ],\n        \"stdin\": \"\",\n        \"sbg:toolAuthor\": \"Derek Barnett, Erik Garrison, Gabor Marth, and Michael Stromberg\",\n        \"$namespaces\": {\n            \"sbg\": \"https://sevenbridges.com\"\n        },\n        \"sbg:appVersion\": [\n            \"sbg:draft-2\"\n        ],\n        \"id\": \"https://api.sbgenomics.com/v2/apps/rfranklin/my-project/bamtools-index-2-4-0/0/raw/\",\n        \"sbg:id\": \"rfranklin/my-project/bamtools-index-2-4-0/0\",\n        \"sbg:revision\": 0,\n        \"sbg:revisionNotes\": \"Copy of admin/sbg-public-data/bamtools-index-2-4-0/30\",\n        \"sbg:modifiedOn\": 1584016152,\n        \"sbg:modifiedBy\": \"rfranklin\",\n        \"sbg:createdOn\": 1584016152,\n        \"sbg:createdBy\": \"rfranklin\",\n        \"sbg:project\": \"rfranklin/my-project\",\n        \"sbg:projectName\": \"My project\",\n        \"sbg:sbgMaintained\": false,\n        \"sbg:validationErrors\": [],\n        \"sbg:contributors\": [\n            \"rfranklin\"\n        ],\n        \"sbg:latestRevision\": 0,\n        \"sbg:revisionsInfo\": [\n            {\n                \"sbg:revision\": 0,\n                \"sbg:modifiedBy\": \"rfranklin\",\n                \"sbg:modifiedOn\": 1584016152,\n                \"sbg:revisionNotes\": \"Copy of admin/sbg-public-data/bamtools-index-2-4-0/30\"\n            }\n        ],\n        \"sbg:publisher\": \"sbg\",\n        \"sbg:content_hash\": null,\n        \"sbg:copyOf\": \"admin/sbg-public-data/bamtools-index-2-4-0/30\"\n    }\n}"
+              schema:
+                type: object
+                properties:
+                  href:
+                    type: string
+                    example: https://api.sbgenomics.com/v2/apps/rfranklin/my-project/bamtools-index-2/0
+                  id:
+                    type: string
+                    example: rfranklin/my-project/bamtools-index-2/0
+                  project:
+                    type: string
+                    example: rfranklin/my-project
+                  name:
+                    type: string
+                    example: BamTools Index
+                  revision:
+                    type: integer
+                    example: 0
+                    default: 0
+                  raw:
+                    type: object
+                    properties:
+                      sbg:categories:
+                        type: array
+                        items:
+                          type: string
+                          example: SAM/BAM-Processing
+                      sbg:image_url: {}
+                      requirements:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            class:
+                              type: string
+                              example: ExpressionEngineRequirement
+                            id:
+                              type: string
+                              example: '#cwl-js-engine'
+                            requirements:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  class:
+                                    type: string
+                                    example: DockerRequirement
+                                  dockerPull:
+                                    type: string
+                                    example: rabix/js-engine
+                      baseCommand:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            class:
+                              type: string
+                              example: Expression
+                            script:
+                              type: string
+                              example: "{\n  if ($job.inputs.input_bai_file){\n \treturn\"echo Skipping index step because BAI file is provided on the input.\"\n  }\n  else{\n    return \"/opt/bamtools/bin/bamtools index\"\n  }\n}"
+                            engine:
+                              type: string
+                              example: '#cwl-js-engine'
+                      class:
+                        type: string
+                        example: CommandLineTool
+                      sbg:cmdPreview:
+                        type: string
+                        example: /opt/bamtools/bin/bamtools index  -in input_bam.bam
+                      sbg:homepage:
+                        type: string
+                        example: https://github.com/pezmaster31/bamtools/wiki
+                      label:
+                        type: string
+                        example: BamTools Index
+                      outputs:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            description:
+                              type: string
+                              example: Output BAM file with index (BAI or BTI) file as a secondary file (not visible in the output list of the task).
+                            type:
+                              type: array
+                              items:
+                                type: string
+                                example: 'null'
+                            id:
+                              type: string
+                              example: '#output_bam_file'
+                            label:
+                              type: string
+                              example: Output BAM file
+                            outputBinding:
+                              type: object
+                              properties:
+                                glob:
+                                  type: object
+                                  properties:
+                                    class:
+                                      type: string
+                                      example: Expression
+                                    script:
+                                      type: string
+                                      example: "{\n  if ($job.inputs.indexed_data === true){\n\treturn ''\n  } else {\n    return $job.inputs.input_bam_file.path.split(\"/\").pop()\n  }\n}\n\n\n"
+                                    engine:
+                                      type: string
+                                      example: '#cwl-js-engine'
+                                secondaryFiles:
+                                  type: array
+                                  items:
+                                    type: string
+                                    example: .bai
+                                sbg:inheritMetadataFrom:
+                                  type: string
+                                  example: '#input_bam_file'
+                            sbg:fileTypes:
+                              type: string
+                              example: BAM
+                      cwlVersion:
+                        type: string
+                        example: sbg:draft-2
+                      temporaryFailCodes:
+                        type: array
+                      sbg:job:
+                        type: object
+                        properties:
+                          inputs:
+                            type: object
+                            properties:
+                              bti_format:
+                                type: boolean
+                                example: false
+                                default: true
+                              indexed_data:
+                                type: boolean
+                                example: false
+                                default: true
+                              input_bam_file:
+                                type: object
+                                properties:
+                                  class:
+                                    type: string
+                                    example: File
+                                  path:
+                                    type: string
+                                    example: input/input_bam.bam
+                                  size:
+                                    type: integer
+                                    example: 0
+                                    default: 0
+                                  secondaryFiles:
+                                    type: array
+                          allocatedResources:
+                            type: object
+                            properties:
+                              mem:
+                                type: integer
+                                example: 1000
+                                default: 0
+                              cpu:
+                                type: integer
+                                example: 1
+                                default: 0
+                      sbg:toolkitVersion:
+                        type: string
+                        example: 2.4.0
+                      arguments:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            position:
+                              type: integer
+                              example: 0
+                              default: 0
+                            separate:
+                              type: boolean
+                              example: true
+                              default: true
+                            valueFrom:
+                              type: object
+                              properties:
+                                class:
+                                  type: string
+                                  example: Expression
+                                script:
+                                  type: string
+                                  example: "{\n  if (!(typeof $job.inputs.input_bai_file !== \"undefined\")){\n    return \"-in \" + $job.inputs.input_bam_file.path.split('/').pop() \n  }\n}"
+                                engine:
+                                  type: string
+                                  example: '#cwl-js-engine'
+                      sbg:license:
+                        type: string
+                        example: The MIT License
+                      hints:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            dockerImageId:
+                              type: string
+                              example: f808163d4cd3
+                            class:
+                              type: string
+                              example: DockerRequirement
+                            dockerPull:
+                              type: string
+                              example: images.sbgenomics.com/markop/bamtools:2.4.0
+                      sbg:links:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            label:
+                              type: string
+                              example: Homepage
+                            id:
+                              type: string
+                              example: https://github.com/pezmaster31/bamtools
+                      stdout:
+                        type: string
+                        example: ''
+                      description:
+                        type: string
+                        example: 'BamTools Index creates an index file (BAI or BTI) for a BAM file. If BAI file is present on the input the tool will skip indexing step and output BAM with provided BAI file.
+
+
+                          **Common issues:** Providing a BAI file on input will result in a pass-through without execution, even if a different index format is requested on the output (BTI instead of BAI).'
+                      sbg:toolkit:
+                        type: string
+                        example: BamTools
+                      successCodes:
+                        type: array
+                      inputs:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            description:
+                              type: string
+                              example: The input BAM file.
+                            type:
+                              type: array
+                              items:
+                                type: string
+                                example: File
+                            id:
+                              type: string
+                              example: '#input_bam_file'
+                            sbg:stageInput:
+                              type: string
+                              example: link
+                            label:
+                              type: string
+                              example: Input BAM file
+                            sbg:category:
+                              type: string
+                              example: Input & Output
+                            sbg:fileTypes:
+                              type: string
+                              example: BAM
+                      stdin:
+                        type: string
+                        example: ''
+                      sbg:toolAuthor:
+                        type: string
+                        example: Derek Barnett, Erik Garrison, Gabor Marth, and Michael Stromberg
+                      $namespaces:
+                        type: object
+                        properties:
+                          sbg:
+                            type: string
+                            example: https://sevenbridges.com
+                      sbg:appVersion:
+                        type: array
+                        items:
+                          type: string
+                          example: sbg:draft-2
+                      id:
+                        type: string
+                        example: https://api.sbgenomics.com/v2/apps/rfranklin/my-project/bamtools-index-2-4-0/0/raw/
+                      sbg:id:
+                        type: string
+                        example: rfranklin/my-project/bamtools-index-2-4-0/0
+                      sbg:revision:
+                        type: integer
+                        example: 0
+                        default: 0
+                      sbg:revisionNotes:
+                        type: string
+                        example: Copy of admin/sbg-public-data/bamtools-index-2-4-0/30
+                      sbg:modifiedOn:
+                        type: integer
+                        example: 1584016152
+                        default: 0
+                      sbg:modifiedBy:
+                        type: string
+                        example: rfranklin
+                      sbg:createdOn:
+                        type: integer
+                        example: 1584016152
+                        default: 0
+                      sbg:createdBy:
+                        type: string
+                        example: rfranklin
+                      sbg:project:
+                        type: string
+                        example: rfranklin/my-project
+                      sbg:projectName:
+                        type: string
+                        example: My project
+                      sbg:sbgMaintained:
+                        type: boolean
+                        example: false
+                        default: true
+                      sbg:validationErrors:
+                        type: array
+                      sbg:contributors:
+                        type: array
+                        items:
+                          type: string
+                          example: rfranklin
+                      sbg:latestRevision:
+                        type: integer
+                        example: 0
+                        default: 0
+                      sbg:revisionsInfo:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            sbg:revision:
+                              type: integer
+                              example: 0
+                              default: 0
+                            sbg:modifiedBy:
+                              type: string
+                              example: rfranklin
+                            sbg:modifiedOn:
+                              type: integer
+                              example: 1584016152
+                              default: 0
+                            sbg:revisionNotes:
+                              type: string
+                              example: Copy of admin/sbg-public-data/bamtools-index-2-4-0/30
+                      sbg:publisher:
+                        type: string
+                        example: sbg
+                      sbg:content_hash: {}
+                      sbg:copyOf:
+                        type: string
+                        example: admin/sbg-public-data/bamtools-index-2-4-0/30
+      deprecated: false
+      x-readme:
+        code-samples:
+        - language: python
+          code: "from sevenbridges import Api\n\napi = Api(url='https://api.sbgenomics.com/v2',\n          token='3210a98c1db9318fa9d9273156740f74')\n\n# send GET request to SB API\napp = api.apps.get(id='rfranklin/my-project/bamtools-index-2')\n\nprint(app.name, app.revision)"
+        samples-languages:
+        - python
+      tags:
+      - Apps
+  /apps/{app_id}/actions/sync:
+    post:
+      summary: Synchronize a copied app with its parent app
+      description: This call synchronizes a copied app with the source app from which it has been copied. For example, when **FASTQC** is copied from public apps to a project and updates are made to **FASTQC** in the public apps gallery (there are new revisions), this action fetches all revisions and revision notes from the updated parent app and applies them to your copied app. Once this has been done, the copied app is updated to the latest revision and includes the complete revision history of its parent app, following the logic of the `git pull` command.
+      operationId: synchronize-a-copied-app-with-its-parent-app
+      parameters:
+      - name: X-SBG-Auth-Token
+        in: header
+        description: Your Seven Bridges Platform [authentication token](doc:get-your-authentication-token).
+        required: true
+        schema:
+          type: string
+      - name: fields
+        in: query
+        description: Selector specifying a subset of fields to include in the response.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: app_id
+        in: path
+        description: The ID of the app you want to update. It should reference the project owner, the project that your app is copied to, and the app's short name (containing no non-alphanumeric characters or spaces).
+        schema:
+          type: string
+        required: true
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{\n  \"href\": \"https://api.sbgenomics.com/v2/apps/rfranklin/test-project/bamtools-index-2/1\",\n  \"id\": \"rfranklin/test-project/bamtools-index-2/1\",\n  \"project\": \"rfranklin/test-project\",\n  \"name\": \"BamTools Index\",\n  \"revision\": 1,\n  \"raw\": {\n    \"sbg:sbgMaintained\": false,\n    \"requirements\": [\n      {\n        \"class\": \"ExpressionEngineRequirement\",\n        \"id\": \"#cwl-js-engine\",\n        \"requirements\": [\n          {\n            \"class\": \"DockerRequirement\",\n            \"dockerPull\": \"rabix/js-engine\"\n          }\n        ]\n      }\n    ],\n    \"sbg:modifiedOn\": 1494849814,\n    \"outputs\": [\n      {\n        \"label\": \"Output BAM file\",\n        \"sbg:fileTypes\": \"BAM\",\n        \"description\": \"Output BAM file with index (BAI or BTI) file as a secondary file (not visible in the output list of the task).\",\n        \"id\": \"#output_bam_file\",\n        \"type\": [\n          \"null\",\n          \"File\"\n        ],\n        \"outputBinding\": {\n          \"glob\": {\n            \"class\": \"Expression\",\n            \"engine\": \"#cwl-js-engine\",\n            \"script\": \"{\\n  if ($job.inputs.indexed_data === true){\\n\\treturn ''\\n  } else {\\n    return $job.inputs.input_bam_file.path.split(\\\"/\\\").pop()\\n  }\\n}\\n\\n\\n\"\n          },\n          \"secondaryFiles\": [\n            \".bai\",\n            \".bti\"\n          ],\n          \"sbg:inheritMetadataFrom\": \"#input_bam_file\"\n        }\n      },\n      {\n        \"label\": \"Generated Index File\",\n        \"sbg:fileTypes\": \"BAI,BTI\",\n        \"description\": \"Generated index file (without the indexed data).\",\n        \"id\": \"#generated_index\",\n        \"type\": [\n          \"null\",\n          \"File\"\n        ],\n        \"outputBinding\": {\n          \"glob\": \"{*.bai,*.bti}\",\n          \"sbg:inheritMetadataFrom\": \"#input_bam_file\"\n        }\n      }\n    ],\n    \"sbg:toolAuthor\": \"Derek Barnett, Erik Garrison, Gabor Marth, and Michael Stromberg\",\n    \"sbg:revisionsInfo\": [\n      {\n        \"sbg:modifiedOn\": 1494849680,\n        \"sbg:modifiedBy\": \"rfranklin\",\n        \"sbg:revision\": 0,\n        \"sbg:revisionNotes\": \"Copy of rfranklin/bam-test/bamtools-index-2/0\"\n      },\n      {\n        \"sbg:modifiedOn\": 1494849814,\n        \"sbg:modifiedBy\": \"rfranklin\",\n        \"sbg:revision\": 1,\n        \"sbg:revisionNotes\": \"Modified output description.\"\n      }\n    ],\n    \"sbg:categories\": [\n      \"SAM/BAM-Processing\",\n      \"Indexing\"\n    ],\n    \"sbg:modifiedBy\": \"rfranklin\",\n    \"sbg:image_url\": null,\n    \"sbg:appVersion\": [\n      \"sbg:draft-2\"\n    ],\n    \"sbg:createdBy\": \"rfranklin\",\n    \"sbg:copyOf\": \"rfranklin/bam-test/bamtools-index-2/1\",\n    \"stdout\": \"\",\n    \"sbg:latestRevision\": 1,\n    \"temporaryFailCodes\": [],\n    \"sbg:job\": {\n      \"inputs\": {\n        \"bti_format\": false,\n        \"input_bam_file\": {\n          \"class\": \"File\",\n          \"size\": 0,\n          \"secondaryFiles\": [],\n          \"path\": \"input/input_bam.bam\"\n        },\n        \"indexed_data\": false\n      },\n      \"allocatedResources\": {\n        \"cpu\": 1,\n        \"mem\": 1000\n      }\n    },\n    \"successCodes\": [],\n    \"sbg:links\": [\n      {\n        \"label\": \"Homepage\",\n        \"id\": \"https://github.com/pezmaster31/bamtools\"\n      },\n      {\n        \"label\": \"Wiki\",\n        \"id\": \"https://github.com/pezmaster31/bamtools/wiki\"\n      }\n    ],\n    \"sbg:revisionNotes\": \"Modified output description.\",\n    \"label\": \"BamTools Index\",\n    \"cwlVersion\": \"sbg:draft-2\",\n    \"sbg:homepage\": \"https://github.com/pezmaster31/bamtools/wiki\",\n    \"sbg:cmdPreview\": \"/opt/bamtools/bin/bamtools index  -in input_bam.bam\",\n    \"stdin\": \"\",\n    \"sbg:id\": \"rfranklin/test-project/bamtools-index-2/1\",\n    \"hints\": [\n      {\n        \"class\": \"DockerRequirement\",\n        \"dockerPull\": \"images.sbgenomics.com/rfranklin/bamtools:2.4.0\",\n        \"dockerImageId\": \"f808163d4cd3\"\n      },\n      {\n        \"class\": \"sbg:CPURequirement\",\n        \"value\": 1\n      },\n      {\n        \"class\": \"sbg:MemRequirement\",\n        \"value\": 1000\n      }\n    ],\n    \"sbg:toolkitVersion\": \"2.4.0\",\n    \"sbg:license\": \"The MIT License\",\n    \"sbg:toolkit\": \"BamTools\",\n    \"sbg:validationErrors\": [],\n    \"class\": \"CommandLineTool\",\n    \"inputs\": [\n      {\n        \"sbg:category\": \"Input & Output\",\n        \"label\": \"Input BAM file\",\n        \"sbg:fileTypes\": \"BAM\",\n        \"id\": \"#input_bam_file\",\n        \"description\": \"The input BAM file.\",\n        \"type\": [\n          \"File\"\n        ],\n        \"sbg:stageInput\": \"link\"\n      },\n      {\n        \"sbg:category\": \"Input & Output\",\n        \"description\": \"Create (non-standard) BamTools index file (*.BTI). Default behavior is to create standard BAM index (*.BAI).\",\n        \"type\": [\n          \"null\",\n          \"boolean\"\n        ],\n        \"label\": \"BTI format\",\n        \"id\": \"#bti_format\"\n      },\n      {\n        \"sbg:category\": \"File input\",\n        \"label\": \"Input BAI(BAM index) file\",\n        \"sbg:fileTypes\": \"BAI\",\n        \"id\": \"#input_bai_file\",\n        \"description\": \"Input BAI(BAM index) file.\",\n        \"type\": [\n          \"null\",\n          \"File\"\n        ],\n        \"sbg:stageInput\": \"link\"\n      },\n      {\n        \"sbg:category\": \"Input & Output\",\n        \"description\": \"Don't output indexed data file. The default value is [FALSE].\",\n        \"type\": [\n          \"null\",\n          \"boolean\"\n        ],\n        \"label\": \"Don't output indexed data file\",\n        \"id\": \"#indexed_data\"\n      }\n    ],\n    \"sbg:createdOn\": 1494849680,\n    \"arguments\": [\n      {\n        \"valueFrom\": {\n          \"class\": \"Expression\",\n          \"engine\": \"#cwl-js-engine\",\n          \"script\": \"{\\n  if (!(typeof $job.inputs.input_bai_file !== \\\"undefined\\\")){\\n    return \\\"-in \\\" + $job.inputs.input_bam_file.path.split('/').pop() \\n  }\\n}\"\n        },\n        \"position\": 0,\n        \"separate\": true\n      },\n      {\n        \"valueFrom\": {\n          \"class\": \"Expression\",\n          \"engine\": \"#cwl-js-engine\",\n          \"script\": \"{\\n  if (!(typeof $job.inputs.input_bai_file !== \\\"undefined\\\"))\\n    if ((typeof $job.inputs.bti_format !== \\\"undefined\\\") && ($job.inputs.bti_format))\\n    \\treturn \\\"-bti\\\"  \\n}\"\n        },\n        \"position\": 1,\n        \"separate\": true\n      }\n    ],\n    \"description\": \"BamTools Index creates an index file (BAI or BTI) for a BAM file. If BAI file is present on the input the tool will skip indexing step and output BAM with provided BAI file.\\n\\n**Common issues:** Providing a BAI file on input will result in a pass-through without execution, even if a different index format is requested on the output (BTI instead of BAI).\",\n    \"sbg:contributors\": [\n      \"rfranklin\"\n    ],\n    \"id\": \"https://api.sbgenomics.com/v2/apps/rfranklin/test-project/bamtools-index-2/1/raw/\",\n    \"baseCommand\": [\n      {\n        \"class\": \"Expression\",\n        \"engine\": \"#cwl-js-engine\",\n        \"script\": \"{\\n  if ($job.inputs.input_bai_file){\\n \\treturn\\\"echo Skipping index step because BAI file is provided on the input.\\\"\\n  }\\n  else{\\n    return \\\"/opt/bamtools/bin/bamtools index\\\"\\n  }\\n}\"\n      }\n    ],\n    \"sbg:projectName\": \"Test Project\",\n    \"sbg:project\": \"rfranklin/test-project\",\n    \"sbg:revision\": 1\n  }\n}"
+              schema:
+                type: object
+                properties:
+                  href:
+                    type: string
+                    example: https://api.sbgenomics.com/v2/apps/rfranklin/test-project/bamtools-index-2/1
+                  id:
+                    type: string
+                    example: rfranklin/test-project/bamtools-index-2/1
+                  project:
+                    type: string
+                    example: rfranklin/test-project
+                  name:
+                    type: string
+                    example: BamTools Index
+                  revision:
+                    type: integer
+                    example: 1
+                    default: 0
+                  raw:
+                    type: object
+                    properties:
+                      sbg:sbgMaintained:
+                        type: boolean
+                        example: false
+                        default: true
+                      requirements:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            class:
+                              type: string
+                              example: ExpressionEngineRequirement
+                            id:
+                              type: string
+                              example: '#cwl-js-engine'
+                            requirements:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  class:
+                                    type: string
+                                    example: DockerRequirement
+                                  dockerPull:
+                                    type: string
+                                    example: rabix/js-engine
+                      sbg:modifiedOn:
+                        type: integer
+                        example: 1494849814
+                        default: 0
+                      outputs:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            label:
+                              type: string
+                              example: Output BAM file
+                            sbg:fileTypes:
+                              type: string
+                              example: BAM
+                            description:
+                              type: string
+                              example: Output BAM file with index (BAI or BTI) file as a secondary file (not visible in the output list of the task).
+                            id:
+                              type: string
+                              example: '#output_bam_file'
+                            type:
+                              type: array
+                              items:
+                                type: string
+                                example: 'null'
+                            outputBinding:
+                              type: object
+                              properties:
+                                glob:
+                                  type: object
+                                  properties:
+                                    class:
+                                      type: string
+                                      example: Expression
+                                    engine:
+                                      type: string
+                                      example: '#cwl-js-engine'
+                                    script:
+                                      type: string
+                                      example: "{\n  if ($job.inputs.indexed_data === true){\n\treturn ''\n  } else {\n    return $job.inputs.input_bam_file.path.split(\"/\").pop()\n  }\n}\n\n\n"
+                                secondaryFiles:
+                                  type: array
+                                  items:
+                                    type: string
+                                    example: .bai
+                                sbg:inheritMetadataFrom:
+                                  type: string
+                                  example: '#input_bam_file'
+                      sbg:toolAuthor:
+                        type: string
+                        example: Derek Barnett, Erik Garrison, Gabor Marth, and Michael Stromberg
+                      sbg:revisionsInfo:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            sbg:modifiedOn:
+                              type: integer
+                              example: 1494849680
+                              default: 0
+                            sbg:modifiedBy:
+                              type: string
+                              example: rfranklin
+                            sbg:revision:
+                              type: integer
+                              example: 0
+                              default: 0
+                            sbg:revisionNotes:
+                              type: string
+                              example: Copy of rfranklin/bam-test/bamtools-index-2/0
+                      sbg:categories:
+                        type: array
+                        items:
+                          type: string
+                          example: SAM/BAM-Processing
+                      sbg:modifiedBy:
+                        type: string
+                        example: rfranklin
+                      sbg:image_url: {}
+                      sbg:appVersion:
+                        type: array
+                        items:
+                          type: string
+                          example: sbg:draft-2
+                      sbg:createdBy:
+                        type: string
+                        example: rfranklin
+                      sbg:copyOf:
+                        type: string
+                        example: rfranklin/bam-test/bamtools-index-2/1
+                      stdout:
+                        type: string
+                        example: ''
+                      sbg:latestRevision:
+                        type: integer
+                        example: 1
+                        default: 0
+                      temporaryFailCodes:
+                        type: array
+                      sbg:job:
+                        type: object
+                        properties:
+                          inputs:
+                            type: object
+                            properties:
+                              bti_format:
+                                type: boolean
+                                example: false
+                                default: true
+                              input_bam_file:
+                                type: object
+                                properties:
+                                  class:
+                                    type: string
+                                    example: File
+                                  size:
+                                    type: integer
+                                    example: 0
+                                    default: 0
+                                  secondaryFiles:
+                                    type: array
+                                  path:
+                                    type: string
+                                    example: input/input_bam.bam
+                              indexed_data:
+                                type: boolean
+                                example: false
+                                default: true
+                          allocatedResources:
+                            type: object
+                            properties:
+                              cpu:
+                                type: integer
+                                example: 1
+                                default: 0
+                              mem:
+                                type: integer
+                                example: 1000
+                                default: 0
+                      successCodes:
+                        type: array
+                      sbg:links:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            label:
+                              type: string
+                              example: Homepage
+                            id:
+                              type: string
+                              example: https://github.com/pezmaster31/bamtools
+                      sbg:revisionNotes:
+                        type: string
+                        example: Modified output description.
+                      label:
+                        type: string
+                        example: BamTools Index
+                      cwlVersion:
+                        type: string
+                        example: sbg:draft-2
+                      sbg:homepage:
+                        type: string
+                        example: https://github.com/pezmaster31/bamtools/wiki
+                      sbg:cmdPreview:
+                        type: string
+                        example: /opt/bamtools/bin/bamtools index  -in input_bam.bam
+                      stdin:
+                        type: string
+                        example: ''
+                      sbg:id:
+                        type: string
+                        example: rfranklin/test-project/bamtools-index-2/1
+                      hints:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            class:
+                              type: string
+                              example: DockerRequirement
+                            dockerPull:
+                              type: string
+                              example: images.sbgenomics.com/rfranklin/bamtools:2.4.0
+                            dockerImageId:
+                              type: string
+                              example: f808163d4cd3
+                      sbg:toolkitVersion:
+                        type: string
+                        example: 2.4.0
+                      sbg:license:
+                        type: string
+                        example: The MIT License
+                      sbg:toolkit:
+                        type: string
+                        example: BamTools
+                      sbg:validationErrors:
+                        type: array
+                      class:
+                        type: string
+                        example: CommandLineTool
+                      inputs:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            sbg:category:
+                              type: string
+                              example: Input & Output
+                            label:
+                              type: string
+                              example: Input BAM file
+                            sbg:fileTypes:
+                              type: string
+                              example: BAM
+                            id:
+                              type: string
+                              example: '#input_bam_file'
+                            description:
+                              type: string
+                              example: The input BAM file.
+                            type:
+                              type: array
+                              items:
+                                type: string
+                                example: File
+                            sbg:stageInput:
+                              type: string
+                              example: link
+                      sbg:createdOn:
+                        type: integer
+                        example: 1494849680
+                        default: 0
+                      arguments:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            valueFrom:
+                              type: object
+                              properties:
+                                class:
+                                  type: string
+                                  example: Expression
+                                engine:
+                                  type: string
+                                  example: '#cwl-js-engine'
+                                script:
+                                  type: string
+                                  example: "{\n  if (!(typeof $job.inputs.input_bai_file !== \"undefined\")){\n    return \"-in \" + $job.inputs.input_bam_file.path.split('/').pop() \n  }\n}"
+                            position:
+                              type: integer
+                              example: 0
+                              default: 0
+                            separate:
+                              type: boolean
+                              example: true
+                              default: true
+                      description:
+                        type: string
+                        example: 'BamTools Index creates an index file (BAI or BTI) for a BAM file. If BAI file is present on the input the tool will skip indexing step and output BAM with provided BAI file.
+
+
+                          **Common issues:** Providing a BAI file on input will result in a pass-through without execution, even if a different index format is requested on the output (BTI instead of BAI).'
+                      sbg:contributors:
+                        type: array
+                        items:
+                          type: string
+                          example: rfranklin
+                      id:
+                        type: string
+                        example: https://api.sbgenomics.com/v2/apps/rfranklin/test-project/bamtools-index-2/1/raw/
+                      baseCommand:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            class:
+                              type: string
+                              example: Expression
+                            engine:
+                              type: string
+                              example: '#cwl-js-engine'
+                            script:
+                              type: string
+                              example: "{\n  if ($job.inputs.input_bai_file){\n \treturn\"echo Skipping index step because BAI file is provided on the input.\"\n  }\n  else{\n    return \"/opt/bamtools/bin/bamtools index\"\n  }\n}"
+                      sbg:projectName:
+                        type: string
+                        example: Test Project
+                      sbg:project:
+                        type: string
+                        example: rfranklin/test-project
+                      sbg:revision:
+                        type: integer
+                        example: 1
+                        default: 0
+      deprecated: false
+      x-readme:
+        code-samples:
+        - language: python
+          code: "from sevenbridges import Api\n\napi = Api(url='https://api.sbgenomics.com/v2',\n          token='3210a98c1db9318fa9d9273156740f74')\n\napp = api.apps.get(id='rfranklin/test-project/bamtools-index-2')\n\n# send POST request to SB API\napp.sync()\n\nprint(app.revision)"
+        samples-languages:
+        - python
+      tags:
+      - Apps
+  /apps/{app_id}/{revision_number}:
+    get:
+      summary: Get details of an app revision
+      description: This call allows you to obtain a particular revision of a tool, which is not necessarily the most recent version.
+      operationId: get-details-of-an-app-revision
+      parameters:
+      - name: X-SBG-Auth-Token
+        in: header
+        description: Your Seven Bridges Platform [authentication token](doc:get-your-authentication-token).
+        required: true
+        schema:
+          type: string
+      - name: fields
+        in: query
+        description: Selector specifying a subset of fields to include in the response.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: app_id
+        in: path
+        description: The ID for the app you are querying. It can be obtained by making the call to [list all apps available to you](ref:list-all-apps-available-to-you).
+        schema:
+          type: string
+        required: true
+      - name: revision_number
+        in: path
+        description: The integer denoting the revision of the app.
+        schema:
+          type: string
+        required: true
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{\n    \"href\": \"https://api.sbgenomics.com/v2/apps/rfranklin/my-project/bamtools-index-2/0\",\n    \"id\": \"rfranklin/my-project/bamtools-index-2/0\",\n    \"project\": \"rfranklin/my-project\",\n    \"name\": \"BamTools Index\",\n    \"revision\": 0,\n    \"raw\": {\n        \"sbg:categories\": [\n            \"SAM/BAM-Processing\",\n            \"Indexing\"\n        ],\n        \"sbg:image_url\": null,\n        \"requirements\": [\n            {\n                \"class\": \"ExpressionEngineRequirement\",\n                \"id\": \"#cwl-js-engine\",\n                \"requirements\": [\n                    {\n                        \"class\": \"DockerRequirement\",\n                        \"dockerPull\": \"rabix/js-engine\"\n                    }\n                ]\n            }\n        ],\n        \"baseCommand\": [\n            {\n                \"class\": \"Expression\",\n                \"script\": \"{\\n  if ($job.inputs.input_bai_file){\\n \\treturn\\\"echo Skipping index step because BAI file is provided on the input.\\\"\\n  }\\n  else{\\n    return \\\"/opt/bamtools/bin/bamtools index\\\"\\n  }\\n}\",\n                \"engine\": \"#cwl-js-engine\"\n            }\n        ],\n        \"class\": \"CommandLineTool\",\n        \"sbg:cmdPreview\": \"/opt/bamtools/bin/bamtools index  -in input_bam.bam\",\n        \"sbg:homepage\": \"https://github.com/pezmaster31/bamtools/wiki\",\n        \"label\": \"BamTools Index\",\n        \"outputs\": [\n            {\n                \"description\": \"Output BAM file with index (BAI or BTI) file as a secondary file (not visible in the output list of the task).\",\n                \"type\": [\n                    \"null\",\n                    \"File\"\n                ],\n                \"id\": \"#output_bam_file\",\n                \"label\": \"Output BAM file\",\n                \"outputBinding\": {\n                    \"glob\": {\n                        \"class\": \"Expression\",\n                        \"script\": \"{\\n  if ($job.inputs.indexed_data === true){\\n\\treturn ''\\n  } else {\\n    return $job.inputs.input_bam_file.path.split(\\\"/\\\").pop()\\n  }\\n}\\n\\n\\n\",\n                        \"engine\": \"#cwl-js-engine\"\n                    },\n                    \"secondaryFiles\": [\n                        \".bai\",\n                        \".bti\"\n                    ],\n                    \"sbg:inheritMetadataFrom\": \"#input_bam_file\"\n                },\n                \"sbg:fileTypes\": \"BAM\"\n            },\n            {\n                \"description\": \"Generated index file (without the indexed data).\",\n                \"type\": [\n                    \"null\",\n                    \"File\"\n                ],\n                \"id\": \"#generated_index\",\n                \"label\": \"Generated index file\",\n                \"outputBinding\": {\n                    \"glob\": \"{*.bai,*.bti}\",\n                    \"sbg:inheritMetadataFrom\": \"#input_bam_file\"\n                },\n                \"sbg:fileTypes\": \"BAI,BTI\"\n            }\n        ],\n        \"cwlVersion\": \"sbg:draft-2\",\n        \"temporaryFailCodes\": [],\n        \"sbg:job\": {\n            \"inputs\": {\n                \"bti_format\": false,\n                \"indexed_data\": false,\n                \"input_bam_file\": {\n                    \"class\": \"File\",\n                    \"path\": \"input/input_bam.bam\",\n                    \"size\": 0,\n                    \"secondaryFiles\": []\n                }\n            },\n            \"allocatedResources\": {\n                \"mem\": 1000,\n                \"cpu\": 1\n            }\n        },\n        \"sbg:toolkitVersion\": \"2.4.0\",\n        \"arguments\": [\n            {\n                \"position\": 0,\n                \"separate\": true,\n                \"valueFrom\": {\n                    \"class\": \"Expression\",\n                    \"script\": \"{\\n  if (!(typeof $job.inputs.input_bai_file !== \\\"undefined\\\")){\\n    return \\\"-in \\\" + $job.inputs.input_bam_file.path.split('/').pop() \\n  }\\n}\",\n                    \"engine\": \"#cwl-js-engine\"\n                }\n            },\n            {\n                \"position\": 1,\n                \"separate\": true,\n                \"valueFrom\": {\n                    \"class\": \"Expression\",\n                    \"script\": \"{\\n  if (!(typeof $job.inputs.input_bai_file !== \\\"undefined\\\"))\\n    if ((typeof $job.inputs.bti_format !== \\\"undefined\\\") && ($job.inputs.bti_format))\\n    \\treturn \\\"-bti\\\"  \\n}\",\n                    \"engine\": \"#cwl-js-engine\"\n                }\n            }\n        ],\n        \"sbg:license\": \"The MIT License\",\n        \"hints\": [\n            {\n                \"dockerImageId\": \"f808163d4cd3\",\n                \"class\": \"DockerRequirement\",\n                \"dockerPull\": \"images.sbgenomics.com/rfranklin/bamtools:2.4.0\"\n            },\n            {\n                \"value\": 1,\n                \"class\": \"sbg:CPURequirement\"\n            },\n            {\n                \"value\": 1000,\n                \"class\": \"sbg:MemRequirement\"\n            }\n        ],\n        \"sbg:links\": [\n            {\n                \"label\": \"Homepage\",\n                \"id\": \"https://github.com/pezmaster31/bamtools\"\n            },\n            {\n                \"label\": \"Wiki\",\n                \"id\": \"https://github.com/pezmaster31/bamtools/wiki\"\n            }\n        ],\n        \"stdout\": \"\",\n        \"description\": \"BamTools Index creates an index file (BAI or BTI) for a BAM file. If BAI file is present on the input the tool will skip indexing step and output BAM with provided BAI file.\\n\\n**Common issues:** Providing a BAI file on input will result in a pass-through without execution, even if a different index format is requested on the output (BTI instead of BAI).\",\n        \"sbg:toolkit\": \"BamTools\",\n        \"successCodes\": [],\n        \"inputs\": [\n            {\n                \"description\": \"The input BAM file.\",\n                \"type\": [\n                    \"File\"\n                ],\n                \"id\": \"#input_bam_file\",\n                \"sbg:stageInput\": \"link\",\n                \"label\": \"Input BAM file\",\n                \"sbg:category\": \"Input & Output\",\n                \"sbg:fileTypes\": \"BAM\"\n            },\n            {\n                \"type\": [\n                    \"null\",\n                    \"boolean\"\n                ],\n                \"label\": \"BTI format\",\n                \"id\": \"#bti_format\",\n                \"sbg:category\": \"Input & Output\",\n                \"description\": \"Create (non-standard) BamTools index file (*.BTI). Default behavior is to create standard BAM index (*.BAI).\"\n            },\n            {\n                \"description\": \"Input BAI(BAM index) file.\",\n                \"type\": [\n                    \"null\",\n                    \"File\"\n                ],\n                \"id\": \"#input_bai_file\",\n                \"sbg:stageInput\": \"link\",\n                \"label\": \"Input BAI(BAM index) file\",\n                \"sbg:category\": \"File input\",\n                \"sbg:fileTypes\": \"BAI\"\n            },\n            {\n                \"type\": [\n                    \"null\",\n                    \"boolean\"\n                ],\n                \"label\": \"Don't output indexed data file\",\n                \"id\": \"#indexed_data\",\n                \"sbg:category\": \"Input & Output\",\n                \"description\": \"Don't output indexed data file. The default value is [FALSE].\"\n            }\n        ],\n        \"stdin\": \"\",\n        \"sbg:toolAuthor\": \"Derek Barnett, Erik Garrison, Gabor Marth, and Michael Stromberg\",\n        \"$namespaces\": {\n            \"sbg\": \"https://sevenbridges.com\"\n        },\n        \"sbg:appVersion\": [\n            \"sbg:draft-2\"\n        ],\n        \"id\": \"https://api.sbgenomics.com/v2/apps/rfranklin/my-project/bamtools-index-2/0/raw/\",\n        \"sbg:id\": \"rfranklin/my-project/bamtools-index-2/0\",\n        \"sbg:revision\": 0,\n        \"sbg:revisionNotes\": \"Copy of admin/sbg-public-data/bamtools-index-2/30\",\n        \"sbg:modifiedOn\": 1584016152,\n        \"sbg:modifiedBy\": \"rfranklin\",\n        \"sbg:createdOn\": 1584016152,\n        \"sbg:createdBy\": \"rfranklin\",\n        \"sbg:project\": \"rfranklin/my-project\",\n        \"sbg:projectName\": \"My project\",\n        \"sbg:sbgMaintained\": false,\n        \"sbg:validationErrors\": [],\n        \"sbg:contributors\": [\n            \"rfranklin\"\n        ],\n        \"sbg:latestRevision\": 0,\n        \"sbg:revisionsInfo\": [\n            {\n                \"sbg:revision\": 0,\n                \"sbg:modifiedBy\": \"rfranklin\",\n                \"sbg:modifiedOn\": 1584016152,\n                \"sbg:revisionNotes\": \"Copy of admin/sbg-public-data/bamtools-index-2/30\"\n            }\n        ],\n        \"sbg:publisher\": \"sbg\",\n        \"sbg:content_hash\": null,\n        \"sbg:copyOf\": \"admin/sbg-public-data/bamtools-index-2/30\"\n    }\n}"
+              schema:
+                type: object
+                properties:
+                  href:
+                    type: string
+                    example: https://api.sbgenomics.com/v2/apps/rfranklin/my-project/bamtools-index-2/0
+                  id:
+                    type: string
+                    example: rfranklin/my-project/bamtools-index-2/0
+                  project:
+                    type: string
+                    example: rfranklin/my-project
+                  name:
+                    type: string
+                    example: BamTools Index
+                  revision:
+                    type: integer
+                    example: 0
+                    default: 0
+                  raw:
+                    type: object
+                    properties:
+                      sbg:categories:
+                        type: array
+                        items:
+                          type: string
+                          example: SAM/BAM-Processing
+                      sbg:image_url: {}
+                      requirements:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            class:
+                              type: string
+                              example: ExpressionEngineRequirement
+                            id:
+                              type: string
+                              example: '#cwl-js-engine'
+                            requirements:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  class:
+                                    type: string
+                                    example: DockerRequirement
+                                  dockerPull:
+                                    type: string
+                                    example: rabix/js-engine
+                      baseCommand:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            class:
+                              type: string
+                              example: Expression
+                            script:
+                              type: string
+                              example: "{\n  if ($job.inputs.input_bai_file){\n \treturn\"echo Skipping index step because BAI file is provided on the input.\"\n  }\n  else{\n    return \"/opt/bamtools/bin/bamtools index\"\n  }\n}"
+                            engine:
+                              type: string
+                              example: '#cwl-js-engine'
+                      class:
+                        type: string
+                        example: CommandLineTool
+                      sbg:cmdPreview:
+                        type: string
+                        example: /opt/bamtools/bin/bamtools index  -in input_bam.bam
+                      sbg:homepage:
+                        type: string
+                        example: https://github.com/pezmaster31/bamtools/wiki
+                      label:
+                        type: string
+                        example: BamTools Index
+                      outputs:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            description:
+                              type: string
+                              example: Output BAM file with index (BAI or BTI) file as a secondary file (not visible in the output list of the task).
+                            type:
+                              type: array
+                              items:
+                                type: string
+                                example: 'null'
+                            id:
+                              type: string
+                              example: '#output_bam_file'
+                            label:
+                              type: string
+                              example: Output BAM file
+                            outputBinding:
+                              type: object
+                              properties:
+                                glob:
+                                  type: object
+                                  properties:
+                                    class:
+                                      type: string
+                                      example: Expression
+                                    script:
+                                      type: string
+                                      example: "{\n  if ($job.inputs.indexed_data === true){\n\treturn ''\n  } else {\n    return $job.inputs.input_bam_file.path.split(\"/\").pop()\n  }\n}\n\n\n"
+                                    engine:
+                                      type: string
+                                      example: '#cwl-js-engine'
+                                secondaryFiles:
+                                  type: array
+                                  items:
+                                    type: string
+                                    example: .bai
+                                sbg:inheritMetadataFrom:
+                                  type: string
+                                  example: '#input_bam_file'
+                            sbg:fileTypes:
+                              type: string
+                              example: BAM
+                      cwlVersion:
+                        type: string
+                        example: sbg:draft-2
+                      temporaryFailCodes:
+                        type: array
+                      sbg:job:
+                        type: object
+                        properties:
+                          inputs:
+                            type: object
+                            properties:
+                              bti_format:
+                                type: boolean
+                                example: false
+                                default: true
+                              indexed_data:
+                                type: boolean
+                                example: false
+                                default: true
+                              input_bam_file:
+                                type: object
+                                properties:
+                                  class:
+                                    type: string
+                                    example: File
+                                  path:
+                                    type: string
+                                    example: input/input_bam.bam
+                                  size:
+                                    type: integer
+                                    example: 0
+                                    default: 0
+                                  secondaryFiles:
+                                    type: array
+                          allocatedResources:
+                            type: object
+                            properties:
+                              mem:
+                                type: integer
+                                example: 1000
+                                default: 0
+                              cpu:
+                                type: integer
+                                example: 1
+                                default: 0
+                      sbg:toolkitVersion:
+                        type: string
+                        example: 2.4.0
+                      arguments:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            position:
+                              type: integer
+                              example: 0
+                              default: 0
+                            separate:
+                              type: boolean
+                              example: true
+                              default: true
+                            valueFrom:
+                              type: object
+                              properties:
+                                class:
+                                  type: string
+                                  example: Expression
+                                script:
+                                  type: string
+                                  example: "{\n  if (!(typeof $job.inputs.input_bai_file !== \"undefined\")){\n    return \"-in \" + $job.inputs.input_bam_file.path.split('/').pop() \n  }\n}"
+                                engine:
+                                  type: string
+                                  example: '#cwl-js-engine'
+                      sbg:license:
+                        type: string
+                        example: The MIT License
+                      hints:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            dockerImageId:
+                              type: string
+                              example: f808163d4cd3
+                            class:
+                              type: string
+                              example: DockerRequirement
+                            dockerPull:
+                              type: string
+                              example: images.sbgenomics.com/rfranklin/bamtools:2.4.0
+                      sbg:links:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            label:
+                              type: string
+                              example: Homepage
+                            id:
+                              type: string
+                              example: https://github.com/pezmaster31/bamtools
+                      stdout:
+                        type: string
+                        example: ''
+                      description:
+                        type: string
+                        example: 'BamTools Index creates an index file (BAI or BTI) for a BAM file. If BAI file is present on the input the tool will skip indexing step and output BAM with provided BAI file.
+
+
+                          **Common issues:** Providing a BAI file on input will result in a pass-through without execution, even if a different index format is requested on the output (BTI instead of BAI).'
+                      sbg:toolkit:
+                        type: string
+                        example: BamTools
+                      successCodes:
+                        type: array
+                      inputs:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            description:
+                              type: string
+                              example: The input BAM file.
+                            type:
+                              type: array
+                              items:
+                                type: string
+                                example: File
+                            id:
+                              type: string
+                              example: '#input_bam_file'
+                            sbg:stageInput:
+                              type: string
+                              example: link
+                            label:
+                              type: string
+                              example: Input BAM file
+                            sbg:category:
+                              type: string
+                              example: Input & Output
+                            sbg:fileTypes:
+                              type: string
+                              example: BAM
+                      stdin:
+                        type: string
+                        example: ''
+                      sbg:toolAuthor:
+                        type: string
+                        example: Derek Barnett, Erik Garrison, Gabor Marth, and Michael Stromberg
+                      $namespaces:
+                        type: object
+                        properties:
+                          sbg:
+                            type: string
+                            example: https://sevenbridges.com
+                      sbg:appVersion:
+                        type: array
+                        items:
+                          type: string
+                          example: sbg:draft-2
+                      id:
+                        type: string
+                        example: https://api.sbgenomics.com/v2/apps/rfranklin/my-project/bamtools-index-2/0/raw/
+                      sbg:id:
+                        type: string
+                        example: rfranklin/my-project/bamtools-index-2/0
+                      sbg:revision:
+                        type: integer
+                        example: 0
+                        default: 0
+                      sbg:revisionNotes:
+                        type: string
+                        example: Copy of admin/sbg-public-data/bamtools-index-2/30
+                      sbg:modifiedOn:
+                        type: integer
+                        example: 1584016152
+                        default: 0
+                      sbg:modifiedBy:
+                        type: string
+                        example: rfranklin
+                      sbg:createdOn:
+                        type: integer
+                        example: 1584016152
+                        default: 0
+                      sbg:createdBy:
+                        type: string
+                        example: rfranklin
+                      sbg:project:
+                        type: string
+                        example: rfranklin/my-project
+                      sbg:projectName:
+                        type: string
+                        example: My project
+                      sbg:sbgMaintained:
+                        type: boolean
+                        example: false
+                        default: true
+                      sbg:validationErrors:
+                        type: array
+                      sbg:contributors:
+                        type: array
+                        items:
+                          type: string
+                          example: rfranklin
+                      sbg:latestRevision:
+                        type: integer
+                        example: 0
+                        default: 0
+                      sbg:revisionsInfo:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            sbg:revision:
+                              type: integer
+                              example: 0
+                              default: 0
+                            sbg:modifiedBy:
+                              type: string
+                              example: rfranklin
+                            sbg:modifiedOn:
+                              type: integer
+                              example: 1584016152
+                              default: 0
+                            sbg:revisionNotes:
+                              type: string
+                              example: Copy of admin/sbg-public-data/bamtools-index-2/30
+                      sbg:publisher:
+                        type: string
+                        example: sbg
+                      sbg:content_hash: {}
+                      sbg:copyOf:
+                        type: string
+                        example: admin/sbg-public-data/bamtools-index-2/30
+      deprecated: false
+      x-readme:
+        code-samples:
+        - language: python
+          code: "from sevenbridges import Api\n\napi = Api(url='https://api.sbgenomics.com/v2',\n          token='3210a98c1db9318fa9d9273156740f74')\n\n# send GET request to SB API\napp = api.apps.get_revision(\n    id='rfranklin/my-project/bamtools-index-2',\n    revision=0\n)\n\nprint(app.name)"
+        samples-languages:
+        - python
+      tags:
+      - Apps
+  /apps/{project_owner}/{project}/{app_short_name}/{revision_number}/raw:
+    post:
+      summary: Add an app using raw CWL
+      description: This call allows you to add an app using raw CWL.
+      operationId: add-an-app-using-raw-cwl
+      parameters:
+      - name: X-SBG-Auth-Token
+        in: header
+        description: Your Seven Bridges Platform [authentication token](doc:get-your-authentication-token).
+        required: true
+        schema:
+          type: string
+      - name: fields
+        in: query
+        description: Selector specifying a subset of fields to include in the response.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: project_owner
+        in: path
+        description: If you are using [Enterprise](doc:about-the-enterprise-feature), use the name of the Division that owns the project in which you want to store the app; otherwise, enter the Platform username of the project owner.
+        schema:
+          type: string
+        required: true
+      - name: Content-Type
+        in: header
+        description: 'Depending on the type of file you are uploading: * `application/json` for a JSON file * `application/yaml` for a YAML file'
+        schema:
+          type: string
+      - name: project
+        in: path
+        description: The name of the project in which you want to store the app.
+        schema:
+          type: string
+        required: true
+      - name: app_short_name
+        in: path
+        description: A short name for the app (without any non-alphanumeric characters or spaces)
+        schema:
+          type: string
+        required: true
+      - name: revision_number
+        in: path
+        description: The app [revision (version)](doc:app-versions) number.
+        schema:
+          type: integer
+          format: int32
+        required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                RAW_BODY:
+                  type: string
+                  description: The body of the request should be a CWL app description saved as a JSON or YAML file. For a template of this description, try making the call to [get raw CWL for an app](ref:get-raw-cwl-for-an-app) about an app already in one of your projects.
+                  format: json
+      deprecated: false
+      x-readme:
+        code-samples:
+        - language: python
+          code: "from sevenbridges import Api\n\napi = Api(url='https://api.sbgenomics.com/v2',\n          token='3210a98c1db9318fa9d9273156740f74')\n\n# send POST request to SB API\nnew_app = api.apps.install_app(\n    id='RFranklin/my-project/my-app',\n    raw='... CWL JSON/YAML HERE ...'\n)\n\nprint(new_app.name, new_app.id)"
+        samples-languages:
+        - python
+      tags:
+      - Apps
+  /apps/{project_owner}/{project}/{app_short_name}/raw:
+    get:
+      summary: Get raw CWL for an app
+      description: "This call returns information about the specified app, as raw CWL. The call differs from the call to [ get details of an app](ref:get-details-of-an-app) by returning a JSON object that is the CWL. \n\nThe app should be one in a project that you can access. This could be an app that has been uploaded to the Seven Bridges Platform by a project member, or a publicly available app that has been copied to the project."
+      operationId: get-raw-cwl-for-an-app
+      parameters:
+      - name: project_owner
+        in: path
+        description: If you are using [Enterprise](doc:about-the-enterprise-feature), use the name of the Division that owns the project in which the app is located; otherwise, enter the Platform username of the project owner.
+        schema:
+          type: string
+        required: true
+      - name: fields
+        in: query
+        description: Selector specifying a subset of fields to include in the response.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: X-SBG-Auth-Token
+        in: header
+        description: Your Seven Bridges Platform [authentication token](doc:get-your-authentication-token).
+        required: true
+        schema:
+          type: string
+      - name: project
+        in: path
+        description: The name of the project in which the app is located.
+        schema:
+          type: string
+        required: true
+      - name: app_short_name
+        in: path
+        description: The short name of the app you are querying. Optionally, to get raw CWL of a specific revision of the app, use the `{app_short_name}/{revision_number}` format, for example `bamtools-index-2-4-0/1`
+        schema:
+          type: string
+        required: true
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{\n  \"successCodes\": [],\n  \"sbg:homepage\": \"https://github.com/pezmaster31/bamtools/wiki\",\n  \"sbg:validationErrors\": [],\n  \"sbg:sbgMaintained\": false,\n  \"temporaryFailCodes\": [],\n  \"requirements\": [],\n  \"sbg:latestRevision\": 0,\n  \"description\": \"BamTools Merge merges multiple BAM files into a single file.\",\n  \"sbg:job\": {\n    \"inputs\": {\n      \"region\": \"chr1\",\n      \"input_bam_files\": [\n        {\n          \"path\": \"1.bam\"\n        },\n        {\n          \"path\": \"2.bam\"\n        }\n      ]\n    },\n    \"allocatedResources\": {\n      \"cpu\": 1,\n      \"mem\": 1000\n    }\n  },\n  \"sbg:toolAuthor\": \"Derek Barnett, Erik Garrison, Gabor Marth, and Michael Stromberg\",\n  \"hints\": [\n    {\n      \"dockerImageId\": \"f808163d4cd3\",\n      \"class\": \"DockerRequirement\",\n      \"dockerPull\": \"images.sbgenomics.com/markop/bamtools:2.4.0\"\n    },\n    {\n      \"value\": 1,\n      \"class\": \"sbg:CPURequirement\"\n    },\n    {\n      \"value\": 1000,\n      \"class\": \"sbg:MemRequirement\"\n    }\n  ],\n  \"sbg:copyOf\": \"djordje_klisic/public-apps-by-seven-bridges/bamtools-merge-2-4-0/0\",\n  \"sbg:createdOn\": 1452181866,\n  \"arguments\": [\n    {\n      \"position\": 1,\n      \"prefix\": \"-out\",\n      \"separate\": true,\n      \"valueFrom\": \"merged.bam\"\n    }\n  ],\n  \"outputs\": [\n    {\n      \"sbg:fileTypes\": \"BAM\",\n      \"id\": \"#output_bam_file\",\n      \"outputBinding\": {\n        \"glob\": \"merged.bam\",\n        \"sbg:metadata\": {},\n        \"sbg:inheritMetadataFrom\": \"#input_bams\"\n      },\n      \"description\": \"Output BAM file.\",\n      \"type\": [\n        \"File\"\n      ],\n      \"label\": \"Output BAM file\"\n    }\n  ],\n  \"sbg:categories\": [\n    \"SAM/BAM-Processing\"\n  ],\n  \"sbg:contributors\": [\n    \"RFranklin\"\n  ],\n  \"sbg:links\": [\n    {\n      \"id\": \"https://github.com/pezmaster31/bamtools\",\n      \"label\": \"Homepage\"\n    },\n    {\n      \"id\": \"https://github.com/pezmaster31/bamtools/wiki\",\n      \"label\": \"Wiki\"\n    }\n  ],\n  \"stdout\": \"\",\n  \"stdin\": \"\",\n  \"sbg:project\": \"RFranklin/my-project\",\n  \"inputs\": [\n    {\n      \"sbg:fileTypes\": \"BAM\",\n      \"id\": \"#input_bam_files\",\n      \"inputBinding\": {\n        \"sbg:cmdInclude\": true,\n        \"prefix\": \"-in\",\n        \"separate\": true,\n        \"itemSeparator\": null,\n        \"position\": 0\n      },\n      \"description\": \"The input BAM files.\",\n      \"label\": \"Input BAM files\",\n      \"type\": [\n        {\n          \"type\": \"array\",\n          \"items\": \"File\"\n        }\n      ],\n      \"sbg:category\": \"Input & Output\"\n    },\n    {\n      \"id\": \"#region\",\n      \"inputBinding\": {\n        \"sbg:cmdInclude\": true,\n        \"position\": 2,\n        \"separate\": true,\n        \"prefix\": \"-region\"\n      },\n      \"description\": \"A region of interest (e.g. \\\"chr1:500..chr3:1500\\\"). See the documentation for more info.\",\n      \"label\": \"Region of interest\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ],\n      \"sbg:category\": \"Input & Output\"\n    }\n  ],\n  \"label\": \"BamTools Merge\",\n  \"sbg:createdBy\": \"RFranklin\",\n  \"baseCommand\": [\n    \"/opt/bamtools/bin/bamtools\",\n    \"merge\"\n  ],\n  \"sbg:toolkitVersion\": \"2.4.0\",\n  \"sbg:id\": \"RFranklin/my-project/bamtools-merge-2-4-0/0\",\n  \"sbg:license\": \"The MIT License\",\n  \"sbg:revision\": 0,\n  \"sbg:cmdPreview\": \"/opt/bamtools/bin/bamtools merge -in 1.bam -in 2.bam -out merged.bam -region chr1\",\n  \"sbg:modifiedOn\": 1452181866,\n  \"id\": \"https://api.sbgenomics.com/RFranklin/my-project/bamtools-merge-2-4-0/0/raw/\",\n  \"class\": \"CommandLineTool\",\n  \"sbg:modifiedBy\": \"RFranklin\",\n  \"sbg:revisionsInfo\": [\n    {\n      \"sbg:modifiedBy\": \"RFranklin\",\n      \"sbg:modifiedOn\": 1452181866,\n      \"sbg:revision\": 0\n    }\n  ],\n  \"sbg:toolkit\": \"BamTools\"\n}"
+              schema:
+                type: object
+                properties:
+                  successCodes:
+                    type: array
+                  sbg:homepage:
+                    type: string
+                    example: https://github.com/pezmaster31/bamtools/wiki
+                  sbg:validationErrors:
+                    type: array
+                  sbg:sbgMaintained:
+                    type: boolean
+                    example: false
+                    default: true
+                  temporaryFailCodes:
+                    type: array
+                  requirements:
+                    type: array
+                  sbg:latestRevision:
+                    type: integer
+                    example: 0
+                    default: 0
+                  description:
+                    type: string
+                    example: BamTools Merge merges multiple BAM files into a single file.
+                  sbg:job:
+                    type: object
+                    properties:
+                      inputs:
+                        type: object
+                        properties:
+                          region:
+                            type: string
+                            example: chr1
+                          input_bam_files:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                path:
+                                  type: string
+                                  example: 1.bam
+                      allocatedResources:
+                        type: object
+                        properties:
+                          cpu:
+                            type: integer
+                            example: 1
+                            default: 0
+                          mem:
+                            type: integer
+                            example: 1000
+                            default: 0
+                  sbg:toolAuthor:
+                    type: string
+                    example: Derek Barnett, Erik Garrison, Gabor Marth, and Michael Stromberg
+                  hints:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        dockerImageId:
+                          type: string
+                          example: f808163d4cd3
+                        class:
+                          type: string
+                          example: DockerRequirement
+                        dockerPull:
+                          type: string
+                          example: images.sbgenomics.com/markop/bamtools:2.4.0
+                  sbg:copyOf:
+                    type: string
+                    example: djordje_klisic/public-apps-by-seven-bridges/bamtools-merge-2-4-0/0
+                  sbg:createdOn:
+                    type: integer
+                    example: 1452181866
+                    default: 0
+                  arguments:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        position:
+                          type: integer
+                          example: 1
+                          default: 0
+                        prefix:
+                          type: string
+                          example: -out
+                        separate:
+                          type: boolean
+                          example: true
+                          default: true
+                        valueFrom:
+                          type: string
+                          example: merged.bam
+                  outputs:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        sbg:fileTypes:
+                          type: string
+                          example: BAM
+                        id:
+                          type: string
+                          example: '#output_bam_file'
+                        outputBinding:
+                          type: object
+                          properties:
+                            glob:
+                              type: string
+                              example: merged.bam
+                            sbg:metadata:
+                              type: object
+                              properties: {}
+                            sbg:inheritMetadataFrom:
+                              type: string
+                              example: '#input_bams'
+                        description:
+                          type: string
+                          example: Output BAM file.
+                        type:
+                          type: array
+                          items:
+                            type: string
+                            example: File
+                        label:
+                          type: string
+                          example: Output BAM file
+                  sbg:categories:
+                    type: array
+                    items:
+                      type: string
+                      example: SAM/BAM-Processing
+                  sbg:contributors:
+                    type: array
+                    items:
+                      type: string
+                      example: RFranklin
+                  sbg:links:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: https://github.com/pezmaster31/bamtools
+                        label:
+                          type: string
+                          example: Homepage
+                  stdout:
+                    type: string
+                    example: ''
+                  stdin:
+                    type: string
+                    example: ''
+                  sbg:project:
+                    type: string
+                    example: RFranklin/my-project
+                  inputs:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        sbg:fileTypes:
+                          type: string
+                          example: BAM
+                        id:
+                          type: string
+                          example: '#input_bam_files'
+                        inputBinding:
+                          type: object
+                          properties:
+                            sbg:cmdInclude:
+                              type: boolean
+                              example: true
+                              default: true
+                            prefix:
+                              type: string
+                              example: -in
+                            separate:
+                              type: boolean
+                              example: true
+                              default: true
+                            itemSeparator: {}
+                            position:
+                              type: integer
+                              example: 0
+                              default: 0
+                        description:
+                          type: string
+                          example: The input BAM files.
+                        label:
+                          type: string
+                          example: Input BAM files
+                        type:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              type:
+                                type: string
+                                example: array
+                              items:
+                                type: string
+                                example: File
+                        sbg:category:
+                          type: string
+                          example: Input & Output
+                  label:
+                    type: string
+                    example: BamTools Merge
+                  sbg:createdBy:
+                    type: string
+                    example: RFranklin
+                  baseCommand:
+                    type: array
+                    items:
+                      type: string
+                      example: /opt/bamtools/bin/bamtools
+                  sbg:toolkitVersion:
+                    type: string
+                    example: 2.4.0
+                  sbg:id:
+                    type: string
+                    example: RFranklin/my-project/bamtools-merge-2-4-0/0
+                  sbg:license:
+                    type: string
+                    example: The MIT License
+                  sbg:revision:
+                    type: integer
+                    example: 0
+                    default: 0
+                  sbg:cmdPreview:
+                    type: string
+                    example: /opt/bamtools/bin/bamtools merge -in 1.bam -in 2.bam -out merged.bam -region chr1
+                  sbg:modifiedOn:
+                    type: integer
+                    example: 1452181866
+                    default: 0
+                  id:
+                    type: string
+                    example: https://api.sbgenomics.com/RFranklin/my-project/bamtools-merge-2-4-0/0/raw/
+                  class:
+                    type: string
+                    example: CommandLineTool
+                  sbg:modifiedBy:
+                    type: string
+                    example: RFranklin
+                  sbg:revisionsInfo:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        sbg:modifiedBy:
+                          type: string
+                          example: RFranklin
+                        sbg:modifiedOn:
+                          type: integer
+                          example: 1452181866
+                          default: 0
+                        sbg:revision:
+                          type: integer
+                          example: 0
+                          default: 0
+                  sbg:toolkit:
+                    type: string
+                    example: BamTools
+      deprecated: false
+      x-readme:
+        code-samples:
+        - language: python
+          code: "from sevenbridges import Api\n\napi = Api(url='https://api.sbgenomics.com/v2',\n          token='1e43fEXampLEa5523dfd14exAMPle3e5')\n\n# send GET request to SB API\napp = api.apps.get(id='RFranklin/my-project/bamtools-merge-2-4-0')\n\nprint(app.raw)"
+        samples-languages:
+        - python
+      tags:
+      - Apps
+  /apps/{project_owner}/{project}/{app_short_name}/actions/copy:
+    post:
+      summary: Copy an app
+      description: This call copies the specified app to the specified project. The app should be one in a project that you can access; this could be an app that has been uploaded to the Seven Bridges Platform by a project member, or a publicly available app that has been copied to the project.
+      operationId: copy-an-app
+      parameters:
+      - name: X-SBG-Auth-Token
+        in: header
+        description: Your Seven Bridges Platform [authentication token](doc:get-your-authentication-token).
+        required: true
+        schema:
+          type: string
+      - name: fields
+        in: query
+        description: Selector specifying a subset of fields to include in the response.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: project_owner
+        in: path
+        description: If you are using [Enterprise](doc:about-the-enterprise-feature), use the name of the Division that owns the project in which the app is located; otherwise, enter the Platform username of the project owner.
+        schema:
+          type: string
+        required: true
+      - name: project
+        in: path
+        description: The name of the project in which the app is located.
+        schema:
+          type: string
+        required: true
+      - name: app_short_name
+        in: path
+        description: The short name of the app you are copying. Optionally, to copy a specific revision of the app, use the `{app_short_name}/{revision_number}` format, for example `rfranklin/my-project/bamtools-index-2-4-0/1`
+        schema:
+          type: string
+        required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - project
+              properties:
+                project:
+                  type: string
+                  description: The name of the project you want to copy the app to.
+                name:
+                  type: string
+                  description: The new name the app will have in the target project. If its name will not change, omit this key.
+                strategy:
+                  type: string
+                  description: 'The method for copying the app   `clone` : copy all revisions; get updates from the same app as the copied app (default) `direct`: copy latest revision; get updates from the copied app `clone_direct`: copy all revisions; get updates from the copied app `transient`: copy latest revision; get updates from the same app as the copied app'
+                  default: clone
+      deprecated: false
+      x-readme:
+        code-samples:
+        - language: python
+          code: "from sevenbridges import Api, AppCopyStrategy\n\napi = Api(url='https://api.sbgenomics.com/v2',\n          token='3210a98c1db9318fa9d9273156740f74')\n\napp = api.apps.get(id='RFranklin/my-project/bamtools-merge-2-4/0')\n\n# send POST request to SB API\nnew_app = app.copy(\n    project='rfranklin/my-project',\n    name='new app name',\n    strategy=AppCopyStrategy.DIRECT\n)\n\nprint(new_app.name, new_app.id)"
+        samples-languages:
+        - python
+      tags:
+      - Apps
+  /apps/{app_id}/{revision_number}/raw:
+    post:
+      summary: Add an app revision using raw CWL
+      description: This call creates a new revision for an existing app. It adds a new CWL app description, and stores it as the named revision for the specified app. The revision number must not already exist and should follow the sequence of previously created revisions.
+      operationId: add-an-app-revision-using-raw-cwl
+      parameters:
+      - name: X-SBG-Auth-Token
+        in: header
+        description: Your Seven Bridges Platform [authentication token](doc:get-your-authentication-token).
+        required: true
+        schema:
+          type: string
+      - name: fields
+        in: query
+        description: Selector specifying a subset of fields to include in the response.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: app_id
+        in: path
+        description: The ID for the app you are you want to upload. It should reference the project that you want the app to be added to, a short name for the app (containing no non-alphanumeric characters or spaces), and a revision number.
+        schema:
+          type: string
+        required: true
+      - name: Content-Type
+        in: header
+        description: 'Depending on the type of file you are uploading: * `application/json` for a JSON file * `application/yaml` for a YAML file'
+        schema:
+          type: string
+      - name: revision_number
+        in: path
+        description: The number of the app revision you want to addd.
+        schema:
+          type: integer
+          format: int32
+        required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                RAW_BODY:
+                  type: string
+                  description: The body of the request should be a CWL app description, saved as a JSON file. For a template of this description, try making the call to [get raw app information](ref:get-raw-cwl-for-an-app) about an app already in one of your projects.
+                  format: json
+      deprecated: false
+      x-readme:
+        code-samples:
+        - language: python
+          code: "from sevenbridges import Api\n\napi = Api(url='https://api.sbgenomics.com/v2',\n          token='3210a98c1db9318fa9d9273156740f74')\n\n# send POST request to SB API\nnew_app_revision = api.apps.create_revision(\n    id='RFranklin/my-project/my-app',\n    revision=4,\n    raw='... CWL JSON/YAML HERE ...'\n)\n\nprint(new_app_revision.name, new_app_revision.id, new_app_revision.revision)"
+        samples-languages:
+        - python
+      tags:
+      - Apps
+    get:
+      summary: Get raw CWL for an app revision
+      description: 'This call returns information about the specified app revision, as raw CWL. The call differs from the call to [get details of an app revision](ref:get-details-of-an-app-revision) by returning a JSON object that is the CWL description of the app revision.
+
+
+        The app should be in a project that you can access. This could be an app that has been uploaded to the Seven Bridges Platform by a project member, or a publicly available app that has been copied to the project.'
+      operationId: get-raw-cwl-for-an-app-revision
+      parameters:
+      - name: app_id
+        in: path
+        description: The ID for the app you are querying. It can be obtained by making the call to [list all apps available to you](ref:list-all-apps-available-to-you).
+        schema:
+          type: string
+        required: true
+      - name: fields
+        in: query
+        description: Selector specifying a subset of fields to include in the response.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: X-SBG-Auth-Token
+        in: header
+        description: Your Seven Bridges Platform [authentication token](doc:get-your-authentication-token).
+        required: true
+        schema:
+          type: string
+      - name: revision_number
+        in: path
+        description: The integer that is the revision number of the app
+        schema:
+          type: integer
+          format: int32
+        required: true
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{\n  \"successCodes\": [],\n  \"sbg:homepage\": \"https://github.com/pezmaster31/bamtools/wiki\",\n  \"sbg:validationErrors\": [],\n  \"sbg:sbgMaintained\": false,\n  \"temporaryFailCodes\": [],\n  \"requirements\": [],\n  \"sbg:latestRevision\": 0,\n  \"description\": \"BamTools Merge merges multiple BAM files into a single file.\",\n  \"sbg:job\": {\n    \"inputs\": {\n      \"region\": \"chr1\",\n      \"input_bam_files\": [\n        {\n          \"path\": \"1.bam\"\n        },\n        {\n          \"path\": \"2.bam\"\n        }\n      ]\n    },\n    \"allocatedResources\": {\n      \"cpu\": 1,\n      \"mem\": 1000\n    }\n  },\n  \"sbg:toolAuthor\": \"Derek Barnett, Erik Garrison, Gabor Marth, and Michael Stromberg\",\n  \"hints\": [\n    {\n      \"dockerImageId\": \"f808163d4cd3\",\n      \"class\": \"DockerRequirement\",\n      \"dockerPull\": \"images.sbgenomics.com/rfranklin/bamtools:2.4.0\"\n    },\n    {\n      \"value\": 1,\n      \"class\": \"sbg:CPURequirement\"\n    },\n    {\n      \"value\": 1000,\n      \"class\": \"sbg:MemRequirement\"\n    }\n  ],\n  \"sbg:copyOf\": \"djordje_klisic/public-apps-by-seven-bridges/bamtools-merge-2-4-0/0\",\n  \"sbg:createdOn\": 1452181866,\n  \"arguments\": [\n    {\n      \"position\": 1,\n      \"prefix\": \"-out\",\n      \"separate\": true,\n      \"valueFrom\": \"merged.bam\"\n    }\n  ],\n  \"outputs\": [\n    {\n      \"sbg:fileTypes\": \"BAM\",\n      \"id\": \"#output_bam_file\",\n      \"outputBinding\": {\n        \"glob\": \"merged.bam\",\n        \"sbg:metadata\": {},\n        \"sbg:inheritMetadataFrom\": \"#input_bams\"\n      },\n      \"description\": \"Output BAM file.\",\n      \"type\": [\n        \"File\"\n      ],\n      \"label\": \"Output BAM file\"\n    }\n  ],\n  \"sbg:categories\": [\n    \"SAM/BAM-Processing\"\n  ],\n  \"sbg:contributors\": [\n    \"RFranklin\"\n  ],\n  \"sbg:links\": [\n    {\n      \"id\": \"https://github.com/pezmaster31/bamtools\",\n      \"label\": \"Homepage\"\n    },\n    {\n      \"id\": \"https://github.com/pezmaster31/bamtools/wiki\",\n      \"label\": \"Wiki\"\n    }\n  ],\n  \"stdout\": \"\",\n  \"stdin\": \"\",\n  \"sbg:project\": \"RFranklin/my-project\",\n  \"inputs\": [\n    {\n      \"sbg:fileTypes\": \"BAM\",\n      \"id\": \"#input_bam_files\",\n      \"inputBinding\": {\n        \"sbg:cmdInclude\": true,\n        \"prefix\": \"-in\",\n        \"separate\": true,\n        \"itemSeparator\": null,\n        \"position\": 0\n      },\n      \"description\": \"The input BAM files.\",\n      \"label\": \"Input BAM files\",\n      \"type\": [\n        {\n          \"type\": \"array\",\n          \"items\": \"File\"\n        }\n      ],\n      \"sbg:category\": \"Input & Output\"\n    },\n    {\n      \"id\": \"#region\",\n      \"inputBinding\": {\n        \"sbg:cmdInclude\": true,\n        \"position\": 2,\n        \"separate\": true,\n        \"prefix\": \"-region\"\n      },\n      \"description\": \"A region of interest (e.g. \\\"chr1:500..chr3:1500\\\"). See the documentation for more info.\",\n      \"label\": \"Region of interest\",\n      \"type\": [\n        \"null\",\n        \"string\"\n      ],\n      \"sbg:category\": \"Input & Output\"\n    }\n  ],\n  \"label\": \"BamTools Merge\",\n  \"sbg:createdBy\": \"RFranklin\",\n  \"baseCommand\": [\n    \"/opt/bamtools/bin/bamtools\",\n    \"merge\"\n  ],\n  \"sbg:toolkitVersion\": \"2.4.0\",\n  \"sbg:id\": \"RFranklin/my-project/bamtools-merge-2/0\",\n  \"sbg:license\": \"The MIT License\",\n  \"sbg:revision\": 0,\n  \"sbg:cmdPreview\": \"/opt/bamtools/bin/bamtools merge -in 1.bam -in 2.bam -out merged.bam -region chr1\",\n  \"sbg:modifiedOn\": 1452181866,\n  \"id\": \"https://api.sbgenomics.com/RFranklin/my-project/bamtools-merge-2/0/raw/\",\n  \"class\": \"CommandLineTool\",\n  \"sbg:modifiedBy\": \"RFranklin\",\n  \"sbg:revisionsInfo\": [\n    {\n      \"sbg:modifiedBy\": \"RFranklin\",\n      \"sbg:modifiedOn\": 1452181866,\n      \"sbg:revision\": 0\n    }\n  ],\n  \"sbg:toolkit\": \"BamTools\"\n}"
+              schema:
+                type: object
+                properties:
+                  successCodes:
+                    type: array
+                  sbg:homepage:
+                    type: string
+                    example: https://github.com/pezmaster31/bamtools/wiki
+                  sbg:validationErrors:
+                    type: array
+                  sbg:sbgMaintained:
+                    type: boolean
+                    example: false
+                    default: true
+                  temporaryFailCodes:
+                    type: array
+                  requirements:
+                    type: array
+                  sbg:latestRevision:
+                    type: integer
+                    example: 0
+                    default: 0
+                  description:
+                    type: string
+                    example: BamTools Merge merges multiple BAM files into a single file.
+                  sbg:job:
+                    type: object
+                    properties:
+                      inputs:
+                        type: object
+                        properties:
+                          region:
+                            type: string
+                            example: chr1
+                          input_bam_files:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                path:
+                                  type: string
+                                  example: 1.bam
+                      allocatedResources:
+                        type: object
+                        properties:
+                          cpu:
+                            type: integer
+                            example: 1
+                            default: 0
+                          mem:
+                            type: integer
+                            example: 1000
+                            default: 0
+                  sbg:toolAuthor:
+                    type: string
+                    example: Derek Barnett, Erik Garrison, Gabor Marth, and Michael Stromberg
+                  hints:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        dockerImageId:
+                          type: string
+                          example: f808163d4cd3
+                        class:
+                          type: string
+                          example: DockerRequirement
+                        dockerPull:
+                          type: string
+                          example: images.sbgenomics.com/rfranklin/bamtools:2.4.0
+                  sbg:copyOf:
+                    type: string
+                    example: djordje_klisic/public-apps-by-seven-bridges/bamtools-merge-2-4-0/0
+                  sbg:createdOn:
+                    type: integer
+                    example: 1452181866
+                    default: 0
+                  arguments:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        position:
+                          type: integer
+                          example: 1
+                          default: 0
+                        prefix:
+                          type: string
+                          example: -out
+                        separate:
+                          type: boolean
+                          example: true
+                          default: true
+                        valueFrom:
+                          type: string
+                          example: merged.bam
+                  outputs:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        sbg:fileTypes:
+                          type: string
+                          example: BAM
+                        id:
+                          type: string
+                          example: '#output_bam_file'
+                        outputBinding:
+                          type: object
+                          properties:
+                            glob:
+                              type: string
+                              example: merged.bam
+                            sbg:metadata:
+                              type: object
+                              properties: {}
+                            sbg:inheritMetadataFrom:
+                              type: string
+                              example: '#input_bams'
+                        description:
+                          type: string
+                          example: Output BAM file.
+                        type:
+                          type: array
+                          items:
+                            type: string
+                            example: File
+                        label:
+                          type: string
+                          example: Output BAM file
+                  sbg:categories:
+                    type: array
+                    items:
+                      type: string
+                      example: SAM/BAM-Processing
+                  sbg:contributors:
+                    type: array
+                    items:
+                      type: string
+                      example: RFranklin
+                  sbg:links:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: https://github.com/pezmaster31/bamtools
+                        label:
+                          type: string
+                          example: Homepage
+                  stdout:
+                    type: string
+                    example: ''
+                  stdin:
+                    type: string
+                    example: ''
+                  sbg:project:
+                    type: string
+                    example: RFranklin/my-project
+                  inputs:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        sbg:fileTypes:
+                          type: string
+                          example: BAM
+                        id:
+                          type: string
+                          example: '#input_bam_files'
+                        inputBinding:
+                          type: object
+                          properties:
+                            sbg:cmdInclude:
+                              type: boolean
+                              example: true
+                              default: true
+                            prefix:
+                              type: string
+                              example: -in
+                            separate:
+                              type: boolean
+                              example: true
+                              default: true
+                            itemSeparator: {}
+                            position:
+                              type: integer
+                              example: 0
+                              default: 0
+                        description:
+                          type: string
+                          example: The input BAM files.
+                        label:
+                          type: string
+                          example: Input BAM files
+                        type:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              type:
+                                type: string
+                                example: array
+                              items:
+                                type: string
+                                example: File
+                        sbg:category:
+                          type: string
+                          example: Input & Output
+                  label:
+                    type: string
+                    example: BamTools Merge
+                  sbg:createdBy:
+                    type: string
+                    example: RFranklin
+                  baseCommand:
+                    type: array
+                    items:
+                      type: string
+                      example: /opt/bamtools/bin/bamtools
+                  sbg:toolkitVersion:
+                    type: string
+                    example: 2.4.0
+                  sbg:id:
+                    type: string
+                    example: RFranklin/my-project/bamtools-merge-2/0
+                  sbg:license:
+                    type: string
+                    example: The MIT License
+                  sbg:revision:
+                    type: integer
+                    example: 0
+                    default: 0
+                  sbg:cmdPreview:
+                    type: string
+                    example: /opt/bamtools/bin/bamtools merge -in 1.bam -in 2.bam -out merged.bam -region chr1
+                  sbg:modifiedOn:
+                    type: integer
+                    example: 1452181866
+                    default: 0
+                  id:
+                    type: string
+                    example: https://api.sbgenomics.com/RFranklin/my-project/bamtools-merge-2/0/raw/
+                  class:
+                    type: string
+                    example: CommandLineTool
+                  sbg:modifiedBy:
+                    type: string
+                    example: RFranklin
+                  sbg:revisionsInfo:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        sbg:modifiedBy:
+                          type: string
+                          example: RFranklin
+                        sbg:modifiedOn:
+                          type: integer
+                          example: 1452181866
+                          default: 0
+                        sbg:revision:
+                          type: integer
+                          example: 0
+                          default: 0
+                  sbg:toolkit:
+                    type: string
+                    example: BamTools
+      deprecated: false
+      x-readme:
+        code-samples:
+        - language: python
+          code: "from sevenbridges import Api\n\napi = Api(url='https://api.sbgenomics.com/v2',\n          token='3210a98c1db9318fa9d9273156740f74')\n\n# send GET request to SB API\napp = api.apps.get(id='RFranklin/my-project/bamtools-merge-2/0')\n\nprint(app.raw)"
+        samples-languages:
+        - python
+      tags:
+      - Apps
+x-readme:
+  headers:
+  - key: X-SBG-Auth-Token
+    value: <your-token-here>
+x-readme-fauxas: true

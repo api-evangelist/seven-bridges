@@ -1,0 +1,900 @@
+openapi: 3.2.0
+info:
+  title: Seven Bridges Files API
+  version: unknown
+  description: 'Operations tagged Files across 2 of this provider''s published API definitions: seven-bridges-cgc-openapi.json, seven-bridges-platform-openapi.json. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://cgc-api.sbgenomics.com/v2
+- url: https://api.sbgenomics.com/v2
+security:
+- {}
+tags:
+- name: Files
+paths:
+  /files/{file_id}:
+    get:
+      summary: Get file details
+      description: /files/{file_id}
+      operationId: get-file-details
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: '{}'
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: '400'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: '{}'
+              schema:
+                type: object
+                properties: {}
+      deprecated: false
+      tags:
+      - Files
+    delete:
+      summary: Delete a file
+      description: This call removes a file from the Seven Bridges Platform. Files are specified by their IDs, which you can obtain by making the API call to [list files](ref:list-files-primary-method).
+      operationId: delete-a-file
+      parameters:
+      - name: X-SBG-Auth-Token
+        in: header
+        description: Your Seven Bridges Platform [authentication token](doc:get-your-authentication-token). For security reasons, token will not be automatically populated in the generated code sample. Please replace `<your-token-here>` with your token before executing this call.
+        required: true
+        schema:
+          type: string
+      - name: file_id
+        in: path
+        description: The ID of the file you want to delete.
+        schema:
+          type: string
+        required: true
+      deprecated: false
+      x-readme:
+        code-samples:
+        - language: python
+          code: "from sevenbridges import Api\n\napi = Api(url='https://api.sbgenomics.com/v2',\n          token='3210a98c1db9318fa9d9273156740f74')\n\nfile = api.files.get(id='567890abc1e5339df0414123')\n\n# send DELETE request to SB API\nfile.delete()"
+          name: Python
+        samples-languages:
+        - python
+      tags:
+      - Files
+    patch:
+      summary: Update file details
+      description: 'This call updates the name, the full set metadata, and tags for a specified file.
+
+
+        Files are specified by their IDs, which you can obtain by making the API call to [list files in a project](ref:list-files-primary-method).
+
+
+        If you want to update metadata for multiple files, the recommended way is to do it in bulk considering the API rate limit ([learn more](doc:api-rate-limit)).'
+      operationId: update-file-details
+      parameters:
+      - name: X-SBG-Auth-Token
+        in: header
+        description: Your Seven Bridges Platform [authentication token](doc:get-your-authentication-token). For security reasons, token will not be automatically populated in the generated code sample. Please replace `<your-token-here>` with your token before executing this call.
+        required: true
+        schema:
+          type: string
+      - name: file_id
+        in: path
+        description: The ID of the file whose details you want to update.
+        schema:
+          type: string
+        required: true
+      - name: fields
+        in: query
+        description: Selector specifying a subset of fields to include in the response.
+        schema:
+          type: array
+          items:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The new name of the file.
+                metadata:
+                  type: object
+                  description: The metadata fields and their values that you want to update. This is a dictionary of key-value pairs. The keys and values are strings.
+                  properties:
+                    '{key}':
+                      type: string
+                      description: In the generated example, replace `{key}` with the name of the metadata key you want to define and replace `{value}` with the corresponding value. Add as many metadata `{key}:{value}` pairs as you need.
+                      default: '{value}'
+                tags:
+                  type: array
+                  description: The tags you want to update.
+                  items:
+                    type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{\n  \"href\":\"https://api.sbgenomics.com/v2/files/567890abc9b0307bc0414164\",\n  \"id\":\"562e339060b174321efb6091\",\n  \"name\":\"1_1000Genomes_phase1.snps.high_confidence.b37.vcf\",\n  \"size\":363,\n  \"project\":\"rfranklin/my-project\",\n  \"created_on\":\"2015-12-11T11:01:49Z\",\n  \"modified_on\":\"2016-01-07T12:22:12Z\",\n  \"origin\":{\n    \n  },\n  \"metadata\":{\n    \"disease_type\":\"Acute Myeloid Leukemia\"\n  },\n  \"tags\":[\n    \"test 1b\",\n    \"sample\"\n  ]\n}"
+              schema:
+                type: object
+                properties:
+                  href:
+                    type: string
+                    example: https://api.sbgenomics.com/v2/files/567890abc9b0307bc0414164
+                  id:
+                    type: string
+                    example: 562e339060b174321efb6091
+                  name:
+                    type: string
+                    example: 1_1000Genomes_phase1.snps.high_confidence.b37.vcf
+                  size:
+                    type: integer
+                    example: 363
+                    default: 0
+                  project:
+                    type: string
+                    example: rfranklin/my-project
+                  created_on:
+                    type: string
+                    example: '2015-12-11T11:01:49Z'
+                  modified_on:
+                    type: string
+                    example: '2016-01-07T12:22:12Z'
+                  origin:
+                    type: object
+                    properties: {}
+                  metadata:
+                    type: object
+                    properties:
+                      disease_type:
+                        type: string
+                        example: Acute Myeloid Leukemia
+                  tags:
+                    type: array
+                    items:
+                      type: string
+                      example: test 1b
+      deprecated: false
+      x-readme:
+        code-samples:
+        - language: python
+          code: "from sevenbridges import Api\n\napi = Api(url='https://api.sbgenomics.com/v2',\n          token='3210a98c1db9318fa9d9273156740f74')\n\nfile = api.files.get(id='567890abc9b0307bc0414164')\n\n# change file details\nfile.name = '1_1000Genomes_phase1.snps.high_confidence.b37.vcf'\nfile.metadata['disease_type'] = 'Acute Myeloid Leukemia'\nfile.tags = ['test 1b', 'sample']\n\n# send PATCH request to SB API for metadata change\n# send PUT request to SB API for tag change\n# send PATCH request to SB API for name change\nfile.save()\n\nprint(file.name)"
+          name: Python
+        samples-languages:
+        - python
+      tags:
+      - Files
+    servers:
+    - url: https://cgc-api.sbgenomics.com/v2
+  /files/paths:
+    post:
+      summary: Get file IDs from file paths
+      description: /files/path
+      operationId: get-file-ids-from-file-paths
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: '{}'
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: '400'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: '{}'
+              schema:
+                type: object
+                properties: {}
+      deprecated: false
+      tags:
+      - Files
+    servers:
+    - url: https://cgc-api.sbgenomics.com/v2
+  /files/{file_id}/metadata:
+    get:
+      summary: Get a file's metadata
+      description: files/{file_id}/metadata
+      operationId: get-a-files-metadata
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: '{}'
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: '400'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: '{}'
+              schema:
+                type: object
+                properties: {}
+      deprecated: false
+      tags:
+      - Files
+    patch:
+      summary: Modify a file's metadata
+      description: This call modifies the metadata values for the specified file.
+      operationId: modify-a-files-metadata
+      parameters:
+      - name: X-SBG-Auth-Token
+        in: header
+        description: Your Seven Bridges Platform [authentication token](doc:get-your-authentication-token). For security reasons, token will not be automatically populated in the generated code sample. Please replace `<your-token-here>` with your token before executing this call.
+        required: true
+        schema:
+          type: string
+      - name: fields
+        in: query
+        description: Selector specifying a subset of fields to include in the response.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: file_id
+        in: path
+        description: The ID of the file whose metadata you want to update.
+        schema:
+          type: string
+        required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                RAW_BODY:
+                  type: string
+                  description: Enter a dictionary of key-value pairs to the request body.
+                  format: json
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{\n  \"library_id\": \"12345\",\n  \"platform\": \"my_platform\",\n  \"sample_id\": \"712345\",\n  \"foo\": \"bar\",\n  \"my_key_1\": \"my_value_1\",\n  \"my_key_2\": \"my_value_2\"\n}"
+              schema:
+                type: object
+                properties:
+                  library_id:
+                    type: string
+                    example: '12345'
+                  platform:
+                    type: string
+                    example: my_platform
+                  sample_id:
+                    type: string
+                    example: '712345'
+                  foo:
+                    type: string
+                    example: bar
+                  my_key_1:
+                    type: string
+                    example: my_value_1
+                  my_key_2:
+                    type: string
+                    example: my_value_2
+      deprecated: false
+      x-readme:
+        code-samples:
+        - language: python
+          code: "from sevenbridges import Api\n\napi = Api(url='https://api.sbgenomics.com/v2',\n          token='3210a98c1db9318fa9d9273156740f74')\n\nfile = api.files.get(id='567890abc9b0307bc0414164')\n\n# modify metadata\nfile.metadata['library_id'] = '12345'\nfile.metadata['platform'] = 'my_platform'\nfile.metadata['sample origin'] = '712345'\nfile.metadata['foo'] = 'bar'\nfile.metadata['my_key_1'] = 'my_value_1'\nfile.metadata['my_key_2'] = 'my_value_2'\n\n# send PATCH request to SB API\nfile.save()\n\nprint(file.metadata)"
+          name: Python
+        samples-languages:
+        - python
+      tags:
+      - Files
+    put:
+      summary: Overwrite a file's metadata
+      description: This call changes the metadata values for the specified file.
+      operationId: overwrite-a-files-metadata
+      parameters:
+      - name: X-SBG-Auth-Token
+        in: header
+        description: Your Seven Bridges Platform [authentication token](doc:get-your-authentication-token). For security reasons, token will not be automatically populated in the generated code sample. Please replace `<your-token-here>` with your token before executing this call.
+        required: true
+        schema:
+          type: string
+      - name: fields
+        in: query
+        description: Selector specifying a subset of fields to include in the response.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: file_id
+        in: path
+        description: The ID of the file whose metadata you want to overwrite.
+        schema:
+          type: string
+        required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                RAW_BODY:
+                  type: string
+                  description: Enter a dictionary of key-value pairs that represent the file metadata, as shown in the [example request body](#example-request-body).
+                  format: json
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{\n  \"library_id\": \"12345\",\n  \"platform\": \"my_platform\",\n  \"foo\": \"bar\",\n  \"my_key_1\": \"my_value_1\",\n  \"my_key_2\": \"my_value_2\"\n}"
+              schema:
+                type: object
+                properties:
+                  library_id:
+                    type: string
+                    example: '12345'
+                  platform:
+                    type: string
+                    example: my_platform
+                  foo:
+                    type: string
+                    example: bar
+                  my_key_1:
+                    type: string
+                    example: my_value_1
+                  my_key_2:
+                    type: string
+                    example: my_value_2
+      deprecated: false
+      x-readme:
+        code-samples:
+        - language: python
+          code: "from sevenbridges import Api\n\napi = Api(url='https://api.sbgenomics.com/v2',\n          token='3210a98c1db9318fa9d9273156740f74')\n\nfile = api.files.get(id='567890abc9b0307bc0414164')\n\n# modify metadata\nfile.metadata['library_id'] = '12345'\nfile.metadata['platform'] = 'my_platform'\nfile.metadata['sample origin'] = '712345'\nfile.metadata['foo'] = 'bar'\nfile.metadata['my_key_1'] = 'my_value_1'\nfile.metadata['my_key_2'] = 'my_value_2'\n\n# send PATCH request to SB API\nfile.save()\n\nprint(file.metadata)"
+          name: Python
+        samples-languages:
+        - python
+      tags:
+      - Files
+    servers:
+    - url: https://cgc-api.sbgenomics.com/v2
+  /files/{file_id}/actions/copy:
+    post:
+      summary: Copy a file between projects
+      description: /v2/files/{file_id}/actions/copy
+      operationId: copy-a-file
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: '{}'
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: '400'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: '{}'
+              schema:
+                type: object
+                properties: {}
+      deprecated: false
+      tags:
+      - Files
+    servers:
+    - url: https://cgc-api.sbgenomics.com/v2
+  /files:
+    get:
+      summary: List files (primary method)
+      description: "This call returns a list of files and subdirectories in a specified project or directory within a project, with specified properties that you can access. The project or directory whose contents you want to list is specified as a query parameter in the call. Further properties to filter by can also be specified as query parameters. \n\nNote that this call lists both files and subdirectories in the specified project or directory within a project, but not the contents of the subdirectories. To list the contents of a subdirectory, make a new call and specify the subdirectory ID as the `parent` parameter.\n\nDon't forget that projects on the Platform are specified by their [short names](doc:the-api#identifying-projects-users-apps-files-tasks-and-inputs).\n\nFurther file properties to filter by can also be specified as query parameters."
+      operationId: list-files-primary-method
+      parameters:
+      - name: project
+        in: query
+        description: '**Required if `parent` is not used**. Project is specified in the following format: `{project_owner}/{project}`. `project_owner` is the owner of the project you are listing files from, while `project` is the project''s [short name](ref:section-project-short-names). Project ID should not be used together with `parent`. If `parent` is used, the call will list the content of the specified folder, within the project to which the folder belongs. If `project` is used, the call will list the content at the root of the project''s files.'
+        schema:
+          type: string
+      - name: parent
+        in: query
+        description: '**Required if `project` is not used**. ID of the folder whose content you want to list. Should not be used together with `project`. If `parent` is used, the call will list the content of the specified folder, within the project to which the folder belongs. If `project` is used, the call will list the content at the root of the project''s files.'
+        schema:
+          type: string
+      - name: name
+        in: query
+        description: List file with this name. Note that the name must be an exact complete string for the results to match. Multiple names can be separated by an `OR` operation. The `OR` operation is implied when the same parameter is queried multiple times in the same API request.
+        schema:
+          type: string
+      - name: metadata.{field}
+        in: query
+        description: List only files with that have the specified value in metadata field.  Multiple instances of the same metadata field are implicitly separated by an `OR` operation. Conversely, different metadata fields are implicitly separated by an `AND` operation.
+        schema:
+          type: string
+      - name: origin.task
+        in: query
+        description: List only files produced by task specified by ID in this field.
+        schema:
+          type: string
+      - name: tag
+        in: query
+        description: List files containing this tag. Note that the tag must be an exact complete string for the results to match. Multiple tags can be separated by an OR operation. The OR operation is implied when the same parameter is queried multiple times in the same API request.  Keep in mind that tags are different from metadata. Learn more about [tagging your files](doc:tag-your-files) on the Platform.
+        schema:
+          type: string
+      - name: X-SBG-Auth-Token
+        in: header
+        description: Your Seven Bridges Platform [authentication token](doc:get-your-authentication-token). For security reasons, token will not be automatically populated in the generated code sample. Please replace `<your-token-here>` with your token before executing this call.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{\n  \"href\": \"https://api.sbgenomics.com/v2/files?offset=0&limit=25&project=RFranklin/my-project\",\n  \"items\": [\n    {\n      \"href\": \"https://api.sbgenomics.com/v2/files/567890abc9b0307bc0414164\",\n      \"id\": \"568cf5dce4b0307bc0462060\",\n      \"name\": \"1000G_phase1.indels.b37.vc\",\n      \"project\": \"RFranklin/my-project\"\n    },\n    {\n      \"href\": \"https://api.sbgenomics.com/v2/files/567890abc1e5339df0414123\",\n      \"id\": \"566aad1de4b0c560b469ea80\",\n      \"name\": \"1000G_omni2.5.b37.vcf\",\n      \"project\": \"RFranklin/my-project\"\n    },\n    {\n      \"href\": \"https://api.sbgenomics.com/v2/files/567890abc4f3066bc3750174\",\n      \"id\": \"568cf5f4e4b0307bc0462062\",\n      \"name\": \"1000G_phase1.snps.high_confidence.b37.vcf\",\n      \"project\": \"RFranklin/my-project\"\n    }\n  ],\n  \"links\": []\n}"
+              schema:
+                type: object
+                properties:
+                  href:
+                    type: string
+                    example: https://api.sbgenomics.com/v2/files?offset=0&limit=25&project=RFranklin/my-project
+                  items:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        href:
+                          type: string
+                          example: https://api.sbgenomics.com/v2/files/567890abc9b0307bc0414164
+                        id:
+                          type: string
+                          example: 568cf5dce4b0307bc0462060
+                        name:
+                          type: string
+                          example: 1000G_phase1.indels.b37.vc
+                        project:
+                          type: string
+                          example: RFranklin/my-project
+                  links:
+                    type: array
+      deprecated: false
+      x-readme:
+        code-samples:
+        - language: python
+          code: "from sevenbridges import Api\n\napi = Api(url='https://api.sbgenomics.com/v2',\n          token='3210a98c1db9318fa9d9273156740f74')\n\n# send GET request to SB API\nfiles = api.files.query(project='rfranklin/my-project')\n\nfor file in files:\n    print(file.id, file.name)"
+          name: Python - List all files
+        - language: python
+          code: "from sevenbridges import Api\n\napi = Api(url='https://api.sbgenomics.com/v2',\n          token='3210a98c1db9318fa9d9273156740f74')\n\n# send GET request to SB API\nfiles = api.files.query(\n    project='rfranklin/my-project',\n    metadata={\n        'sample': 'SAMPLE1'\n    }\n)\n\nfor file in files:\n    print(file.id, file.name)"
+          name: Python - List all files with a specific Sample ID
+        - language: python
+          code: "from sevenbridges import Api\n\napi = Api(url='https://api.sbgenomics.com/v2',\n          token='3210a98c1db9318fa9d9273156740f74')\n\n# send GET request to SB API\nfiles = api.files.query(\n    project='rfranklin/my-project',\n    metadata={\n        'sample_id': 'SAM316315',\n        'library_id': 'HiSeqX_R'\n    }\n)\n\nfor file in files:\n    print(file.id, file.name)"
+          name: Python - List all files produced by a specific task with specific Sample ID
+        - language: python
+          code: "from sevenbridges import Api\n\napi = Api(url='https://api.sbgenomics.com/v2',\n          token='3210a98c1db9318fa9d9273156740f74')\n\n# send GET request to SB API\nfiles = api.files.query(\n    project='rfranklin/my-project',\n    names=[\n        'dbsnp_137.b37.vcf',\n        '1000G_phase1.indels.b37.vcf',\n        'Mills_and_1000G_gold_standard.indels.b37.sites.vcf'\n    ]\n)\n\nfor file in files:\n    print(file.id, file.name)"
+          name: Python - List all files matching exact names
+        - language: python
+          code: "from sevenbridges import Api\n\napi = Api(url='https://api.sbgenomics.com/v2',\n          token='3210a98c1db9318fa9d9273156740f74')\n\n# send GET request to SB API\nfiles = api.files.query(\n    project='rfranklin/my-project',\n    tags=[\n        'test1b',\n        'my_first_project'\n    ]\n)\n\nfor file in files:\n    print(file.id, file.name)"
+          name: Python - List all files matching exact tags
+        samples-languages:
+        - python
+      tags:
+      - Files
+    post:
+      summary: Create a folder
+      description: 'This call creates a new folder.Every project on the Seven Bridges Platform is represented by a root folder which contains all the files associated with a particular project. You can create nesting folders and subfolders within this root folder by using this API request.Once you''ve created a folder, you can [move](ref:move-a-file-between-folders) or [copy](ref:copy-a-file)  files between folders to populate your newly created folder.To list the contents of the main project folder, first make the API request to [get project details](ref:get-project-details) which will return the ID of the main folder (key: `root_folder`). Next, use the [list folder contents](ref:list-folder-contents) call and specify this ID.'
+      operationId: create-a-folder
+      parameters:
+      - name: X-SBG-Auth-Token
+        in: header
+        description: Your Seven Bridges Platform [authentication token](doc:get-your-authentication-token). For security reasons, token will not be automatically populated in the generated code sample. Please replace `<your-token-here>` with your token before executing this call.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - name
+              - type
+              properties:
+                name:
+                  type: string
+                  description: The name of the folder. It shouldn't begin with "__".
+                type:
+                  type: string
+                  description: Set this to `folder`.
+                  default: folder
+                parent:
+                  type: string
+                  description: Specifies the ID of the parent folder for the new folder.  You should either specify a parent folder or the project name (see [list folder contents](ref:list-folder-contents) for instructions on how to find the folder ID).
+                project:
+                  type: string
+                  description: Project ID (`username/project_name`).   You should either specify a project name or the parent folder ID.
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{\n  \"href\": \"https://api.sbgenomics.com/v2/files/567890abc8a5136ec6127063\",\n  \"id\": \"5887b406e4b07ecb1445de83\",\n  \"name\": \"my_new_folder\",\n  \"parent\": \"567890abc9b0307bc0414164\",\n  \"type\": \"FOLDER\",\n  \"created_on\": \"2016-10-10T14:06:25Z\",\n  \"modified_on\": \"2016-10-10T14:06:25Z\"\n}"
+              schema:
+                type: object
+                properties:
+                  href:
+                    type: string
+                    example: https://api.sbgenomics.com/v2/files/567890abc8a5136ec6127063
+                  id:
+                    type: string
+                    example: 5887b406e4b07ecb1445de83
+                  name:
+                    type: string
+                    example: my_new_folder
+                  parent:
+                    type: string
+                    example: 567890abc9b0307bc0414164
+                  type:
+                    type: string
+                    example: FOLDER
+                  created_on:
+                    type: string
+                    example: '2016-10-10T14:06:25Z'
+                  modified_on:
+                    type: string
+                    example: '2016-10-10T14:06:25Z'
+      deprecated: false
+      x-readme:
+        code-samples:
+        - language: python
+          code: "from sevenbridges import Api\n\napi = Api(url='https://api.sbgenomics.com/v2',\n          token='3210a98c1db9318fa9d9273156740f74')\n\n# send POST request to SB API\nnew_folder = api.files.create_folder(\n    name='my_new_folder',\n    parent='567890abc9b0307bc0414164'\n)\n\nprint(new_folder.name, new_folder.id, new_folder.type)"
+          name: Python
+        samples-languages:
+        - python
+      tags:
+      - Files
+    servers:
+    - url: https://api.sbgenomics.com/v2
+  /files/{file_id}/download_info:
+    get:
+      summary: Get downloadable URL for a file
+      description: This call returns a URL that you can use to download the specified file.
+      operationId: get-downloadable-url-for-a-file
+      parameters:
+      - name: X-SBG-Auth-Token
+        in: header
+        description: Your Seven Bridges Platform [authentication token](doc:get-your-authentication-token). For security reasons, token will not be automatically populated in the generated code sample. Please replace `<your-token-here>` with your token before executing this call.
+        required: true
+        schema:
+          type: string
+      - name: fields
+        in: query
+        description: Selector specifying a subset of fields to include in the response.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: file_id
+        in: path
+        description: The ID of the file whose download URL you want to get.
+        schema:
+          type: string
+        required: true
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{\n  \"url\": \"https://main.s3.amazonaws.com/723c949a-789c-12b3-45b6-b2dd0d8d0021%2Btest-text.txt?response-content-disposition=attachment%3Bfilename%3Dtest-text.txt&response-content-type=application%2Foctet-stream&AWSAccessKeyId=REDACTED_AWS_ACCESS_KEY_ID&Expires=1452345802&Signature=4v3DEiBMyiyLw%2F3VGyJUlwSyw28%3D\"\n}"
+              schema:
+                type: object
+                properties:
+                  url:
+                    type: string
+                    example: https://main.s3.amazonaws.com/723c949a-789c-12b3-45b6-b2dd0d8d0021%2Btest-text.txt?response-content-disposition=attachment%3Bfilename%3Dtest-text.txt&response-content-type=application%2Foctet-stream&AWSAccessKeyId=REDACTED_AWS_ACCESS_KEY_ID&Expires=1452345802&Signature=4v3DEiBMyiyLw%2F3VGyJUlwSyw28%3D
+      deprecated: false
+      x-readme:
+        code-samples:
+        - language: python
+          code: "from sevenbridges import Api\n\napi = Api(url='https://api.sbgenomics.com/v2',\n          token='3210a98c1db9318fa9d9273156740f74')\n\nfile = api.files.get(id='567890abc9b0307bc0414164')\n\n# send GET request to SB API\ndownload_info = file.download_info()\n\nprint(download_info.url)"
+          name: Python
+        samples-languages:
+        - python
+      tags:
+      - Files
+    servers:
+    - url: https://api.sbgenomics.com/v2
+  /files/{file_id}/tags:
+    put:
+      summary: Add tags to a file
+      description: 'This call allows you to tag files on the Platform. You can tag your files on the Platform with keywords to make it easier to identify and organize files you’ve imported from public datasets or copied between projects. Learn more about [tagging your files](doc:tag-your-files).
+
+
+        In addition to tagging your files, you can do the following via the API:
+
+        * [Update previously added tags](ref:update-file-details)
+
+        * [View tags you''ve set on your files](ref:get-file-details)
+
+        * Filter by tags, using [list files](ref:list-files-primary-method) and specifying the required tag'
+      operationId: add-tags-to-a-file
+      parameters:
+      - name: X-SBG-Auth-Token
+        in: header
+        description: Your Seven Bridges Platform [authentication token](doc:get-your-authentication-token). For security reasons, token will not be automatically populated in the generated code sample. Please replace `<your-token-here>` with your token before executing this call.
+        required: true
+        schema:
+          type: string
+      - name: file_id
+        in: path
+        description: The ID of the file whose tags you want to update.
+        schema:
+          type: string
+        required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                RAW_BODY:
+                  type: array
+                  description: Keywords which help you identify your files at a glance. Tags are entered in the form of a list, as shown in [example request body](#example-request-body).
+                  items:
+                    type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "[\n    \"test 1b\",\n    \"my first project\",\n    \"CCLE\"\n]"
+              schema:
+                type: array
+                items:
+                  type: string
+                  example: test 1b
+      deprecated: false
+      x-readme:
+        code-samples:
+        - language: python
+          code: "from sevenbridges import Api\n\napi = Api(url='https://api.sbgenomics.com/v2',\n          token='3210a98c1db9318fa9d9273156740f74')\n\nfile = api.files.get(id='567890abc9b0307bc0414164')\n\n# set tags\nfile.tags = ['test 1b', 'my first project', 'CCLE']\n\n# send PUT request to SB API\nfile.save()\n\nprint(file.tags)"
+          name: Python
+        samples-languages:
+        - python
+      tags:
+      - Files
+    servers:
+    - url: https://api.sbgenomics.com/v2
+  /files/{file_id}/actions/move:
+    post:
+      summary: Move a file between folders
+      description: This call moves a file from one folder to another. Moving of files is only allowed within the same project.
+      operationId: move-a-file-between-folders
+      parameters:
+      - name: X-SBG-Auth-Token
+        in: header
+        description: Your Seven Bridges Platform [authentication token](doc:get-your-authentication-token). For security reasons, token will not be automatically populated in the generated code sample. Please replace `<your-token-here>` with your token before executing this call.
+        required: true
+        schema:
+          type: string
+      - name: file_id
+        in: path
+        description: The ID of the file that you want to move.
+        schema:
+          type: string
+        required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - parent
+              properties:
+                parent:
+                  type: string
+                  description: Specifies the target folder by using its ID.  To find out the folder ID, use the [list folder contents](ref:list-folder-contents) call for its parent folder.
+                name:
+                  type: string
+                  description: Specifies a new name for a file in case you want to rename it.  If you want to use the same name, omit this key.
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{\n    \"href\": \"https://api.sbgenomics.com/v2/files/567890abc4f3066bc3750174\",\n    \"id\": \"5f335aa0e4b08c38f159b956\",\n    \"name\": \"1000G_omni2.5.hg38.vcf\",\n    \"size\": 1787,\n    \"project\": \"rfranklin/my-project\",\n    \"parent\": \"567890abc9b0307bc0414164\",\n    \"type\": \"file\",\n    \"created_on\": \"2020-08-13T13:05:36Z\",\n    \"modified_on\": \"2021-02-22T14:26:36Z\",\n    \"storage\": {\n        \"type\": \"PLATFORM\",\n        \"hosted_on_locations\": [\n            \"aws:us-east-1\"\n        ]\n    },\n    \"origin\": {},\n    \"tags\": [],\n    \"metadata\": {\n        \"library_id\": \"1134\",\n        \"sample_id\": \"10987\"\n    }\n}"
+              schema:
+                type: object
+                properties:
+                  href:
+                    type: string
+                    example: https://api.sbgenomics.com/v2/files/567890abc4f3066bc3750174
+                  id:
+                    type: string
+                    example: 5f335aa0e4b08c38f159b956
+                  name:
+                    type: string
+                    example: 1000G_omni2.5.hg38.vcf
+                  size:
+                    type: integer
+                    example: 1787
+                    default: 0
+                  project:
+                    type: string
+                    example: rfranklin/my-project
+                  parent:
+                    type: string
+                    example: 567890abc9b0307bc0414164
+                  type:
+                    type: string
+                    example: file
+                  created_on:
+                    type: string
+                    example: '2020-08-13T13:05:36Z'
+                  modified_on:
+                    type: string
+                    example: '2021-02-22T14:26:36Z'
+                  storage:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                        example: PLATFORM
+                      hosted_on_locations:
+                        type: array
+                        items:
+                          type: string
+                          example: aws:us-east-1
+                  origin:
+                    type: object
+                    properties: {}
+                  tags:
+                    type: array
+                  metadata:
+                    type: object
+                    properties:
+                      library_id:
+                        type: string
+                        example: '1134'
+                      sample_id:
+                        type: string
+                        example: '10987'
+      deprecated: false
+      x-readme:
+        code-samples:
+        - language: python
+          code: "from sevenbridges import Api\n\napi = Api(url='https://api.sbgenomics.com/v2',\n          token='3210a98c1db9318fa9d9273156740f74')\n\nfile = api.files.get(id='567890abc3d8130ea4047731')\n\n# send POST request to SB API\nmoved_file = file.move_to_folder(\n    parent='567890abc9b0307bc0414164',\n    name='1000G_omni2.5.hg38.vcf'\n)\n\nprint(moved_file.name, moved_file.id, moved_file.parent)"
+          name: Python
+        samples-languages:
+        - python
+      tags:
+      - Files
+    servers:
+    - url: https://api.sbgenomics.com/v2
+  /files/{folder_id}/list:
+    get:
+      summary: List folder contents
+      description: ''
+      operationId: list-folder-contents
+      parameters:
+      - name: X-SBG-Auth-Token
+        in: header
+        description: Your Seven Bridges Platform [authentication token](doc:get-your-authentication-token). For security reasons, token will not be automatically populated in the generated code sample. Please replace `<your-token-here>` with your token before executing this call.
+        required: true
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: The maximum number of collection items to return for a single request. Minimum value is 1. The maximum value is 100 and the default value is 50. This is a pagination-specific attribute.
+        schema:
+          type: integer
+          format: int32
+          default: 50
+      - name: offset
+        in: query
+        description: The zero-based starting index in the entire collection of the first item to return. The default value is 0. This is a pagination-specific attribute.
+        schema:
+          type: integer
+          format: int32
+          default: 0
+      - name: folder_id
+        in: path
+        description: ID of the folder whose contents you want to list. Use the call to [list files and folders in a project](list-files-primary-method) to get the ID.
+        schema:
+          type: string
+        required: true
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{\n  \"href\": \"https://api.sbgenomics.com/v2/files/567890abc9b0307bc0414164/list?offset=0&limit=5\",\n  \"items\": [\n    {\n      \"href\": \"https://api.sbgenomics.com/v2/files/567890abc1e5339df0414123\",\n      \"id\": \"567890abc1e5339df0414123\",\n      \"name\": \"folder-name-1\",\n      \"project\": \"rfranklin/my-project\",\n      \"parent\": \"567890abc9b0307bc0414164\",\n      \"type\": \"FOLDER\"\n    },\n    {\n      \"href\": \"https://api.sbgenomics.com/v2/files/567890abc3d8130ea4047731\",\n      \"id\": \"567890abc3d8130ea4047731\",\n      \"name\": \"file-name-1\",\n      \"project\": \"rfranklin/my-project\",\n      \"parent\": \"567890abc9b0307bc0414164\",\n      \"type\": \"FILE\"\n    },"
+      deprecated: false
+      x-readme:
+        code-samples:
+        - language: python
+          code: "from sevenbridges import Api\n\napi = Api(url='https://api.sbgenomics.com/v2',\n          token='1e43fEXampLEa5523dfd14exAMPle3e5')\n\nfolder = api.files.get(id='567890abc9b0307bc0414164')\n\n# send GET request to SB API\nfiles = folder.list_files()\n\nfor file in files:\n    print(file.name, file.type)"
+          name: Python
+        samples-languages:
+        - python
+      tags:
+      - Files
+    servers:
+    - url: https://api.sbgenomics.com/v2
+  /files/{folder_id}:
+    delete:
+      summary: Delete a folder
+      description: This call deletes a folder. Only an empty folder can be deleted.
+      operationId: delete-a-folder
+      parameters:
+      - name: X-SBG-Auth-Token
+        in: header
+        description: Your Seven Bridges Platform [authentication token](doc:get-your-authentication-token). For security reasons, token will not be automatically populated in the generated code sample. Please replace `<your-token-here>` with your token before executing this call.
+        required: true
+        schema:
+          type: string
+      - name: folder_id
+        in: path
+        description: The ID of the folder you want to delete. Use the call to [list files and folders in a project](list-files-primary-method) to get the ID.
+        schema:
+          type: string
+        required: true
+      deprecated: false
+      x-readme:
+        code-samples:
+        - language: python
+          code: "from sevenbridges import Api\n\napi = Api(url='https://api.sbgenomics.com/v2',\n          token='3210a98c1db9318fa9d9273156740f74')\n\nfolder = api.files.get(id='567890abc9b0307bc0414164')\n\n# send DELETE request to SB API\nfolder.delete()"
+          name: Python
+        samples-languages:
+        - python
+      tags:
+      - Files
+    servers:
+    - url: https://api.sbgenomics.com/v2
+x-refined-from:
+- seven-bridges-cgc-openapi.json
+- seven-bridges-platform-openapi.json
+x-readme:
+  headers: []
+x-readme-fauxas: true

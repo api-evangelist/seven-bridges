@@ -1,0 +1,116 @@
+openapi: 3.2.0
+info:
+  title: Seven Bridges Platform User API
+  version: unknown
+servers:
+- url: https://api.sbgenomics.com/v2
+security:
+- {}
+tags:
+- name: User
+paths:
+  /user:
+    get:
+      summary: Get my information
+      description: ''
+      operationId: get-my-information
+      parameters:
+      - name: fields
+        in: query
+        description: Selector specifying a subset of fields to include in the response.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: X-SBG-Auth-Token
+        in: header
+        description: Your Platform [authentication token](doc:get-your-authentication-token). For security reasons, token will not be automatically populated in the generated code sample. Please replace `<your-token-here>` with your token before executing this call.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{\n  \"href\": \"https://api.sbgenomics.com/v2/users/RFranklin\",\n  \"username\": \"RFranklin\",\n  \"email\": \"rosalind.franklin@sbgenomics.com\",\n  \"first_name\": \"Rosalind\",\n  \"last_name\": \"Franklin\",\n  \"role\": \"MEMBER\",\n  \"tags\": [\n        {\n            \"tag\": \"tcga-oa\",\n            \"expires_at\": 3053937952000\n        },\n        {\n            \"tag\": \"tcga-ca\",\n            \"expires_at\": 1506729600000\n        }\n    ],\n  \"affiliation\": \"Seven Bridges\",\n  \"phone\": \"\",\n  \"address\": \"\",\n  \"city\": \"London\",\n  \"state\": \"\",\n  \"country\": \"United Kingdom\",\n  \"zip_code\": \"\"\n}"
+              schema:
+                type: object
+                properties:
+                  href:
+                    type: string
+                    example: https://api.sbgenomics.com/v2/users/RFranklin
+                  username:
+                    type: string
+                    example: RFranklin
+                  email:
+                    type: string
+                    example: rosalind.franklin@sbgenomics.com
+                  first_name:
+                    type: string
+                    example: Rosalind
+                  last_name:
+                    type: string
+                    example: Franklin
+                  role:
+                    type: string
+                    example: MEMBER
+                  tags:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        tag:
+                          type: string
+                          example: tcga-oa
+                        expires_at:
+                          type: integer
+                          example: 3053937952000
+                          default: 0
+                  affiliation:
+                    type: string
+                    example: Seven Bridges
+                  phone:
+                    type: string
+                    example: ''
+                  address:
+                    type: string
+                    example: ''
+                  city:
+                    type: string
+                    example: London
+                  state:
+                    type: string
+                    example: ''
+                  country:
+                    type: string
+                    example: United Kingdom
+                  zip_code:
+                    type: string
+                    example: ''
+      deprecated: false
+      x-readme:
+        code-samples:
+        - language: http
+          code: 'GET /v2/user HTTP/1.1
+
+            Host: api.sbgenomics.com
+
+            X-SBG-Auth-Token: 3210a98c1db9318fa9d9273156740f74'
+        - language: python
+          code: "from sevenbridges import Api\n\napi = Api(url='https://api.sbgenomics.com/v2',\n          token='3210a98c1db9318fa9d9273156740f74')\n\n# send GET request to SB API\nme = api.users.me()\n\nprint(me.username, me.email)"
+          name: Python
+        - language: curl
+          code: "curl -sL \\\n     --request GET \\\n     --url https://api.sbgenomics.com/v2/user \\\n     --header 'Accept: application/json' \\\n     --header 'X-SBG-Auth-Token: <your-token-here>'"
+        samples-languages:
+        - http
+        - python
+        - curl
+      tags:
+      - User
+x-readme:
+  headers:
+  - key: X-SBG-Auth-Token
+    value: <your-token-here>
+x-readme-fauxas: true

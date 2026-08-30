@@ -1,0 +1,1344 @@
+openapi: 3.2.0
+info:
+  title: Seven Bridges Tasks API
+  version: unknown
+  description: 'Operations tagged Tasks across 2 of this provider''s published API definitions: seven-bridges-cgc-openapi.json, seven-bridges-platform-openapi.json. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://cgc-api.sbgenomics.com/v2
+- url: https://api.sbgenomics.com/v2
+security:
+- {}
+tags:
+- name: Tasks
+paths:
+  /v2/tasks:
+    post:
+      summary: Create a new draft task
+      description: /tasks
+      operationId: create-a-new-task
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: '{}'
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: '400'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: '{}'
+              schema:
+                type: object
+                properties: {}
+      deprecated: false
+      tags:
+      - Tasks
+    get:
+      summary: List tasks you can access (primary method)
+      description: /tasks
+      operationId: list-tasks-you-can-access
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: '{}'
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: '400'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: '{}'
+              schema:
+                type: object
+                properties: {}
+      deprecated: false
+      tags:
+      - Tasks
+    servers:
+    - url: https://cgc-api.sbgenomics.com/v2
+  /tasks/{task_id}:
+    patch:
+      summary: Modify a task
+      description: /tasks/{task_id}
+      operationId: modify-a-task
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: '{}'
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: '400'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: '{}'
+              schema:
+                type: object
+                properties: {}
+      deprecated: false
+      tags:
+      - Tasks
+    delete:
+      summary: Delete a task
+      description: This call deletes the specified task. The task is referred to by its ID, which you can obtain by making the call to [list all tasks you can access](ref:list-tasks-you-can-access).
+      operationId: delete-a-task
+      parameters:
+      - name: X-SBG-Auth-Token
+        in: header
+        description: Your Seven Bridges Platform [authentication token](doc:get-your-authentication-token). For security reasons, token will not be automatically populated in the generated code sample. Please replace `<your-token-here>` with your token before executing this call.
+        required: true
+        schema:
+          type: string
+      - name: task_id
+        in: path
+        description: The ID of the task you are deleting. See the section on [specifying tasks](ref:section-tasks) for details.
+        schema:
+          type: string
+        required: true
+      deprecated: false
+      x-readme:
+        code-samples:
+        - language: python
+          code: "from sevenbridges import Api\n\napi = Api(url='https://api.sbgenomics.com/v2',\n          token='3210a98c1db9318fa9d9273156740f74')\n\ntask = api.tasks.get(id='723c949a-789c-12b3-45b6-b2dd0d8d0021')\n\n# send DELETE request to SB API\ntask.delete()"
+        samples-languages:
+        - python
+      tags:
+      - Tasks
+    get:
+      summary: Get details of a task
+      description: 'This call returns details of the specified task. The task is referred to by its ID, which you can obtain by making the call to [list all tasks you can access](ref:list-tasks-you-can-access).
+
+
+        The task details include its creator, its start and end time, the number of jobs completed in it, and its input and output files. You can also see the status of the task.'
+      operationId: get-details-of-a-task
+      parameters:
+      - name: X-SBG-Auth-Token
+        in: header
+        description: Your Seven Bridges Platform [authentication token](doc:get-your-authentication-token). For security reasons, token will not be automatically populated in the generated code sample. Please replace `<your-token-here>` with your token before executing this call.
+        required: true
+        schema:
+          type: string
+      - name: task_id
+        in: path
+        description: The ID of the task you are querying.
+        schema:
+          type: string
+        required: true
+      - name: fields
+        in: query
+        description: Selector specifying a subset of fields to include in the response.
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Regular task response body:
+                  value: "{\n  \"href\": \"https://api.sbgenomics.com/v2/tasks/bd5e95d9-12b3-789c-45b6-34d8696571a9\",\n  \"id\": \"bd5e95d9-12b3-789c-45b6-34d8696571a9\",\n  \"name\": \"grep run - 11-26-15 14:14:14\",\n  \"status\": \"COMPLETED\",\n  \"project\": \"RFranklin/test\",\n  \"use_interruptible_instances\": false,\n  \"execution_settings\": {\n          \"instance_type\": \"c4.2xlarge;ebs-gp2;2000\",\n          \"max_parallel_instances\": 1\n      },\n  \"app\": \"rfranklin/my-project/grep/5\",\n  \"type\": \"v2\",\n  \"batch\": false,\n  \"created_by\": \"RFranklin\",\n  \"executed_by\": \"RFranklin\",\n  \"start_time\": \"2015-11-26T14:14:14Z\",\n  \"end_time\": \"2015-11-26T14:20:30Z\",\n  \"execution_status\": {\n        \"steps_completed\": 19,\n        \"system_limit\": false,\n        \"account_limit\": false,\n        \"instance_init\": false,\n        \"steps_total\": 19,\n        \"message\": \"Completed\",\n        \"duration\": 0,\n        \"queued_duration\": 0,\n        \"running_duration\": 0,\n        \"execution_duration\": 0\n      },\n  \"price\": {\n    \"currency\": \"USD\",\n    \"amount\": \"0.23\",\n    \"breakdown\": {\n      \"storage\": \"0.00\",\n      \"computation\": \"0.23\"\n    }\n  },\n  \"origin_id\": \"723c949a-789c-12b3-45b6-b2dd0d8d0021\",\n  \"inputs\": {\n    \"file_to_search\": {\n      \"class\": \"File\",\n      \"path\": \"567890abc9b0307bc0414164\",\n      \"name\": \"test-text.txt\"\n    },\n    \"lines_of_context\": 2,\n    \"pattern_to_find\": \"word\"\n  },\n  \"outputs\": {\n    \"pattern_found\": {\n      \"path\": \"567890abc1e5339df0414123\",\n      \"name\": \"output.txt\",\n      \"class\": \"File\"\n    }\n  }\n}"
+                Batch task response body:
+                  value: "{\n    \"href\": \"https://api.sbgenomics.com/v2/tasks/a547a1c4-45c3-441e-857e-caf2a2df96ad\",\n    \"id\": \"a547a1c4-45c3-441e-857e-caf2a2df96ad\",\n    \"name\": \"wes run - 09-12-15 11:24:33\",\n    \"status\": \"ABORTED\",\n    \"project\": \"RFranklin/batch-test\",\n    \"app\": \"RFranklin/batch-test/whole-exome-sequencing-gatk-2-3-9-lite/2\",\n    \"type\": \"v2\",\n    \"created_by\": \"RFranklin\",\n    \"executed_by\": \"RFranklin\",\n    \"start_time\": \"2016-04-05T12:18:14Z\",\n    \"end_time\": \"2016-04-07T11:04:42Z\",\n    \"batch\": true,\n    \"batch_input\": \"FASTQ\",\n    \"batch_by\": {\n        \"type\": \"CRITERIA\",\n        \"criteria\": [\n            \"metadata.sample_id\",\n            \"metadata.library_id\"\n        ]\n    },\n    \"execution_status\": {\n        \"duration\": '123456789',\n        \"running_duration\": '120453636',\n        \"queued_duration\": '3456789',\n        \"message\": \"Batch tasks list initialization.\",\n        \"queued\": 0,\n        \"running\": 0,\n        \"completed\": 0,\n        \"failed\": 0,\n        \"aborted\": 0,\n        \"execution_duration\": 0,\n        \"system_limit\": false,\n        \"account_limit\": false\n    },\n    \"price\": {\n        \"currency\": \"USD\",\n        \"amount\": \"0.00\",\n    },\n    \"origin_id\": \"e1b28692-d911-4f2f-9afe-fd0213a64e41\",\n    \"inputs\": {\n        \"Known_SNPs\": [\n            {\n                \"class\": \"File\",\n                \"path\": \"5702cd5a60b27cfe6e8c13bf\",\n                \"name\": \"dbsnp_137.b37.vcf\"\n            }\n        ],\n        <snip>\n    }\n}"
+              schema:
+                type: object
+                properties:
+                  href:
+                    type: string
+                    example: https://api.sbgenomics.com/v2/tasks/bd5e95d9-12b3-789c-45b6-34d8696571a9
+                  id:
+                    type: string
+                    example: bd5e95d9-12b3-789c-45b6-34d8696571a9
+                  name:
+                    type: string
+                    example: grep run - 11-26-15 14:14:14
+                  status:
+                    type: string
+                    example: COMPLETED
+                  project:
+                    type: string
+                    example: RFranklin/test
+                  use_interruptible_instances:
+                    type: boolean
+                    example: false
+                    default: true
+                  execution_settings:
+                    type: object
+                    properties:
+                      instance_type:
+                        type: string
+                        example: c4.2xlarge;ebs-gp2;2000
+                      max_parallel_instances:
+                        type: integer
+                        example: 1
+                        default: 0
+                  app:
+                    type: string
+                    example: rfranklin/my-project/grep/5
+                  type:
+                    type: string
+                    example: v2
+                  batch:
+                    type: boolean
+                    example: false
+                    default: true
+                  created_by:
+                    type: string
+                    example: RFranklin
+                  executed_by:
+                    type: string
+                    example: RFranklin
+                  start_time:
+                    type: string
+                    example: '2015-11-26T14:14:14Z'
+                  end_time:
+                    type: string
+                    example: '2015-11-26T14:20:30Z'
+                  execution_status:
+                    type: object
+                    properties:
+                      steps_completed:
+                        type: integer
+                        example: 19
+                        default: 0
+                      system_limit:
+                        type: boolean
+                        example: false
+                        default: true
+                      account_limit:
+                        type: boolean
+                        example: false
+                        default: true
+                      instance_init:
+                        type: boolean
+                        example: false
+                        default: true
+                      steps_total:
+                        type: integer
+                        example: 19
+                        default: 0
+                      message:
+                        type: string
+                        example: Completed
+                      duration:
+                        type: integer
+                        example: 0
+                        default: 0
+                      queued_duration:
+                        type: integer
+                        example: 0
+                        default: 0
+                      running_duration:
+                        type: integer
+                        example: 0
+                        default: 0
+                      execution_duration:
+                        type: integer
+                        example: 0
+                        default: 0
+                  price:
+                    type: object
+                    properties:
+                      currency:
+                        type: string
+                        example: USD
+                      amount:
+                        type: string
+                        example: '0.23'
+                      breakdown:
+                        type: object
+                        properties:
+                          storage:
+                            type: string
+                            example: '0.00'
+                          computation:
+                            type: string
+                            example: '0.23'
+                  origin_id:
+                    type: string
+                    example: 723c949a-789c-12b3-45b6-b2dd0d8d0021
+                  inputs:
+                    type: object
+                    properties:
+                      file_to_search:
+                        type: object
+                        properties:
+                          class:
+                            type: string
+                            example: File
+                          path:
+                            type: string
+                            example: 567890abc9b0307bc0414164
+                          name:
+                            type: string
+                            example: test-text.txt
+                      lines_of_context:
+                        type: integer
+                        example: 2
+                        default: 0
+                      pattern_to_find:
+                        type: string
+                        example: word
+                  outputs:
+                    type: object
+                    properties:
+                      pattern_found:
+                        type: object
+                        properties:
+                          path:
+                            type: string
+                            example: 567890abc1e5339df0414123
+                          name:
+                            type: string
+                            example: output.txt
+                          class:
+                            type: string
+                            example: File
+      deprecated: false
+      x-readme:
+        code-samples:
+        - language: python
+          code: "from sevenbridges import Api\n\napi = Api(url='https://api.sbgenomics.com/v2',\n          token='3210a98c1db9318fa9d9273156740f74')\n\n# send GET request to SB API for all task fields\ntask = api.tasks.get(id='bd5e95d9-12b3-789c-45b6-34d8696571a9')\n\nprint(task.name, task.id, task.status, task.description, task.app)\nprint(task.inputs)\nprint(task.outputs)"
+        samples-languages:
+        - python
+      tags:
+      - Tasks
+    servers:
+    - url: https://cgc-api.sbgenomics.com/v2
+  /tasks/{task_id}/inputs:
+    get:
+      summary: Get task inputs
+      description: This call returns just the inputs provided to the specified task. The task is referred to by its ID, which you can obtain by making the call to [list all tasks you can access](ref:list-tasks-you-can-access).
+      operationId: get-task-inputs
+      parameters:
+      - name: X-SBG-Auth-Token
+        in: header
+        description: Your Seven Bridges Platform [authentication token](doc:get-your-authentication-token). For security reasons, token will not be automatically populated in the generated code sample. Please replace `<your-token-here>` with your token before executing this call.
+        required: true
+        schema:
+          type: string
+      - name: task_id
+        in: path
+        description: The ID of the task you are querying.
+        schema:
+          type: string
+        required: true
+      - name: fields
+        in: query
+        description: Selector specifying a subset of fields to include in the response.
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{\n    \"Known_SNPs\": [\n        {\n            \"class\": \"File\",\n            \"path\": \"567890abc9b0307bc0414164\",\n            \"name\": \"dbsnp_137.b37.vcf\"\n        }\n    ],\n    \"Known_Indels\": [\n        {\n            \"class\": \"File\",\n            \"path\": \"567890abc1e5339df0414123\",\n            \"name\": \"1000G_phase1.indels.b37.vcf\"\n        },\n        {\n            \"class\": \"File\",\n            \"path\": \"567890abc4f3066bc3750174\",\n            \"name\": \"Mills_and_1000G_gold_standard.indels.b37.sites.vcf\"\n        }\n    ],\n    \"input_file\": {\n        \"class\": \"File\",\n        \"path\": \"56796c27e4c8c560b46ab03c\",\n        \"name\": \"3d1b628fa0d554d5fefb71444511dcbb.bam\"\n    },\n    \"Target_BED\": {\n        \"class\": \"File\",\n        \"path\": \"567890abc8a5639cc6722063\",\n        \"name\": \"exome_targets.b37.bed\"\n    },\n    \"Reference\": {\n        \"class\": \"File\",\n        \"path\": \"567890abc3d8130ea4047731\",\n        \"name\": \"GRCh37-lite.fa\"\n    },\n    \"snpEff_databse\": {\n        \"class\": \"File\",\n        \"path\": \"567890abc8a5136ec6127063\",\n        \"name\": \"snpEff_v3_3_GRCh37.71.zip\"\n    },\n    \"memory_per_job\": 8000\n}"
+              schema:
+                type: object
+                properties:
+                  Known_SNPs:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        class:
+                          type: string
+                          example: File
+                        path:
+                          type: string
+                          example: 567890abc9b0307bc0414164
+                        name:
+                          type: string
+                          example: dbsnp_137.b37.vcf
+                  Known_Indels:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        class:
+                          type: string
+                          example: File
+                        path:
+                          type: string
+                          example: 567890abc1e5339df0414123
+                        name:
+                          type: string
+                          example: 1000G_phase1.indels.b37.vcf
+                  input_file:
+                    type: object
+                    properties:
+                      class:
+                        type: string
+                        example: File
+                      path:
+                        type: string
+                        example: 56796c27e4c8c560b46ab03c
+                      name:
+                        type: string
+                        example: 3d1b628fa0d554d5fefb71444511dcbb.bam
+                  Target_BED:
+                    type: object
+                    properties:
+                      class:
+                        type: string
+                        example: File
+                      path:
+                        type: string
+                        example: 567890abc8a5639cc6722063
+                      name:
+                        type: string
+                        example: exome_targets.b37.bed
+                  Reference:
+                    type: object
+                    properties:
+                      class:
+                        type: string
+                        example: File
+                      path:
+                        type: string
+                        example: 567890abc3d8130ea4047731
+                      name:
+                        type: string
+                        example: GRCh37-lite.fa
+                  snpEff_databse:
+                    type: object
+                    properties:
+                      class:
+                        type: string
+                        example: File
+                      path:
+                        type: string
+                        example: 567890abc8a5136ec6127063
+                      name:
+                        type: string
+                        example: snpEff_v3_3_GRCh37.71.zip
+                  memory_per_job:
+                    type: integer
+                    example: 8000
+                    default: 0
+      deprecated: false
+      x-readme:
+        code-samples:
+        - language: python
+          code: "from sevenbridges import Api\n\napi = Api(url='https://api.sbgenomics.com/v2',\n          token='3210a98c1db9318fa9d9273156740f74')\n\n# send GET request to SB API for all task fields\ntask = api.tasks.get(id='723c949a-789c-12b3-45b6-b2dd0d8d0021')\n\nprint(task.inputs)"
+        samples-languages:
+        - python
+      tags:
+      - Tasks
+    patch:
+      summary: Modify task inputs
+      description: This call enables you to modify the inputs provided to the specified task. The task is referred to by its ID, which you can obtain by making the call to [list all tasks you can access](ref:list-tasks-you-can-access).
+      operationId: modify-task-inputs
+      parameters:
+      - name: X-SBG-Auth-Token
+        in: header
+        description: Your Seven Bridges Platform [authentication token](doc:get-your-authentication-token). For security reasons, token will not be automatically populated in the generated code sample. Please replace `<your-token-here>` with your token before executing this call.
+        required: true
+        schema:
+          type: string
+      - name: fields
+        in: query
+        description: Selector specifying a subset of fields to include in the response.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: task_id
+        in: path
+        description: The ID of the task you are querying
+        schema:
+          type: string
+        required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                RAW_BODY:
+                  type: array
+                  description: In the body of the request, you should enter some or all of the key-value pairs contained in the input object for the task. See the section on [specifying task inputs](doc:the-api#section-inputs) for information on creating task input objects. In the example request, make sure to replace `{input_id}` with the actual ID of the input you are modifying.
+                  items:
+                    properties:
+                      '{input_id}':
+                        type: object
+                        properties:
+                          class:
+                            type: string
+                            description: Input value type. If this is a file, the value is `File`.
+                            default: File
+                          path:
+                            type: string
+                            description: File ID for file inputs.
+                          name:
+                            type: string
+                            description: Name of the file for file inputs.
+                    type: object
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{\n  \"dispersion_threshold\": null,\n  \"cuffdiff_zip\": {\n    \"class\": \"File\",\n    \"path\": \"567890abc9b0307bc0414164\",\n    \"name\": \"new-file-name.vcf\"\n  },\n  \"density_threshold\": null,\n  \"thresholds_off\": null\n}\n"
+              schema:
+                type: object
+                properties:
+                  dispersion_threshold: {}
+                  cuffdiff_zip:
+                    type: object
+                    properties:
+                      class:
+                        type: string
+                        example: File
+                      path:
+                        type: string
+                        example: 567890abc9b0307bc0414164
+                      name:
+                        type: string
+                        example: new-file-name.vcf
+                  density_threshold: {}
+                  thresholds_off: {}
+      deprecated: false
+      x-readme:
+        code-samples:
+        - language: python
+          code: "from sevenbridges import Api\n\napi = Api(url='https://api.sbgenomics.com/v2',\n          token='3210a98c1db9318fa9d9273156740f74')\n\ntask = api.tasks.get(id='48f79ccf-12b3-45b6-789c-b1e8d88dabcd')\n\ntask.inputs['cuffdiff_zip'] = api.files.get(id='567890abc9b0307bc0414164')\n\n# send PATCH request to SB API, same as changing any other field\ntask.save()\n\nprint(task.inputs)"
+        samples-languages:
+        - python
+      tags:
+      - Tasks
+    servers:
+    - url: https://api.sbgenomics.com/v2
+  /tasks/{task_id}/actions/abort:
+    post:
+      summary: Abort a task
+      description: This call aborts the specified task. Only tasks whose status is `"RUNNING"` or `"QUEUED"` may be aborted.
+      operationId: abort-a-task
+      parameters:
+      - name: X-SBG-Auth-Token
+        in: header
+        description: Your Seven Bridges Platform [authentication token](doc:get-your-authentication-token).
+        required: true
+        schema:
+          type: string
+      - name: task_id
+        in: path
+        description: The ID of the task you are acting on.
+        schema:
+          type: string
+        required: true
+      - name: fields
+        in: query
+        description: Selector specifying a subset of fields to include in the response.
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{\n  \"href\": \"https://api.sbgenomics.com/v2/tasks/bd5e95d9-12b3-789c-45b6-34d8696571a9\",\n  \"id\": \"bd5e95d9-12b3-789c-45b6-34d8696571a9\",\n  \"name\": \"Workflow run - 11-15-15 15:56:11\",\n  \"status\": \"Active\",\n  \"project\": \"RFranklin/my-project\",\n  \"use_interruptible_instances\": false,\n  \"app\": \"RFranklin/my-project/workflow/1\",\n  \"created_by\": \"RFranklin\",\n  \"executed_by\": \"Kate\",\n  \"start_time\": \"2015-11-15T15:56:11Z\",\n  \"inputs\": {\n    \"my_hardcoded_string\": {\n      \"schema\": [\n        \"null\",\n        \"string\"\n      ],\n      \"value\": null,\n      \"errors\": null,\n      \"files\": null,\n      \"missing_files\": null\n    }\n  }\n}"
+              schema:
+                type: object
+                properties:
+                  href:
+                    type: string
+                    example: https://api.sbgenomics.com/v2/tasks/bd5e95d9-12b3-789c-45b6-34d8696571a9
+                  id:
+                    type: string
+                    example: bd5e95d9-12b3-789c-45b6-34d8696571a9
+                  name:
+                    type: string
+                    example: Workflow run - 11-15-15 15:56:11
+                  status:
+                    type: string
+                    example: Active
+                  project:
+                    type: string
+                    example: RFranklin/my-project
+                  use_interruptible_instances:
+                    type: boolean
+                    example: false
+                    default: true
+                  app:
+                    type: string
+                    example: RFranklin/my-project/workflow/1
+                  created_by:
+                    type: string
+                    example: RFranklin
+                  executed_by:
+                    type: string
+                    example: Kate
+                  start_time:
+                    type: string
+                    example: '2015-11-15T15:56:11Z'
+                  inputs:
+                    type: object
+                    properties:
+                      my_hardcoded_string:
+                        type: object
+                        properties:
+                          schema:
+                            type: array
+                            items:
+                              type: string
+                              example: 'null'
+                          value: {}
+                          errors: {}
+                          files: {}
+                          missing_files: {}
+      deprecated: false
+      x-readme:
+        code-samples:
+        - language: python
+          code: "from sevenbridges import Api\n\napi = Api(url='https://api.sbgenomics.com/v2',\n          token='3210a98c1db9318fa9d9273156740f74')\n\ntask = api.tasks.get(id='bd5e95d9-12b3-789c-45b6-34d8696571a9')\n\n# send POST request to SB API\ntask.abort()\n\nprint(task.status)"
+        samples-languages:
+        - python
+      tags:
+      - Tasks
+    servers:
+    - url: https://api.sbgenomics.com/v2
+  /tasks:
+    post:
+      summary: Create a new draft task
+      description: 'This call creates a new task. You can create either a single task or a batch task by using the app''s default batching, override batching, or disable batching completely.
+
+
+        A **parent task** is a task that specifies criteria by which to batch its inputs into a series of further sub-tasks, called **child tasks**.
+
+
+        See the documentation on [batching tasks](doc:about-batch-analyses) for more details on batching criteria.'
+      operationId: create-a-new-task
+      parameters:
+      - name: fields
+        in: query
+        description: Selector specifying a subset of fields to include in the response.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: action
+        in: query
+        description: If set to "run", the task will be run immediately upon creation.
+        schema:
+          type: string
+      - name: X-SBG-Auth-Token
+        in: header
+        description: Your Seven Bridges Platform [authentication token](doc:get-your-authentication-token). For security reasons, token will not be automatically populated in the generated code sample. Please replace `<your-token-here>` with your token before executing this call.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - project
+              - app
+              properties:
+                project:
+                  type: string
+                  description: The [short name](the-api#section-project-short-names) of the project that you want to create the task in.
+                app:
+                  type: string
+                  description: The specification of the app that you want to run. Recall that apps are specified by their projects, in the form `{project_owner}/{project}/{app_name}`
+                name:
+                  type: string
+                  description: The name of the task
+                description:
+                  type: string
+                  description: An optional description of the task
+                execution_settings:
+                  type: object
+                  description: Detailed task execution parameters.
+                  properties:
+                    instance_type:
+                      type: string
+                      description: 'Possible value is the specific instance type, e.g. `"instance_type": "c4.2xlarge;ebs-gp2;2000"`.'
+                    max_parallel_instances:
+                      type: integer
+                      description: 'Maximum number of instances running at the same time. Takes any integer value equal to or greater than 1, e.g. `"max_parallel_instances": 2`.'
+                      format: int32
+                    use_memoization:
+                      type: boolean
+                      description: Set to `false` by default. Set to `true` to enable [memoization](doc:about-memoization).
+                    use_elastic_disk:
+                      type: boolean
+                      description: Set to `true` to enable [Elastic Disk](page:elastic-disk).
+                inputs:
+                  type: array
+                  description: See the section on [specifying task inputs](doc:the-api#section-inputs) for information on creating task input objects.
+                  items:
+                    properties:
+                      '{input_id}':
+                        type: object
+                        properties:
+                          class:
+                            type: string
+                            description: Input value type. If this is a file, the value is `File`.
+                            default: File
+                          path:
+                            type: string
+                            description: File ID for file inputs.
+                          name:
+                            type: string
+                            description: Name of the file for file inputs.
+                    type: object
+                batch:
+                  type: boolean
+                  description: This is set to `false` by default. Set to `true` to create a batch task and specify the `batch_input` and `batch-by` criteria as described below.
+                batch_input:
+                  type: string
+                  description: The ID of the input on which you wish to batch. You would typically batch on the input consisting of a list of files. If this parameter is omitted, the default batching criteria defined for the app will be used.
+                batch_by:
+                  type: object
+                  description: 'This specifies the criteria on which to batch. It can be in one of two formats.  1. If you wish to batch per item in the app''s input (i.e., typically per file in a list of files) then specify a dictionary with the following format: `{    "type": "ITEM" }`  2. If you wish to batch by groups of inputs, you should specify the criteria satisfied by each group. This should be a common metadata value in one, or more, metadata fields.  To do this, specify a dictionary with the following format:  `{    "type": "CRITERIA",    "criteria": [         "metadata.<field_1>", "metadata.<field_2>"     ] }` This will group inputs by shared metadata values for `<field_1>` and `<field_2>`, in that order. Arbitrarily many metadata fields may be listed, and the order in which fields are grouped will respect the order of the list.'
+                  properties: {}
+                use_interruptible_instances:
+                  type: string
+                  description: This field can be true or false. Set this field to true to allow the use of [spot instances](doc:about-spot-instances).
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{\n  \"href\": \"https://api.sbgenomics.com/v2/tasks/bd5e95d9-12b3-789c-45b6-34d8696571a9\",\n  \"id\": \"bd5e95d9-12b3-789c-45b6-34d8696571a9\",\n  \"name\": \"RFranklin, Experiment IV\",\n  \"description\": \"my draft task\",\n  \"status\": \"DRAFT\",\n  \"project\": \"RFranklin/my-project\",\n  \"execution_settings\": {\n            \"instance_type\": \"c4.2xlarge;ebs-gp2;2000\",\n            \"max_parallel_instances\": 1,\n            \"use_memoization\": true\n        },\n  \"use_interruptible_instances\": false,\n  \"app\": \"RFranklin/my-project/new-test-app/0\",\n  \"type\": \"v2\",\n  \"created_by\": \"RFranklin\",\n  \"start_time\": \"2016-01-12T19:20:10Z\",\n  \"inputs\": {\n    \"dispersion_threshold\": null,\n    \"cuffdiff_zip\": {\n      \"class\": \"File\",\n      \"path\": \"567890abc3d8130ea4047731\",\n      \"name\": \"example_human_known_indels.vcf\"\n    },\n    \"density_threshold\": null,\n    \"thresholds_off\": null\n  },\n  \"outputs\": {\n    \"archive\": null,\n    \"html\": null\n  }\n}\n"
+              schema:
+                type: object
+                properties:
+                  href:
+                    type: string
+                    example: https://api.sbgenomics.com/v2/tasks/bd5e95d9-12b3-789c-45b6-34d8696571a9
+                  id:
+                    type: string
+                    example: bd5e95d9-12b3-789c-45b6-34d8696571a9
+                  name:
+                    type: string
+                    example: RFranklin, Experiment IV
+                  description:
+                    type: string
+                    example: my draft task
+                  status:
+                    type: string
+                    example: DRAFT
+                  project:
+                    type: string
+                    example: RFranklin/my-project
+                  execution_settings:
+                    type: object
+                    properties:
+                      instance_type:
+                        type: string
+                        example: c4.2xlarge;ebs-gp2;2000
+                      max_parallel_instances:
+                        type: integer
+                        example: 1
+                        default: 0
+                      use_memoization:
+                        type: boolean
+                        example: true
+                        default: true
+                  use_interruptible_instances:
+                    type: boolean
+                    example: false
+                    default: true
+                  app:
+                    type: string
+                    example: RFranklin/my-project/new-test-app/0
+                  type:
+                    type: string
+                    example: v2
+                  created_by:
+                    type: string
+                    example: RFranklin
+                  start_time:
+                    type: string
+                    example: '2016-01-12T19:20:10Z'
+                  inputs:
+                    type: object
+                    properties:
+                      dispersion_threshold: {}
+                      cuffdiff_zip:
+                        type: object
+                        properties:
+                          class:
+                            type: string
+                            example: File
+                          path:
+                            type: string
+                            example: 567890abc3d8130ea4047731
+                          name:
+                            type: string
+                            example: example_human_known_indels.vcf
+                      density_threshold: {}
+                      thresholds_off: {}
+                  outputs:
+                    type: object
+                    properties:
+                      archive: {}
+                      html: {}
+      deprecated: false
+      x-readme:
+        code-samples:
+        - language: python
+          code: "from sevenbridges import Api\n\napi = Api(url='https://api.sbgenomics.com/v2',\n          token='3210a98c1db9318fa9d9273156740f74')\n\n# send POST request to SB API\nnew_task = api.tasks.create(\n    name='RFranklin, Experiment IV',\n    project='RFranklin/my-project',\n    app='RFranklin/my-project/new-test-app',\n    inputs={\n        'cuffdiff_zip': api.files.get('567890abc9b0307bc0414164')\n    },\n    description='my draft task',\n    interruptible=False,\n    execution_settings={\n        \"instance_type\": \"c4.2xlarge;ebs-gp2;2000\",\n        \"max_parallel_instances\": 1\n    }\n)\n\nprint(new_task.name, new_task.status, new_task.id)"
+        samples-languages:
+        - python
+      tags:
+      - Tasks
+    get:
+      summary: List tasks you can access
+      description: This call returns a list of tasks that you can access.
+      operationId: list-tasks-you-can-access
+      parameters:
+      - name: X-SBG-Auth-Token
+        in: header
+        description: Your Seven Bridges Platform [authentication token](doc:get-your-authentication-token). For security reasons, token will not be automatically populated in the generated code sample. Please replace `<your-token-here>` with your token before executing this call.
+        required: true
+        schema:
+          type: string
+      - name: fields
+        in: query
+        description: Selector specifying a subset of fields to include in the response.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: status
+        in: query
+        description: 'You can filter the returned tasks by their status. Set the value of `status` to one of the following values: `"QUEUED"` `"DRAFT"` `"RUNNING"` `"COMPLETED"` `"ABORTED"` `"FAILED"`'
+        schema:
+          type: string
+      - name: parent
+        in: query
+        description: Enter the task ID of the parent task to return all child tasks from that parent.  A **parent task** is a task that specifies criteria by which to batch its inputs into a series of further sub-tasks, called **child tasks**.  See the documentation on [batching tasks](doc:perform-batch-analysis) for more details on how to run tasks in batches.
+        schema:
+          type: string
+      - name: project
+        in: query
+        description: Enter the project ID of the project you wish to list the tasks from.
+        schema:
+          type: string
+      - name: created_from
+        in: query
+        description: Enter the starting date for querying tasks created on the specified date and onwards (see below for more information).
+        schema:
+          type: string
+          format: date-time
+      - name: created_to
+        in: query
+        description: Enter the ending date for querying tasks created until the specified date. You can use it in combination with `created_from` to specify a time interval.
+        schema:
+          type: string
+          format: date-time
+      - name: started_from
+        in: query
+        description: Enter the starting date for querying tasks started on the specified date and onwards (see below for more information).
+        schema:
+          type: string
+          format: date-time
+      - name: started_to
+        in: query
+        description: Enter the starting date for querying tasks started until the specified date (see below for more information).
+        schema:
+          type: string
+          format: date-time
+      - name: ended_from
+        in: query
+        description: Enter the starting date for querying tasks that ended on a specified date (see below for more information).
+        schema:
+          type: string
+          format: date-time
+      - name: ended_to
+        in: query
+        description: Enter the ending date for querying tasks that ended until a specified date.
+        schema:
+          type: string
+          format: date-time
+      - name: order_by
+        in: query
+        description: 'Order returned results by the specified field. Allowed values:  - `created_time` - `start_time` - `name` - `end_time` - `created_by`  Sort can be done only by one column. The default value is `created_time`.'
+        schema:
+          type: string
+      - name: order
+        in: query
+        description: Sort results in ascending or descending order by specifying `asc` or `desc`, respectively. Only taken into account if `order_by` is explicitly specified.  The default value is `asc`.
+        schema:
+          type: string
+      - name: origin_id
+        in: query
+        description: Enter an automation run ID to list all tasks created from the specified automation run.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{\n  \"href\": \"https://api.sbgenomics.com/v2/tasks?offset=0&limit=25&project=RFranklin/my-project\",\n  \"items\": [\n    {\n      \"href\": \"https://api.sbgenomics.com/v2/tasks/48f79ccf-12b3-45b6-789c-b1e8d88dabcd\",\n      \"id\": \"48f79ccf-12b3-45b6-789c-b1e8d88dabcd\",\n      \"name\": \"test run - 12-11-15 11:02:03\",\n      \"project\": \"RFranklin/my-project\"\n    },\n    {\n      \"href\": \"https://api.sbgenomics.com/v2/tasks/1fd125fa-789c-45b6-12b3-2a3ab3bedcba\",\n      \"id\": \"1fd125fa-789c-45b6-12b3-2a3ab3bedcba\",\n      \"name\": \"test run - 12-11-15 11:52:45\",\n      \"project\": \"RFranklin/my-project\"\n    }\n  ],\n  \"links\": []\n}"
+              schema:
+                type: object
+                properties:
+                  href:
+                    type: string
+                    example: https://api.sbgenomics.com/v2/tasks?offset=0&limit=25&project=RFranklin/my-project
+                  items:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        href:
+                          type: string
+                          example: https://api.sbgenomics.com/v2/tasks/48f79ccf-12b3-45b6-789c-b1e8d88dabcd
+                        id:
+                          type: string
+                          example: 48f79ccf-12b3-45b6-789c-b1e8d88dabcd
+                        name:
+                          type: string
+                          example: test run - 12-11-15 11:02:03
+                        project:
+                          type: string
+                          example: RFranklin/my-project
+                  links:
+                    type: array
+      deprecated: false
+      x-readme:
+        code-samples:
+        - language: python
+          code: "from sevenbridges import Api\n\napi = Api(url='https://api.sbgenomics.com/v2',\n          token='3210a98c1db9318fa9d9273156740f74')\n\n# send GET request to SB API\ntasks = api.tasks.query()\n\nfor task in tasks:\n    print(task.name, task.status, task.id)"
+        samples-languages:
+        - python
+      tags:
+      - Tasks
+    servers:
+    - url: https://api.sbgenomics.com/v2
+  /tasks/{task_id}/execution_details:
+    get:
+      summary: Get task execution details
+      description: "This call returns execution details of the specified task. The task is referred to by its ID, which you can obtain by making the [call to list all tasks you can access](ref:list-tasks-you-can-access). \n\nThe call breaks down the information into the task's distinct jobs. A job is a single subprocess carried out in a task.\n\nThe information returned by this call is broadly similar to that which can be found in the [task stats and logs provided on the Platform](doc:review-task-page)."
+      operationId: get-task-execution-details
+      parameters:
+      - name: X-SBG-Auth-Token
+        in: header
+        description: Your Seven Bridges Platform [authentication token](doc:get-your-authentication-token). For security reasons, token will not be automatically populated in the generated code sample. Please replace `<your-token-here>` with your token before executing this call.
+        required: true
+        schema:
+          type: string
+      - name: task_id
+        in: path
+        description: The ID of the task you are querying.
+        schema:
+          type: string
+        required: true
+      - name: fields
+        in: query
+        description: Selector specifying a subset of fields to include in the response.
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                OK:
+                  value: "{\n  \"href\": \"https://api.sbgenomics.com/v2/tasks/f0b89de2-45b6-789c-12b3-05b832c576c6/execution_details\",\n  \"start_time\": \"2017-04-20T15:30:11Z\",\n  \"end_time\": \"2017-04-20T15:36:29Z\",\n  \"status\": \"COMPLETED\",\n  \"message\": \"Completed\",\n  \"jobs\": [\n    {\n      \"name\": \"FastQC_1_0_s\",\n      \"start_time\": \"2017-04-20T15:33:41Z\",\n      \"end_time\": \"2017-04-20T15:34:25Z\",\n      \"status\": \"COMPLETED\",\n      \"command_line\": \"fastqc --noextract --outdir . --quiet --threads 4 /sbgenomics/Projects/10e26e13-cf6a-4c44-8f58-b7352187b50e/hg00105.srr711354.fastq\",\n      \"instance\": {\n        \"id\": \"i-054205ac85c9debcf\",\n        \"type\": \"c4.2xlarge\",\n        \"provider\": \"AWS\",\n        \"disk\": {\n          \"size\": 1024,\n          \"unit\": \"GB\",\n          \"type\": \"amazon-gp2\"\n        }\n      },\n      \"logs\": {\n        \"cmd.log\": \"https://api.sbgenomics.com/v2/files/567890abc9b0307bc0414164/download_info\",\n        \"job.err.log\": \"https://api.sbgenomics.com/v2/files/567890abc1e5339df0414123/download_info\",\n        \"job.tree.log\": \"https://api.sbgenomics.com/v2/files/567890abc4f3066bc3750174/download_info\",\n        \"stderr\": \"https://api.sbgenomics.com/v2/files/567890abc8a5639cc6722063/download_info\"\n      },\n      \"docker\": {\n        \"checksum\": \"sha256:642f70b2d64dffa562e4aea95aa0850a69ab8b09922b56b0b92e40a741cddd29\"\n      }\n    },\n    {\n      \"name\": \"SBG_Html2b64_1_0_s\",\n      \"start_time\": \"2017-04-20T15:35:54Z\",\n      \"end_time\": \"2017-04-20T15:36:27Z\",\n      \"status\": \"COMPLETED\",\n      \"command_line\": \"python /opt/sbg_html_to_b64.py --input /sbgenomics/Projects/10e26e13-cf6a-4c44-8f58-b7352187b50e/workspace/48ed6043-d531-42be-afb1-d2d5bbae6ca3/fastqc-analysis_FastQC_1_0_s/hg00105.srr711354_fastqc.zip\",\n      \"instance\": {\n        \"id\": \"i-054205ac85a0debcf\",\n        \"type\": \"c4.2xlarge\",\n        \"provider\": \"AWS\",\n        \"disk\": {\n          \"size\": 1024,\n          \"unit\": \"GB\",\n          \"type\": \"amazon-gp2\"\n        }\n      },\n      \"logs\": {\n        \"cmd.log\": \"https://api.sbgenomics.com/v2/files/567894d13d947a1eecc6d563/download_info\",\n        \"job.err.log\": \"https://api.sbgenomics.com/v2/files/567894a81c947a1eecc6d56d/download_info\",\n        \"job.tree.log\": \"https://api.sbgenomics.com/v2/files/567890abc3d8130ea4047731/download_info\",\n        \"stderr\": \"https://api.sbgenomics.com/v2/files/567890abc8a5136ec6127063/download_info\"\n      },\n      \"docker\": {\n        \"checksum\": \"sha256:0a7b35a10596c43f6b2345e511692e09e6c3fbc3870c106b18bc4dac3bb21ea8\"\n      }\n    }\n  ]\n}"
+              schema:
+                type: object
+                properties:
+                  href:
+                    type: string
+                    example: https://api.sbgenomics.com/v2/tasks/f0b89de2-45b6-789c-12b3-05b832c576c6/execution_details
+                  start_time:
+                    type: string
+                    example: '2017-04-20T15:30:11Z'
+                  end_time:
+                    type: string
+                    example: '2017-04-20T15:36:29Z'
+                  status:
+                    type: string
+                    example: COMPLETED
+                  message:
+                    type: string
+                    example: Completed
+                  jobs:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                          example: FastQC_1_0_s
+                        start_time:
+                          type: string
+                          example: '2017-04-20T15:33:41Z'
+                        end_time:
+                          type: string
+                          example: '2017-04-20T15:34:25Z'
+                        status:
+                          type: string
+                          example: COMPLETED
+                        command_line:
+                          type: string
+                          example: fastqc --noextract --outdir . --quiet --threads 4 /sbgenomics/Projects/10e26e13-cf6a-4c44-8f58-b7352187b50e/hg00105.srr711354.fastq
+                        instance:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              example: i-054205ac85c9debcf
+                            type:
+                              type: string
+                              example: c4.2xlarge
+                            provider:
+                              type: string
+                              example: AWS
+                            disk:
+                              type: object
+                              properties:
+                                size:
+                                  type: integer
+                                  example: 1024
+                                  default: 0
+                                unit:
+                                  type: string
+                                  example: GB
+                                type:
+                                  type: string
+                                  example: amazon-gp2
+                        logs:
+                          type: object
+                          properties:
+                            cmd.log:
+                              type: string
+                              example: https://api.sbgenomics.com/v2/files/567890abc9b0307bc0414164/download_info
+                            job.err.log:
+                              type: string
+                              example: https://api.sbgenomics.com/v2/files/567890abc1e5339df0414123/download_info
+                            job.tree.log:
+                              type: string
+                              example: https://api.sbgenomics.com/v2/files/567890abc4f3066bc3750174/download_info
+                            stderr:
+                              type: string
+                              example: https://api.sbgenomics.com/v2/files/567890abc8a5639cc6722063/download_info
+                        docker:
+                          type: object
+                          properties:
+                            checksum:
+                              type: string
+                              example: sha256:642f70b2d64dffa562e4aea95aa0850a69ab8b09922b56b0b92e40a741cddd29
+      deprecated: false
+      x-readme:
+        code-samples:
+        - language: python
+          code: "from sevenbridges import Api\n\napi = Api(url='https://api.sbgenomics.com/v2',\n          token='3210a98c1db9318fa9d9273156740f74')\n\ntask = api.tasks.get(id='f0b89de2-45b6-789c-12b3-05b832c576c6')\n\n# send GET request to SB API\nexecution_details = task.get_execution_details()\n\nprint(execution_details.status, execution_details.message)\nfor job in execution_details.jobs:\n    print(job.name, job.start_time, job.end_time)"
+        samples-languages:
+        - python
+      tags:
+      - Tasks
+    servers:
+    - url: https://api.sbgenomics.com/v2
+  /tasks/{task_id}/actions/run:
+    post:
+      summary: Run a task
+      description: This call runs (executes) the specified task. Only tasks whose status is `"DRAFT"` can be run.
+      operationId: perform-an-action-on-a-specific-task
+      parameters:
+      - name: X-SBG-Auth-Token
+        in: header
+        description: Your Seven Bridges Platform [authentication token](doc:get-your-authentication-token). For security reasons, token will not be automatically populated in the generated code sample. Please replace `<your-token-here>` with your token before executing this call.
+        required: true
+        schema:
+          type: string
+      - name: fields
+        in: query
+        description: Selector specifying a subset of fields to include in the response.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: task_id
+        in: path
+        description: The ID of the task you want to run.
+        schema:
+          type: string
+        required: true
+      - name: batch
+        in: query
+        description: Set this to `false` to disable the default batching for this task.  Running a batch task is a recommended way to run multiple tasks considering the API rate limit ([learn more](doc:api-rate-limit)).
+        schema:
+          type: boolean
+      - name: use_interruptible_instances
+        in: query
+        description: This field can be `true` or `false`.  Set this field to `true` to allow the use of [spot instances](doc:about-spot-instances).
+        schema:
+          type: boolean
+      - name: Content-Type
+        in: header
+        required: true
+        schema:
+          type: string
+          default: application/json
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{\n  \"href\": \"https://api.sbgenomics.com/v2/tasks/48f79ccf-12b3-45b6-789c-b1e8d88dabcd\",\n  \"id\": \"48f79ccf-12b3-45b6-789c-b1e8d88dabcd\",\n  \"name\": \"new name for my task\",\n  \"description\": \"re-describing the task\",\n  \"status\": \"RUNNING\",\n  \"project\": \"RFranklin/my-project\",\n  \"use_interruptible_instances\": false,\n  \"app\": \"RFranklin/my-project/new/0\",\n  \"type\": \"v2\",\n  \"created_by\": \"RFranklin\",\n  \"executed_by\": \"RFranklin\",\n  \"start_time\": \"2016-01-12T18:39:30Z\",\n  \"execution_status\": {\n    \"message\": \"Initializing...\"\n  },\n  \"inputs\": {\n    \"dispersion_threshold\": null,\n    \"cuffdiff_zip\": {\n      \"class\": \"File\",\n      \"path\": \"567890abc9b0307bc0414164\",\n      \"name\": \"example_human_known_indels.vcf\"\n    },\n    \"density_threshold\": null,\n    \"thresholds_off\": null\n  },\n  \"outputs\": {\n    \"archive\": null,\n    \"html\": null\n  }\n}"
+              schema:
+                type: object
+                properties:
+                  href:
+                    type: string
+                    example: https://api.sbgenomics.com/v2/tasks/48f79ccf-12b3-45b6-789c-b1e8d88dabcd
+                  id:
+                    type: string
+                    example: 48f79ccf-12b3-45b6-789c-b1e8d88dabcd
+                  name:
+                    type: string
+                    example: new name for my task
+                  description:
+                    type: string
+                    example: re-describing the task
+                  status:
+                    type: string
+                    example: RUNNING
+                  project:
+                    type: string
+                    example: RFranklin/my-project
+                  use_interruptible_instances:
+                    type: boolean
+                    example: false
+                    default: true
+                  app:
+                    type: string
+                    example: RFranklin/my-project/new/0
+                  type:
+                    type: string
+                    example: v2
+                  created_by:
+                    type: string
+                    example: RFranklin
+                  executed_by:
+                    type: string
+                    example: RFranklin
+                  start_time:
+                    type: string
+                    example: '2016-01-12T18:39:30Z'
+                  execution_status:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                        example: Initializing...
+                  inputs:
+                    type: object
+                    properties:
+                      dispersion_threshold: {}
+                      cuffdiff_zip:
+                        type: object
+                        properties:
+                          class:
+                            type: string
+                            example: File
+                          path:
+                            type: string
+                            example: 567890abc9b0307bc0414164
+                          name:
+                            type: string
+                            example: example_human_known_indels.vcf
+                      density_threshold: {}
+                      thresholds_off: {}
+                  outputs:
+                    type: object
+                    properties:
+                      archive: {}
+                      html: {}
+      deprecated: false
+      x-readme:
+        code-samples:
+        - language: python
+          code: "from sevenbridges import Api\n\napi = Api(url='https://api.sbgenomics.com/v2',\n          token='3210a98c1db9318fa9d9273156740f74')\n\ntask = api.tasks.get(id='48f79ccf-12b3-45b6-789c-b1e8d88dabcd')\n\n# send POST request to SB API\ntask.run()\n\nprint(task.status)"
+        samples-languages:
+        - python
+      tags:
+      - Tasks
+    servers:
+    - url: https://api.sbgenomics.com/v2
+  /tasks/{task_id}/actions/clone:
+    post:
+      summary: Rerun a task
+      description: This call reruns (executes) the specified task.  Once rerun, the task can either be in draft mode or immediately ran, using the Action query parameter (see below).
+      operationId: rerun-a-task
+      parameters:
+      - name: X-SBG-Auth-Token
+        in: header
+        description: Your Seven Bridges Platform [authentication token](doc:get-your-authentication-token). For security reasons, token will not be automatically populated in the generated code sample. Please replace `<your-token-here>` with your token before executing this call.
+        required: true
+        schema:
+          type: string
+      - name: action
+        in: query
+        description: Set this to `run` in order to create a draft task and execute it immediately.
+        schema:
+          type: string
+      - name: task_id
+        in: path
+        description: The ID of the task you are rerunning.
+        schema:
+          type: string
+        required: true
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{\n    \"href\": \"https://api.sbgenomics.com/v2/tasks/67f68072-45b6-12b3-789c-37be8b0f2f04\",\n    \"id\": \"67f68072-45b6-12b3-789c-37be8b0f2f04\",\n    \"name\": \"VarsScan2 WF from BAM test\",\n    \"status\": \"DRAFT\",\n    \"project\": \"rfranklin/rfranklin-demo-project\",\n    \"app\": \"rfranklin/rfranklin-demo-project/varscan2-workflow-from-bam-v2-3/0\",\n    \"type\": \"v2\",\n    \"created_by\": \"rfranklin\",\n    \"start_time\": \"2018-07-03T14:24:10Z\",\n    \"batch\": false,\n    \"use_interruptible_instances\": false,\n    \"errors\": [],\n    \"warnings\": [],\n    \"inputs\": {\n        \"input_fasta_file\": {\n            \"path\": \"567890abc9b0307bc0414164\",\n            \"class\": \"File\"\n        },\n        \"Normal_BAM\": {\n            \"path\": \"567890abc1e5339df0414123\",\n            \"class\": \"File\"\n        },\n        \"Tumor_BAM\": {\n            \"path\": \"567890abc4f3066bc3750174\",\n            \"class\": \"File\"\n        }\n    },\n    \"outputs\": {\n        \"High_Confidence_INDELs\": {},\n        \"empty_contigs\": {},\n        \"High_Confidence_SNPs\": {}\n    },\n    \"created_time\": \"2018-07-03T14:24:10Z\"\n}"
+              schema:
+                type: object
+                properties:
+                  href:
+                    type: string
+                    example: https://api.sbgenomics.com/v2/tasks/67f68072-45b6-12b3-789c-37be8b0f2f04
+                  id:
+                    type: string
+                    example: 67f68072-45b6-12b3-789c-37be8b0f2f04
+                  name:
+                    type: string
+                    example: VarsScan2 WF from BAM test
+                  status:
+                    type: string
+                    example: DRAFT
+                  project:
+                    type: string
+                    example: rfranklin/rfranklin-demo-project
+                  app:
+                    type: string
+                    example: rfranklin/rfranklin-demo-project/varscan2-workflow-from-bam-v2-3/0
+                  type:
+                    type: string
+                    example: v2
+                  created_by:
+                    type: string
+                    example: rfranklin
+                  start_time:
+                    type: string
+                    example: '2018-07-03T14:24:10Z'
+                  batch:
+                    type: boolean
+                    example: false
+                    default: true
+                  use_interruptible_instances:
+                    type: boolean
+                    example: false
+                    default: true
+                  errors:
+                    type: array
+                  warnings:
+                    type: array
+                  inputs:
+                    type: object
+                    properties:
+                      input_fasta_file:
+                        type: object
+                        properties:
+                          path:
+                            type: string
+                            example: 567890abc9b0307bc0414164
+                          class:
+                            type: string
+                            example: File
+                      Normal_BAM:
+                        type: object
+                        properties:
+                          path:
+                            type: string
+                            example: 567890abc1e5339df0414123
+                          class:
+                            type: string
+                            example: File
+                      Tumor_BAM:
+                        type: object
+                        properties:
+                          path:
+                            type: string
+                            example: 567890abc4f3066bc3750174
+                          class:
+                            type: string
+                            example: File
+                  outputs:
+                    type: object
+                    properties:
+                      High_Confidence_INDELs:
+                        type: object
+                        properties: {}
+                      empty_contigs:
+                        type: object
+                        properties: {}
+                      High_Confidence_SNPs:
+                        type: object
+                        properties: {}
+                  created_time:
+                    type: string
+                    example: '2018-07-03T14:24:10Z'
+      deprecated: false
+      x-readme:
+        code-samples:
+        - language: python
+          code: "from sevenbridges import Api\n\napi = Api(url='https://api.sbgenomics.com/v2',\n          token='3210a98c1db9318fa9d9273156740f74')\n\ntask = api.tasks.get(id='f0b89de2-45b6-789c-12b3-05b832c576c6')\n\n# send POST request to SB API\nnew_task = task.clone()\n\nprint(new_task.name, new_task.status, new_task.id)"
+        samples-languages:
+        - python
+      tags:
+      - Tasks
+    servers:
+    - url: https://api.sbgenomics.com/v2
+x-refined-from:
+- seven-bridges-cgc-openapi.json
+- seven-bridges-platform-openapi.json
+x-readme:
+  headers: []
+x-readme-fauxas: true

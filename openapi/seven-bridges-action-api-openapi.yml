@@ -1,0 +1,151 @@
+openapi: 3.2.0
+info:
+  title: Seven Bridges Action API
+  version: unknown
+  description: 'Operations tagged Action across 2 of this provider''s published API definitions: seven-bridges-cgc-openapi.json, seven-bridges-platform-openapi.json. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://cgc-api.sbgenomics.com/v2
+- url: https://api.sbgenomics.com/v2
+security:
+- {}
+tags:
+- name: Action
+paths:
+  /v2/action/files/copy:
+    post:
+      summary: Copy multiple files between projects
+      description: /action/files/copy
+      operationId: copy-files-between-projects-1
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: '{}'
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: '400'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: '{}'
+              schema:
+                type: object
+                properties: {}
+      deprecated: false
+      tags:
+      - Action
+    servers:
+    - url: https://cgc-api.sbgenomics.com/v2
+  /action/files/copy:
+    post:
+      summary: Copy multiple files between projects
+      description: This call allows you to copy files between projects. Unlike the call to [copy a file between projects](ref:copy-a-file), this call lets you batch the copy operation and copy a list of files at a time.
+      operationId: copy-files-between-projects
+      parameters:
+      - name: X-SBG-Auth-Token
+        in: header
+        description: Your Seven Bridges Platform [authentication token](doc:get-your-authentication-token). For security reasons, token will not be automatically populated in the generated code sample. Please replace `<your-token-here>` with your token before executing this call.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - project
+              properties:
+                project:
+                  type: string
+                  description: The name of the project you want to copy into.
+                file_ids:
+                  type: array
+                  description: The IDs of the files you want to copy.
+                  items:
+                    type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{\n  \"567890abc9b0307bc0414164\": {\n    \"status\": \"OK\",\n    \"new_file_id\": \"567890abc8a5136ec6127063\",\n    \"new_file_name\": \"sorted.bam\"\n  }\n}"
+              schema:
+                type: object
+                properties:
+                  567890abc9b0307bc0414164:
+                    type: object
+                    properties:
+                      status:
+                        type: string
+                        example: OK
+                      new_file_id:
+                        type: string
+                        example: 567890abc8a5136ec6127063
+                      new_file_name:
+                        type: string
+                        example: sorted.bam
+      deprecated: false
+      x-readme:
+        code-samples:
+        - language: python
+          code: "from sevenbridges import Api\n\napi = Api(url='https://api.sbgenomics.com/v2',\n          token='3210a98c1db9318fa9d9273156740f74')\n\n# send POST request to SB API\ncopy_results = api.actions.bulk_copy_files(\n    files=['567890abc9b0307bc0414164', '567890abc1e5339df0414123'],\n    destination_project='RFranklin/my-project'\n)\n\nfor original_file_id, copy_result in copy_results.items():\n    print(original_file_id, copy_result)"
+          name: Python
+        samples-languages:
+        - python
+      tags:
+      - Action
+    servers:
+    - url: https://api.sbgenomics.com/v2
+  /action/notifications/feedback:
+    post:
+      summary: Send a feedback item
+      description: 'Use this call to send feedback on ideas, thoughts, and problems via the API with three available types: "`idea`", "`thought`", and "`problem`". You can send one feedback item per minute.'
+      operationId: send-a-feedback-item
+      parameters:
+      - name: X-SBG-Auth-Token
+        in: header
+        description: Your Seven Bridges Platform [authentication token](doc:get-your-authentication-token). For security reasons, token will not be automatically populated in the generated code sample. Please replace `<your-token-here>` with your token before executing this call.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text:
+                  type: string
+                  description: Specifies the content for the feedback i.e. feedback text.
+                type:
+                  type: string
+                  description: 'Specifies the type of feedback. The following are available:   * idea   * thought   * problem'
+                referrer:
+                  type: string
+                  description: The name of the person submitting the feedback.
+      deprecated: false
+      x-readme:
+        code-samples:
+        - language: python
+          code: "from sevenbridges import Api\n\napi = Api(url='https://api.sbgenomics.com/v2',\n          token='3210a98c1db9318fa9d9273156740f74')\n\n# send POST request to SB API\napi.actions.send_feedback(\n    referrer='Rosalind Franklin',\n    text='I have an idea on what you can change for the Workflow Editor.'\n)"
+        samples-languages:
+        - python
+      tags:
+      - Action
+    servers:
+    - url: https://api.sbgenomics.com/v2
+x-refined-from:
+- seven-bridges-cgc-openapi.json
+- seven-bridges-platform-openapi.json
+x-readme:
+  headers: []
+x-readme-fauxas: true

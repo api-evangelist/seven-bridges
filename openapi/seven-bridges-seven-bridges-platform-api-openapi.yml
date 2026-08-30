@@ -1,0 +1,79 @@
+openapi: 3.2.0
+info:
+  title: Seven Bridges Platform API
+  version: unknown
+servers:
+- url: https://api.sbgenomics.com/v2
+security:
+- {}
+tags:
+- name: Seven Bridges Platform
+paths:
+  /:
+    get:
+      summary: List all API paths
+      description: ''
+      operationId: list-all-api-paths
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{\n  \"rate_limit_url\": \"https://api.sbgenomics.com/v2/rate_limit\",\n  \"user_url\": \"https://api.sbgenomics.com/v2/user\",\n  \"users_url\": \"https://api.sbgenomics.com/v2/users\",\n  \"billing_url\": \"https://api.sbgenomics.com/v2/billing\",\n  \"projects_url\": \"https://api.sbgenomics.com/v2/projects\",\n  \"files_url\": \"https://api.sbgenomics.com/v2/files\",\n  \"tasks_url\": \"https://api.sbgenomics.com/v2/tasks\",\n  \"apps_url\": \"https://api.sbgenomics.com/v2/apps\",\n  \"action_url\": \"https://api.sbgenomics.com/v2/action\",\n  \"upload_url\":\"https://api.sbgenomics.com/v2/upload\",\n  \"storage_url\": \"https://api.sbgenomics.com/v2/storage\"\n}"
+              schema:
+                type: object
+                properties:
+                  rate_limit_url:
+                    type: string
+                    example: https://api.sbgenomics.com/v2/rate_limit
+                  user_url:
+                    type: string
+                    example: https://api.sbgenomics.com/v2/user
+                  users_url:
+                    type: string
+                    example: https://api.sbgenomics.com/v2/users
+                  billing_url:
+                    type: string
+                    example: https://api.sbgenomics.com/v2/billing
+                  projects_url:
+                    type: string
+                    example: https://api.sbgenomics.com/v2/projects
+                  files_url:
+                    type: string
+                    example: https://api.sbgenomics.com/v2/files
+                  tasks_url:
+                    type: string
+                    example: https://api.sbgenomics.com/v2/tasks
+                  apps_url:
+                    type: string
+                    example: https://api.sbgenomics.com/v2/apps
+                  action_url:
+                    type: string
+                    example: https://api.sbgenomics.com/v2/action
+                  upload_url:
+                    type: string
+                    example: https://api.sbgenomics.com/v2/upload
+                  storage_url:
+                    type: string
+                    example: https://api.sbgenomics.com/v2/storage
+      deprecated: false
+      security: []
+      x-readme:
+        code-samples:
+        - language: http
+          code: 'GET /v2/ HTTP/1.1
+
+            Host: api.sbgenomics.com
+
+            X-SBG-Auth-Token: 3210a98c1db9318fa9d9273156740f74'
+        samples-languages:
+        - http
+      tags:
+      - Seven Bridges Platform
+x-readme:
+  headers:
+  - key: X-SBG-Auth-Token
+    value: <your-token-here>
+x-readme-fauxas: true

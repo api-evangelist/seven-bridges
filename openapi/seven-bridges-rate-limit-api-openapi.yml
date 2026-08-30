@@ -1,0 +1,81 @@
+openapi: 3.2.0
+info:
+  title: Seven Bridges Platform Rate Limit API
+  version: unknown
+servers:
+- url: https://api.sbgenomics.com/v2
+security:
+- {}
+tags:
+- name: Rate Limit
+paths:
+  /rate_limit:
+    get:
+      summary: Get your current rate limit status
+      description: This call returns information about your current rate limit. This is the number of API calls you can make in five minutes. This call also returns information about your current instance limit.
+      operationId: get-your-current-rate-limit-status
+      parameters:
+      - name: X-SBG-Auth-Token
+        in: header
+        description: Your Seven Bridges Platform [authentication token](doc:get-your-authentication-token). For security reasons, token will not be automatically populated in the generated code sample. Please replace `<your-token-here>` with your token before executing this call.
+        required: true
+        schema:
+          type: string
+      - name: fields
+        in: query
+        description: Selector specifying a subset of fields to include in the response.
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{\n  \"rate\": {\n    \"limit\": 1000,\n    \"remaining\": 1000,\n    \"reset\":  1489700093\n  },\n \"instance_limit\" : {\n    \"limit\": -1,\n    \"remaining\": 9223372036854775807\n }\n}"
+              schema:
+                type: object
+                properties:
+                  rate:
+                    type: object
+                    properties:
+                      limit:
+                        type: integer
+                        example: 1000
+                        default: 0
+                      remaining:
+                        type: integer
+                        example: 1000
+                        default: 0
+                      reset:
+                        type: integer
+                        example: 1489700093
+                        default: 0
+                  instance_limit:
+                    type: object
+                    properties:
+                      limit:
+                        type: integer
+                        example: -1
+                        default: 0
+                      remaining:
+                        type: integer
+                        example: 9223372036854776000
+                        default: 0
+      deprecated: false
+      x-readme:
+        code-samples:
+        - language: python
+          code: "from sevenbridges import Api\n\napi = Api(url='https://api.sbgenomics.com/v2',\n          token='3210a98c1db9318fa9d9273156740f74')\n\n# send GET request to SB API\nrate_limit = api.rate_limit.get()\n\nprint(rate_limit.rate.remaining, rate_limit.rate.reset)\nprint(rate_limit.instance_limit.remaining, rate_limit.instance_limit.limit)"
+        samples-languages:
+        - python
+      tags:
+      - Rate Limit
+x-readme:
+  headers:
+  - key: X-SBG-Auth-Token
+    value: <your-token-here>
+x-readme-fauxas: true

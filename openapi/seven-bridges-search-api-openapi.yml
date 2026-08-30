@@ -1,0 +1,137 @@
+openapi: 3.2.0
+info:
+  title: Seven Bridges Platform Search API
+  version: unknown
+servers:
+- url: https://api.sbgenomics.com/v2
+security:
+- {}
+tags:
+- name: Search
+paths:
+  /search:
+    post:
+      summary: Search for files (advanced method)
+      description: ''
+      operationId: search-for-files
+      parameters:
+      - name: X-SBG-Auth-Token
+        in: header
+        description: Your Seven Bridges Platform [authentication token](doc:get-your-authentication-token). For security reasons, token will not be automatically populated in the generated code sample. Please replace `<your-token-here>` with your token before executing this call.
+        required: true
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: Enter a value to specify the number of pages for the results page.
+        schema:
+          type: string
+      - name: cont_token
+        in: query
+        description: A string value representing continuation token.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                query:
+                  type: string
+                  description: The `query` parameter contains the query expression written in Seven Bridges query language.
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{\n    \"count\": 3,\n    \"cont_token\": \"eyJzYSI6WzE3MDMwNjM5MTYxNjQsIjY1ODJiMTZjYmIyYzE3MDkwNzFhMWZlMSJdfQ==\",\n    \"result_set\": [\n        {\n            \"vs_route\": {\n                \"origin_parent_path\": \"/Projects/130d2690-9cf5-47d3-99af-e2e7f8e81dcc/\",\n                \"origin_id\": \"6582b156bb2c1709071a1fd2\",\n                \"origin_name\": \"file-998_202312191450.txt\"\n            },\n            \"type\": \"FILE\",\n            \"time_updated\": 1703063949882,\n            \"volume\": \"{\\\"volume\\\":\\\"goranv/jnj_test\\\",\\\"location\\\":\\\"goranv/test5/folder1/file-998_202312191450.txt\\\"}\",\n            \"size\": 16,\n            \"imported\": \"true\",\n            \"name\": \"file-998_202312191450.txt\",\n            \"time_created\": 1703063916164,\n            \"parent_path\": \"/Projects/130d2690-9cf5-47d3-99af-e2e7f8e81dcc/folder1/\",\n            \"file_extension\": \"TXT\",\n            \"locations\": \"[\\\"aws:us-east-1\\\"]\",\n            \"id\": \"6582b16cbb2c1709071a1fdf\",\n            \"state\": \"AVAILABLE\",\n            \"operation_timestamp\": 1703063916155,\n            \"coords\": \"vsstore://e7325a7c-ee51-47ec-a5a3-a5f111d23817:jnj_test@s3:sb-qa-test-rw/gv_test_jnj/goranv/test5/folder1/file-998_202312191450.txt\"\n        },\n        {\n            \"vs_route\": {\n                \"origin_parent_path\": \"/Projects/130d2690-9cf5-47d3-99af-e2e7f8e81dcc/\",\n                \"origin_id\": \"6582b156bb2c1709071a1fce\",\n                \"origin_name\": \"file-997_202312191450.txt\"\n            },\n            \"type\": \"FILE\",\n            \"time_updated\": 1703063949884,\n            \"volume\": \"{\\\"volume\\\":\\\"goranv/jnj_test\\\",\\\"location\\\":\\\"goranv/test5/folder1/file-997_202312191450.txt\\\"}\",\n            \"size\": 16,\n            \"imported\": \"true\",\n            \"name\": \"file-997_202312191450.txt\",\n            \"time_created\": 1703063916164,\n            \"parent_path\": \"/Projects/130d2690-9cf5-47d3-99af-e2e7f8e81dcc/folder1/\",\n            \"file_extension\": \"TXT\",\n            \"locations\": \"[\\\"aws:us-east-1\\\"]\",\n            \"id\": \"6582b16cbb2c1709071a1fe0\",\n            \"state\": \"AVAILABLE\",\n            \"operation_timestamp\": 1703063916155,\n            \"coords\": \"vsstore://e7325a7c-ee51-47ec-a5a3-a5f111d23817:jnj_test@s3:sb-qa-test-rw/gv_test_jnj/goranv/test5/folder1/file-997_202312191450.txt\"\n        },\n        {\n            \"vs_route\": {\n                \"origin_parent_path\": \"/Projects/130d2690-9cf5-47d3-99af-e2e7f8e81dcc/\",\n                \"origin_id\": \"6582b156bb2c1709071a1fd0\",\n                \"origin_name\": \"file-995_202312191450.txt\"\n            },\n            \"type\": \"FILE\",\n            \"time_updated\": 1703063949886,\n            \"volume\": \"{\\\"volume\\\":\\\"goranv/jnj_test\\\",\\\"location\\\":\\\"goranv/test5/folder1/file-995_202312191450.txt\\\"}\",\n            \"size\": 16,\n            \"imported\": \"true\",\n            \"name\": \"file-995_202312191450.txt\",\n            \"time_created\": 1703063916164,\n            \"parent_path\": \"/Projects/130d2690-9cf5-47d3-99af-e2e7f8e81dcc/folder1/\",\n            \"file_extension\": \"TXT\",\n            \"locations\": \"[\\\"aws:us-east-1\\\"]\",\n            \"id\": \"6582b16cbb2c1709071a1fe1\",\n            \"state\": \"AVAILABLE\",\n            \"operation_timestamp\": 1703063916155,\n            \"coords\": \"vsstore://e7325a7c-ee51-47ec-a5a3-a5f111d23817:jnj_test@s3:sb-qa-test-rw/gv_test_jnj/goranv/test5/folder1/file-995_202312191450.txt\"\n        }\n    ]\n}"
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    example: 3
+                    default: 0
+                  cont_token:
+                    type: string
+                    example: eyJzYSI6WzE3MDMwNjM5MTYxNjQsIjY1ODJiMTZjYmIyYzE3MDkwNzFhMWZlMSJdfQ==
+                  result_set:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        vs_route:
+                          type: object
+                          properties:
+                            origin_parent_path:
+                              type: string
+                              example: /Projects/130d2690-9cf5-47d3-99af-e2e7f8e81dcc/
+                            origin_id:
+                              type: string
+                              example: 6582b156bb2c1709071a1fd2
+                            origin_name:
+                              type: string
+                              example: file-998_202312191450.txt
+                        type:
+                          type: string
+                          example: FILE
+                        time_updated:
+                          type: integer
+                          example: 1703063949882
+                          default: 0
+                        volume:
+                          type: string
+                          example: '{"volume":"goranv/jnj_test","location":"goranv/test5/folder1/file-998_202312191450.txt"}'
+                        size:
+                          type: integer
+                          example: 16
+                          default: 0
+                        imported:
+                          type: string
+                          example: 'true'
+                        name:
+                          type: string
+                          example: file-998_202312191450.txt
+                        time_created:
+                          type: integer
+                          example: 1703063916164
+                          default: 0
+                        parent_path:
+                          type: string
+                          example: /Projects/130d2690-9cf5-47d3-99af-e2e7f8e81dcc/folder1/
+                        file_extension:
+                          type: string
+                          example: TXT
+                        locations:
+                          type: string
+                          example: '["aws:us-east-1"]'
+                        id:
+                          type: string
+                          example: 6582b16cbb2c1709071a1fdf
+                        state:
+                          type: string
+                          example: AVAILABLE
+                        operation_timestamp:
+                          type: integer
+                          example: 1703063916155
+                          default: 0
+                        coords:
+                          type: string
+                          example: vsstore://e7325a7c-ee51-47ec-a5a3-a5f111d23817:jnj_test@s3:sb-qa-test-rw/gv_test_jnj/goranv/test5/folder1/file-998_202312191450.txt
+      deprecated: false
+      x-readme:
+        code-samples:
+        - language: python
+          code: "POST /v2/files/search?limit=10&cont_token=token2\n{\n    \"query\": \"IN \\\"/Project/my-project\\\" WHERE type = \"FILE\" LIMIT 5 TOKEN token1\"\n}"
+        samples-languages:
+        - python
+      tags:
+      - Search
+x-readme:
+  headers:
+  - key: X-SBG-Auth-Token
+    value: <your-token-here>
+x-readme-fauxas: true

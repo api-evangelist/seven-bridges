@@ -1,0 +1,43 @@
+openapi: 3.2.0
+info:
+  title: Settings Bulk API
+  version: unknown
+servers:
+- url: https://cgc-api.sbgenomics.com/v2
+security:
+- {}
+tags:
+- name: Bulk
+paths:
+  /bulk/storage/exports/create:
+    post:
+      summary: Start a bulk export job
+      description: ''
+      operationId: start-a-bulk-export-job
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: '{}'
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: '400'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: '{}'
+              schema:
+                type: object
+                properties: {}
+      deprecated: false
+      tags:
+      - Bulk
+x-readme:
+  headers: []
+x-readme-fauxas: true

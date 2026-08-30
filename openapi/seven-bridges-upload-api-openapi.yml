@@ -1,0 +1,601 @@
+openapi: 3.2.0
+info:
+  title: Seven Bridges Upload API
+  version: unknown
+  description: 'Operations tagged Upload across 2 of this provider''s published API definitions: seven-bridges-cgc-openapi.json, seven-bridges-platform-openapi.json. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://cgc-api.sbgenomics.com/v2
+- url: https://api.sbgenomics.com/v2
+security:
+- {}
+tags:
+- name: Upload
+paths:
+  /v2/upload/multipart/{upload_id}/part:
+    post:
+      summary: Report an uploaded part
+      description: /upload/multipart/{upload_id}/part
+      operationId: report-an-uploaded-part
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: '{}'
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: '400'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: '{}'
+              schema:
+                type: object
+                properties: {}
+      deprecated: false
+      tags:
+      - Upload
+    servers:
+    - url: https://cgc-api.sbgenomics.com/v2
+  /v2/upload/multipart/{upload_id}/part/{part_number}:
+    get:
+      summary: Get upload URL for a file part
+      description: /upload/multipart/{upload_id}/part/{part_number}
+      operationId: get-upload-url-for-a-file-part
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: '{}'
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: '400'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: '{}'
+              schema:
+                type: object
+                properties: {}
+      deprecated: false
+      tags:
+      - Upload
+    servers:
+    - url: https://cgc-api.sbgenomics.com/v2
+  /v2/upload/multipart/{upload_id}:
+    post:
+      summary: Report uploaded parts
+      description: /upload/multipart/{upload_id}
+      operationId: report-uploaded-parts
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: '{}'
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: '400'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: '{}'
+              schema:
+                type: object
+                properties: {}
+      deprecated: false
+      tags:
+      - Upload
+    servers:
+    - url: https://cgc-api.sbgenomics.com/v2
+  /upload/multipart/{upload_id}/part/{part_number}:
+    get:
+      summary: Get upload URL for a file part
+      description: This call returns the signed URL required to upload a part of a multipart upload. Once you have obtained this URL for your file part, you can make a `PUT` request to it with the file part as the request body.
+      operationId: get-the-upload-url-for-a-file-part
+      parameters:
+      - name: X-SBG-Auth_Token
+        in: header
+        description: Your Seven Bridges Platform [authentication token](doc:get-your-authentication-token). For security reasons, token will not be automatically populated in the generated code sample. Please replace `<your-token-here>` with your token before executing this call.
+        required: true
+        schema:
+          type: string
+      - name: upload_id
+        in: path
+        description: The ID for the upload, returned by the call to [initialize a multipart upload](ref:initialize-a-multipart-upload).
+        schema:
+          type: string
+        required: true
+      - name: part_number
+        in: path
+        description: The number of the file part you are uploading. Part numbers start from 1.
+        schema:
+          type: integer
+          format: int32
+        required: true
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{\n  \"method\": \"PUT\",\n  \"url\": \"https://bucket-name.s3.amazonaws.com/bd5e95d9-12b3-789c-45b6-34d8696571a9%2BCanFam3.1.dna_rm.toplevel.fa.gz?uploadId=Yrand0mVyTZj2Vc2WwKAQtXUhBFZDzax20oaBf12mSixrrcm78sBzB8YGxUgQi1K&partNumber=1&AWSAccessKeyId=REDACTED_AWS_ACCESS_KEY_ID&Expires=1459113561&Signature=3myyeand0mjkmjX24WApZwNo%3D\",\n  \"expires\": \"2016-02-27T15:55:38Z\",\n  \"headers\": {},\n  \"report\": {\n    \"success_codes\": [\n      200\n    ],\n    \"headers\": [\n      \"ETag\"\n    ]\n  }\n}"
+              schema:
+                type: object
+                properties:
+                  method:
+                    type: string
+                    example: PUT
+                  url:
+                    type: string
+                    example: https://bucket-name.s3.amazonaws.com/bd5e95d9-12b3-789c-45b6-34d8696571a9%2BCanFam3.1.dna_rm.toplevel.fa.gz?uploadId=Yrand0mVyTZj2Vc2WwKAQtXUhBFZDzax20oaBf12mSixrrcm78sBzB8YGxUgQi1K&partNumber=1&AWSAccessKeyId=REDACTED_AWS_ACCESS_KEY_ID&Expires=1459113561&Signature=3myyeand0mjkmjX24WApZwNo%3D
+                  expires:
+                    type: string
+                    example: '2016-02-27T15:55:38Z'
+                  headers:
+                    type: object
+                    properties: {}
+                  report:
+                    type: object
+                    properties:
+                      success_codes:
+                        type: array
+                        items:
+                          type: integer
+                          example: 200
+                          default: 0
+                      headers:
+                        type: array
+                        items:
+                          type: string
+                          example: ETag
+      deprecated: false
+      tags:
+      - Upload
+    servers:
+    - url: https://api.sbgenomics.com/v2
+  /upload/multipart/{upload_id}:
+    get:
+      summary: Get details of a multipart upload
+      description: 'This call will return the details of an active multipart upload.
+
+
+        The upload is referenced by its ID as returned by a call to [initialize a multipart upload](ref:initialize-a-multipart-upload) or [list current multipart uploads](ref:list-current-multipart-uploads).'
+      operationId: get-details-of-a-multipart-upload
+      parameters:
+      - name: X-SBG-Auth_Token
+        in: header
+        description: Your Seven Bridges Platform [authentication token](doc:get-your-authentication-token). For security reasons, token will not be automatically populated in the generated code sample. Please replace `<your-token-here>` with your token before executing this call.
+        required: true
+        schema:
+          type: string
+      - name: upload_id
+        in: path
+        description: The ID of the upload. It can be obtained by [initializing a new upload](ref:initialize-a-multipart-upload) or by [listing the ongoing multipart uploads](ref:list-current-multipart-uploads).
+        schema:
+          type: string
+        required: true
+      - name: list_parts
+        in: query
+        description: If `true`, also return a list of parts that have been reported as completed for this multipart upload.
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{\n  \"upload_id\": \"Zrand0mrFtYj3rooeFcnawiVhoZp1sF0OK3RVvpWucTKGtNpvDvXFrj4JKOU1qyV\",\n  \"project\": \"RFranklin/my-project\",\n  \"name\": \"1000G_omni2.5.b37.vcf\",\n  \"initiated\": \"2016-01-01T00:00:00Z\",\n  \"parallel_uploads\": true,\n  \"part_size\": 1073741824,\n  \"uploaded_parts_count\": 1,\n  \"parts\": [\n    {\n      \"part_number\": 1,\n      \"response\": {\n        \"headers\": {\n          \"ETag\": \"1234e128411f2bace2sadfdabe610f30\"\n        }\n      }\n    }\n  ]\n}"
+              schema:
+                type: object
+                properties:
+                  upload_id:
+                    type: string
+                    example: Zrand0mrFtYj3rooeFcnawiVhoZp1sF0OK3RVvpWucTKGtNpvDvXFrj4JKOU1qyV
+                  project:
+                    type: string
+                    example: RFranklin/my-project
+                  name:
+                    type: string
+                    example: 1000G_omni2.5.b37.vcf
+                  initiated:
+                    type: string
+                    example: '2016-01-01T00:00:00Z'
+                  parallel_uploads:
+                    type: boolean
+                    example: true
+                    default: true
+                  part_size:
+                    type: integer
+                    example: 1073741824
+                    default: 0
+                  uploaded_parts_count:
+                    type: integer
+                    example: 1
+                    default: 0
+                  parts:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        part_number:
+                          type: integer
+                          example: 1
+                          default: 0
+                        response:
+                          type: object
+                          properties:
+                            headers:
+                              type: object
+                              properties:
+                                ETag:
+                                  type: string
+                                  example: 1234e128411f2bace2sadfdabe610f30
+      deprecated: false
+      tags:
+      - Upload
+    delete:
+      summary: Abort a multipart upload
+      description: This call aborts an ongoing upload.
+      operationId: abort-a-multipart-upload
+      parameters:
+      - name: X-SBG-Auth_Token
+        in: header
+        description: Your Seven Bridges Platform [authentication token](doc:get-your-authentication-token). For security reasons, token will not be automatically populated in the generated code sample. Please replace `<your-token-here>` with your token before executing this call.
+        required: true
+        schema:
+          type: string
+      - name: upload_id
+        in: path
+        description: The ID for the upload, returned by a call to [initialize a multipart upload](ref:initialize-a-multipart-upload) or to [list current multipart uploads](ref:list-current-multipart-uploads).
+        schema:
+          type: string
+        required: true
+      deprecated: false
+      x-readme:
+        code-samples:
+        - language: python
+          code: "from sevenbridges import Api\n\napi = Api(url='https://api.sbgenomics.com/v2',\n          token='1e43fEXampLEa5523dfd14exAMPle3e5')\n\n# create and start upload without blocking by using wait=False\nupload = api.files.upload(\n    path='CanFam3.1.dna_rm.toplevel.fa.gz',\n    project='RFranklin/my-project',\n    wait=False\n)\nupload.start()\n\n# send DELETE request to SB API\nupload.stop()"
+        samples-languages:
+        - python
+      tags:
+      - Upload
+    post:
+      summary: Report uploaded parts
+      description: This call allows you to report the upload multiple file parts at once.
+      operationId: report-that-all-file-parts-have-uploaded
+      parameters:
+      - name: X-SBG-Auth_Token
+        in: header
+        description: Your Seven Bridges Platform [authentication token](doc:get-your-authentication-token). For security reasons, token will not be automatically populated in the generated code sample. Please replace `<your-token-here>` with your token before executing this call.
+        required: true
+        schema:
+          type: string
+      - name: upload_id
+        in: path
+        description: The ID for the upload, returned by the call to [initialize a multipart upload](ref:initialize-a-multipart-upload).
+        schema:
+          type: string
+        required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                parts:
+                  type: array
+                  description: This key should contain an array of objects describing the individual part upload reports. Each of these objects should be formatted exactly as the whole body of the [report an uploaded part](ref:report-an-uploaded-file-part) call.
+                  items:
+                    properties:
+                      part_number:
+                        type: integer
+                        description: The number of the file part you are reporting. Part numbers start from 1.
+                        format: int32
+                      response:
+                        type: object
+                        properties:
+                          headers:
+                            type: object
+                            properties:
+                              '{key}':
+                                type: string
+                                description: You should format the response object in this call as a set of key-value mappings. The keys in these mappings are the headers and other response elements described in [getting upload URL for a file part](ref:get-the-upload-url-for-a-file-part), and their values are the strings that you have collected from the HTTP part upload request.
+                                default: '{value}'
+                    type: object
+      deprecated: false
+      tags:
+      - Upload
+    servers:
+    - url: https://api.sbgenomics.com/v2
+  /upload/multipart:
+    post:
+      summary: Initialize a multipart upload
+      description: This call initializes a multipart file upload.
+      operationId: initialize-a-multipart-upload
+      parameters:
+      - name: X-SBG-Auth_Token
+        in: header
+        description: Your Seven Bridges Platform [authentication token](doc:get-your-authentication-token). For security reasons, token will not be automatically populated in the generated code sample. Please replace `<your-token-here>` with your token before executing this call.
+        required: true
+        schema:
+          type: string
+      - name: overwrite
+        in: query
+        description: If `overwrite` is set to `true` and a file already exists under the name specified in the request, the existing file will be deleted and a new one created in its place.
+        schema:
+          type: boolean
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - name
+              properties:
+                project:
+                  type: string
+                  description: The name of the project you want to upload a file to, in the (`<username>/<project-name>`) format.
+                parent:
+                  type: string
+                  description: The ID of the folder to which the item is being uploaded.  Should not be used together with `project`. If `parent` is used, the upload will take place into the specified folder, within the project to which the folder belongs. If `project` is used, the items will be imported to the root of the project's files.
+                name:
+                  type: string
+                  description: The name of the file you are about to upload. This must be unique in the project, unless you are also enabling the `overwrite` query parameter.  Allowed characters in **file names** are all alphanumerics and special characters except slash (`/`). File names can’t be longer than 255 characters.
+                size:
+                  type: integer
+                  description: The size of the file that will be uploaded. This can be used to track progress of an ongoing upload, but is otherwise optional.
+                  format: int32
+                part_size:
+                  type: integer
+                  description: The preferred size for upload parts. If omitted or set to a value that is incompatible with the cloud storage provider, a default value will be used.
+                  format: int32
+                md5:
+                  type: string
+                  description: 32-byte hexadecimal MD5 checksum of the file. This value is currently only stored but is not used by the Platform.
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{\n  \"project\": \"RFranklin/my-project\",\n  \"name\": \"CanFam3.1.dna_rm.toplevel.fa.gz\",\n  \"size\": 433759572,\n  \"upload_id\": \"Yrand0mVyTZj2Vc2WwKAQtXUhBFZDzax20oaBf12mSixrrcm78sBzB8YGxUgQi1K\",\n  \"part_size\": 5242880,\n  \"parallel_uploads\": true\n}"
+              schema:
+                type: object
+                properties:
+                  project:
+                    type: string
+                    example: RFranklin/my-project
+                  name:
+                    type: string
+                    example: CanFam3.1.dna_rm.toplevel.fa.gz
+                  size:
+                    type: integer
+                    example: 433759572
+                    default: 0
+                  upload_id:
+                    type: string
+                    example: Yrand0mVyTZj2Vc2WwKAQtXUhBFZDzax20oaBf12mSixrrcm78sBzB8YGxUgQi1K
+                  part_size:
+                    type: integer
+                    example: 5242880
+                    default: 0
+                  parallel_uploads:
+                    type: boolean
+                    example: true
+                    default: true
+      deprecated: false
+      x-readme:
+        code-samples:
+        - language: python
+          code: "from sevenbridges import Api\n\napi = Api(url='https://api.sbgenomics.com/v2',\n          token='3210a98c1db9318fa9d9273156740f74')\n\n# send POST request to SB API to initialize a multipart upload\n# start upload to cloud\n# send POST requests to SB API to mark finishing parts\n# send POST request to SB API to mark finishing multipart upload\nupload = api.files.upload(\n    path='CanFam3.1.dna_rm.toplevel.fa.gz',\n    project='RFranklin/my-project'\n)\n\nprint(upload.status, upload.result())"
+        samples-languages:
+        - python
+      tags:
+      - Upload
+    get:
+      summary: List current multipart uploads
+      description: This call returns the list of ongoing uploads.
+      operationId: list-current-multipart-uploads
+      parameters:
+      - name: X-SBG-Auth_Token
+        in: header
+        description: Your Seven Bridges Platform [authentication token](doc:get-your-authentication-token). For security reasons, token will not be automatically populated in the generated code sample. Please replace `<your-token-here>` with your token before executing this call.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{\n  \"items\": [\n    {\n      \"href\": \"http://api.sbgenomics.com/v2/upload/multipart/srand0mB1h7n3UcjUEqcHKahAl1cizencbI1OQvIkGv8qQRDiP2VAtUpO8NnLKFN\",\n      \"project\": \"RFranklin/my-project\",\n      \"name\": \"1000G_phase1.indels.b37.vc\",\n      \"initiated\": \"2016-03-11T15:15:21Z\",\n      \"upload_id\": \"srand0mB1h7n3UcjUEqcHKahAl1cizencbI1OQvIkGv8qQRDiP2VAtUpO8NnLKFN\"\n    },\n    {\n      \"href\": \"http://api.sbgenomics.com/v2/upload/multipart/Zrand0mrFtYj3rooeFcnawiVhoZp1sF0OK3RVvpWucTKGtNpvDvXFrj4JKOU1qyV\",\n      \"project\": \"RFranklin/my-project\",\n      \"name\": \"1000G_omni2.5.b37.vcf\",\n      \"initiated\": \"2016-03-11T16:05:28Z\",\n      \"upload_id\": \"Zrand0mrFtYj3rooeFcnawiVhoZp1sF0OK3RVvpWucTKGtNpvDvXFrj4JKOU1qyV\"\n    }\n  ]\n}"
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        href:
+                          type: string
+                          example: http://api.sbgenomics.com/v2/upload/multipart/srand0mB1h7n3UcjUEqcHKahAl1cizencbI1OQvIkGv8qQRDiP2VAtUpO8NnLKFN
+                        project:
+                          type: string
+                          example: RFranklin/my-project
+                        name:
+                          type: string
+                          example: 1000G_phase1.indels.b37.vc
+                        initiated:
+                          type: string
+                          example: '2016-03-11T15:15:21Z'
+                        upload_id:
+                          type: string
+                          example: srand0mB1h7n3UcjUEqcHKahAl1cizencbI1OQvIkGv8qQRDiP2VAtUpO8NnLKFN
+      deprecated: false
+      tags:
+      - Upload
+    servers:
+    - url: https://api.sbgenomics.com/v2
+  /upload/multipart/{upload_id}/part:
+    post:
+      summary: Report an uploaded part
+      description: This call allows you to report the upload of a file part.
+      operationId: report-an-uploaded-file-part
+      parameters:
+      - name: X-SBG-Auth_Token
+        in: header
+        description: Your Seven Bridges Platform [authentication token](doc:get-your-authentication-token). For security reasons, token will not be automatically populated in the generated code sample. Please replace `<your-token-here>` with your token before executing this call.
+        required: true
+        schema:
+          type: string
+      - name: upload_id
+        in: path
+        description: The ID for the upload, returned by the call to [initialize a multipart upload](ref:initialize-a-multipart-upload).
+        schema:
+          type: string
+        required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                part_number:
+                  type: integer
+                  description: The number of the file part you are reporting. Part numbers start from 1.
+                  format: int32
+                response:
+                  type: object
+                  description: This object should contain the information collected from a successful HTTP part upload request. See the [formatting the response object](#formatting-the-response-object) section below for an explanation of its structure.
+                  properties:
+                    headers:
+                      type: object
+                      properties:
+                        '{key}':
+                          type: string
+                          description: You should format the response object in this call as a set of key-value mappings. The keys in these mappings are the headers and other response elements described in [getting upload URL for a file part](ref:get-the-upload-url-for-a-file-part), and their values are the strings that you have collected from the HTTP part upload request.
+                          default: '{value}'
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{\n  \"part_number\": 1,\n  \"response\": {\n    \"headers\": {\n      \"ETag\": \"1234e128411f2bace2sadfdabe610f30\"\n    }\n  }\n}"
+              schema:
+                type: object
+                properties:
+                  part_number:
+                    type: integer
+                    example: 1
+                    default: 0
+                  response:
+                    type: object
+                    properties:
+                      headers:
+                        type: object
+                        properties:
+                          ETag:
+                            type: string
+                            example: 1234e128411f2bace2sadfdabe610f30
+      deprecated: false
+      tags:
+      - Upload
+    servers:
+    - url: https://api.sbgenomics.com/v2
+  /upload/multipart/{upload_id}/complete:
+    post:
+      summary: Complete a multipart upload
+      description: 'This call must be issued to report the completion of a file upload.
+
+
+        An optional list of remaining parts may be given in the body of this request. The format of this list is the same as described in [report uploaded parts](ref:report-that-all-file-parts-have-uploaded).'
+      operationId: finalize-a-multipart-upload
+      parameters:
+      - name: X-SBG-Auth_Token
+        in: header
+        description: Your Seven Bridges Platform [authentication token](doc:get-your-authentication-token). For security reasons, token will not be automatically populated in the generated code sample. Please replace `<your-token-here>` with your token before executing this call.
+        required: true
+        schema:
+          type: string
+      - name: upload_id
+        in: path
+        description: The ID for the upload, returned by the call to [initialize a multipart upload](ref:initialize-a-multipart-upload).
+        schema:
+          type: string
+        required: true
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{\n  \"href\": \"http://api.sbgenomics.com/v2/files/567890abc9b0307bc0414164\",\n  \"path\": \"/Projects/1fd125fa-789c-45b6-12b3-2a3ab3bedcba/CanFam3.1.dna_rm.toplevel.fa.gz\",\n  \"id\": \"36fddf29f5c4568b3c86e09d\",\n  \"project\": \"RFranklin/my-project\",\n  \"name\": \"CanFam3.1.dna_rm.toplevel.fa.gz\",\n  \"type\": \"file\",\n  \"size\": 433759572,\n  \"created_on\": \"2016-02-27T16:36:41Z\",\n  \"modified_on\": \"2016-02-27T16:36:41Z\"\n}"
+              schema:
+                type: object
+                properties:
+                  href:
+                    type: string
+                    example: http://api.sbgenomics.com/v2/files/567890abc9b0307bc0414164
+                  path:
+                    type: string
+                    example: /Projects/1fd125fa-789c-45b6-12b3-2a3ab3bedcba/CanFam3.1.dna_rm.toplevel.fa.gz
+                  id:
+                    type: string
+                    example: 36fddf29f5c4568b3c86e09d
+                  project:
+                    type: string
+                    example: RFranklin/my-project
+                  name:
+                    type: string
+                    example: CanFam3.1.dna_rm.toplevel.fa.gz
+                  type:
+                    type: string
+                    example: file
+                  size:
+                    type: integer
+                    example: 433759572
+                    default: 0
+                  created_on:
+                    type: string
+                    example: '2016-02-27T16:36:41Z'
+                  modified_on:
+                    type: string
+                    example: '2016-02-27T16:36:41Z'
+      deprecated: false
+      tags:
+      - Upload
+    servers:
+    - url: https://api.sbgenomics.com/v2
+x-refined-from:
+- seven-bridges-cgc-openapi.json
+- seven-bridges-platform-openapi.json
+x-readme:
+  headers: []
+x-readme-fauxas: true

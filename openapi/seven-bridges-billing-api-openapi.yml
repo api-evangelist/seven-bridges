@@ -1,0 +1,680 @@
+openapi: 3.2.0
+info:
+  title: Seven Bridges Billing API
+  version: unknown
+  description: 'Operations tagged Billing across 2 of this provider''s published API definitions: seven-bridges-cgc-openapi.json, seven-bridges-platform-openapi.json. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://cgc-api.sbgenomics.com/v2
+- url: https://api.sbgenomics.com/v2
+security:
+- {}
+tags:
+- name: Billing
+paths:
+  /billing/invoices:
+    get:
+      summary: List invoices
+      description: /billing/invoices
+      operationId: list-invoices
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: '{}'
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: '400'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: '{}'
+              schema:
+                type: object
+                properties: {}
+      deprecated: false
+      tags:
+      - Billing
+    servers:
+    - url: https://cgc-api.sbgenomics.com/v2
+  /billing:
+    get:
+      summary: List billing API paths
+      description: This call returns a list of paths used to access billing information via the API.
+      operationId: list-billing-sub-urls
+      parameters:
+      - name: X-SBG-Auth-Token
+        in: header
+        description: Your Platform [authentication token](doc:get-your-authentication-token). For security reasons, token will not be automatically populated in the generated code sample. Please replace `<your-token-here>` with your token before executing this call.
+        required: true
+        schema:
+          type: string
+      - name: fields
+        in: query
+        description: Selector specifying a subset of fields to include in the response.
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{\n  \"billing_groups_url\": \"https://api.sbgenomics.com/v2/billing/groups/\",\n  \"invoices_url\": \"https://api.sbgenomics.com/v2/billing/invoices/\"\n}"
+              schema:
+                type: object
+                properties:
+                  billing_groups_url:
+                    type: string
+                    example: https://api.sbgenomics.com/v2/billing/groups/
+                  invoices_url:
+                    type: string
+                    example: https://api.sbgenomics.com/v2/billing/invoices/
+      deprecated: false
+      tags:
+      - Billing
+    servers:
+    - url: https://api.sbgenomics.com/v2
+  /billing/groups/{billing_group}:
+    get:
+      summary: Get a single billing group
+      description: This call retrieves a single billing group, specified by `{billing_group}`. To find the `billing_group`, use the call [list billing groups](ref:list-your-billing-groups) to list all your billing groups. The information returned includes the billing group owner, the total balance, and the status of the billing group (pending or confirmed).
+      operationId: get-a-single-billing-group
+      parameters:
+      - name: X-SBG-Auth-Token
+        in: header
+        description: Your Seven Bridges Platform [authentication token](doc:get-your-authentication-token). For security reasons, token will not be automatically populated in the generated code sample. Please replace `<your-token-here>` with your token before executing this call.
+        required: true
+        schema:
+          type: string
+      - name: billing_group
+        in: path
+        description: ID of the billing group you are querying. You can get the ID by [listing your billing groups](ref:list-your-billing-groups).
+        schema:
+          type: string
+        required: true
+      - name: fields
+        in: query
+        description: Selector specifying a subset of fields to include in the response.
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{\n  \"id\": \"ec1dc1e3-12a3-4b56-789c-e3f2dca0c6f7\",\n  \"href\": \"https://api.sbgenomics.com/v2/billing/groups/ec1dc1e3-12a3-4b56-789c-e3f2dca0c6f7\",\n  \"owner\": \"RFranklin\",\n  \"name\": \"RFranklin Billing Group\",\n  \"type\": \"free\",\n  \"pending\": false,\n  \"disabled\": false,\n  \"balance\": {\n    \"currency\": \"USD\",\n    \"amount\": 0\n  }\n}"
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: ec1dc1e3-12a3-4b56-789c-e3f2dca0c6f7
+                  href:
+                    type: string
+                    example: https://api.sbgenomics.com/v2/billing/groups/ec1dc1e3-12a3-4b56-789c-e3f2dca0c6f7
+                  owner:
+                    type: string
+                    example: RFranklin
+                  name:
+                    type: string
+                    example: RFranklin Billing Group
+                  type:
+                    type: string
+                    example: free
+                  pending:
+                    type: boolean
+                    example: false
+                    default: true
+                  disabled:
+                    type: boolean
+                    example: false
+                    default: true
+                  balance:
+                    type: object
+                    properties:
+                      currency:
+                        type: string
+                        example: USD
+                      amount:
+                        type: integer
+                        example: 0
+                        default: 0
+      deprecated: false
+      x-readme:
+        code-samples:
+        - language: python
+          code: "from sevenbridges import Api\n\napi = Api(url='https://api.sbgenomics.com/v2',\n          token='3210a98c1db9318fa9d9273156740f74')\n\n# send GET request to SB API\nbilling_group = api.billing_groups.get(\n    id='ec1dc1e3-12a3-4b56-789c-e3f2dca0c6f7'\n)\n\nprint(billing_group.name)"
+        samples-languages:
+        - python
+      tags:
+      - Billing
+    servers:
+    - url: https://api.sbgenomics.com/v2
+  /billing/groups:
+    get:
+      summary: List billing groups
+      description: This call lists all your billing groups, including groups that are pending or have been disabled.
+      operationId: list-your-billing-groups
+      parameters:
+      - name: fields
+        in: query
+        description: Selector specifying a subset of fields to include in the response.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: limit
+        in: query
+        description: The maximum number of collection items to return for a single request. Minimum value is 1. The maximum value is 100 and the default value is 25. This is a pagination-specific attribute.
+        schema:
+          type: integer
+          format: int32
+          default: 50
+      - name: offset
+        in: query
+        description: The zero-based starting index in the entire collection of the first item to return. The default value is 0. This is a pagination-specific attribute.
+        schema:
+          type: integer
+          format: int32
+          default: 0
+      - name: X-SBG-Auth-Token
+        in: header
+        description: Your Seven Bridges Platform [authentication token](doc:get-your-authentication-token). For security reasons, token will not be automatically populated in the generated code sample. Please replace `<your-token-here>` with your token before executing this call.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{\n  \"href\": \"https://api.sbgenomics.com/v2/billing/groups?offset=0&limit=25\",\n  \"items\": [\n    {\n      \"id\": \"ec1dc1e3-12a3-4b56-789c-e3f2dca0c6f7\",\n      \"href\": \"https://api.sbgenomics.com/v2/billing/groups/ec1dc1e3-12a3-4b56-789c-e3f2dca0c6f7\",\n      \"name\": \"RFranklin Billing Group\"\n    }\n  ],\n  \"links\": []\n}"
+              schema:
+                type: object
+                properties:
+                  href:
+                    type: string
+                    example: https://api.sbgenomics.com/v2/billing/groups?offset=0&limit=25
+                  items:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: ec1dc1e3-12a3-4b56-789c-e3f2dca0c6f7
+                        href:
+                          type: string
+                          example: https://api.sbgenomics.com/v2/billing/groups/ec1dc1e3-12a3-4b56-789c-e3f2dca0c6f7
+                        name:
+                          type: string
+                          example: RFranklin Billing Group
+                  links:
+                    type: array
+      deprecated: false
+      x-readme:
+        code-samples:
+        - language: python
+          code: "from sevenbridges import Api\n\napi = Api(url='https://api.sbgenomics.com/v2',\n          token='3210a98c1db9318fa9d9273156740f74')\n\n# send GET request to SB API\nbilling_groups = api.billing_groups.query()\n\nfor billing_group in billing_groups:\n    print(billing_group.name)"
+        samples-languages:
+        - python
+      tags:
+      - Billing
+    servers:
+    - url: https://api.sbgenomics.com/v2
+  /billing/groups/{billing_group}/breakdown/analysis:
+    get:
+      summary: Get analysis breakdown for a billing group
+      description: "This call returns an analysis breakdown for a billing group which contains information on both the tasks and Cruncher analysis. \n\nTo find the `billing_group`, use the call [list billing groups](ref:list-your-billing-groups) to list all your billing groups."
+      operationId: get-analysis-breakdown-for-a-billing-group
+      parameters:
+      - name: X-SBG-Auth-Token
+        in: header
+        description: Your Seven Bridges Platform [authentication token](doc:get-your-authentication-token). For security reasons, token will not be automatically populated in the generated code sample. Please replace `<your-token-here>` with your token before executing this call.
+        required: true
+        schema:
+          type: string
+      - name: billing_group
+        in: path
+        description: The ID of the billing group.
+        schema:
+          type: string
+        required: true
+      - name: limit
+        in: query
+        description: The maximum number of collection items to return for a single request.  The default value is 50, while the maximum value is 100.  This is a pagination-specific attribute.
+        schema:
+          type: integer
+          format: int32
+          default: 50
+      - name: offset
+        in: query
+        description: The zero-based starting index in the entire collection of the first item to return.  The default value is 0. This is a pagination-specific attribute.
+        schema:
+          type: integer
+          format: int32
+          default: 0
+      - name: fields
+        in: query
+        description: Selector specifying a subset of fields to include in the response.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: date_from
+        in: query
+        description: 'Specify the starting date for retrieving transactions analysis in the following format: mm-dd-yyyy.'
+        schema:
+          type: string
+      - name: date_to
+        in: query
+        description: 'Specify the ending date for retrieving transactions analysis in the following format: mm-dd-yyyy.'
+        schema:
+          type: string
+      - name: invoice_id
+        in: query
+        description: Specify Invoice ID to show a breakdown for the specific invoice.  If omitted, the current spending breakdown is returned.  To find the particular 'invoice_id' use the [List invoices](doc:list-invoices) call.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{\n    \"href\": \"https://api.sbgenomics.com/v2/billing/groups/ec1dc1e3-12a3-4b56-789c-e3f2dca0c6f7/breakdown/analysis?offset=0&amp;limit=2&amp;date_from=11-04-2020\",\n    \"items\": [\n        {\n            \"analysis_type\": \"TASK\",\n            \"analysis_id\": \"48f79ccf-12b3-45b6-789c-b1e8d88dabcd\",\n            \"project_locked\": false,\n            \"project_name\": \"my project\",\n            \"analysis_app_name\": \"Alignment Metrics QC\",\n            \"analysis_name\": \"Alignment Metrics QC run - 01-18-21 16:08:24\",\n            \"ran_by\": \"div/rfranklin\",\n            \"analysis_status\": \"COMPLETED\",\n            \"analysis_cost\": {\n                \"currency\": \"USD\",\n                \"amount\": \"0.024162\",\n                \"breakdown\": {\n                    \"storage\": \"0.002312\",\n                    \"computation\": \"0.021850\",\n                    \"data_transfer_in\": \"0.000000\"\n                }\n            },\n            \"refunded_amount\": \"0.000000\",\n            \"time_started\": \"2021-01-18T16:08:26Z\",\n            \"time_finished\": \"2021-01-18T16:12:08Z\"\n        },\n        {\n            \"analysis_type\": \"CRUNCHER_ANALYSIS\",\n            \"analysis_id\": \"1fd125fa-789c-45b6-12b3-2a3ab3bedcba\",\n            \"project_locked\": false,\n            \"project_name\": \"my project\",\n            \"analysis_app_name\": \"\",\n            \"analysis_name\": \"an-1\",\n            \"ran_by\": \"div/rfranklin\",\n            \"analysis_status\": \"STOPPED\",\n            \"analysis_cost\": {\n                \"currency\": \"USD\",\n                \"amount\": \"0.256994\",\n                \"breakdown\": {\n                    \"storage\": \"0.074055\",\n                    \"computation\": \"0.182939\",\n                    \"data_transfer_in\": \"0.000000\"\n                }\n            },\n            \"refunded_amount\": \"0.000000\",\n            \"time_started\": \"2021-01-18T16:00:27Z\",\n            \"time_finished\": \"2021-01-18T16:32:52Z\"\n        },\n \n    \"links\": [\n        {\n            \"href\": \"https://api.sbgenomics.com/v2/billing/groups/ec1dc1e3-12a3-4b56-789c-e3f2dca0c6f7/breakdown/analysis?offset=2&amp;limit=2&amp;date_from=11-04-2020\",\n            \"rel\": \"next\",\n            \"method\": \"GET\"\n        }\n    ]\n}"
+                OK - Locked project:
+                  value: "{\n    \"href\": \"https://api.sbgenomics.com/v2/billing/groups/ec1dc1e3-12a3-4b56-789c-e3f2dca0c6f7/breakdown/analysis?offset=0&amp;limit=1\",\n    \"items\": [\n        {\n            \"analysis_type\": \"TASK\",\n            \"analysis_id\": \"470ceb64-6f37-4e0d-18ad-9c31d5292177\",\n            \"project_locked\": true,\n            \"analysis_cost\": {\n                \"currency\": \"USD\",\n                \"amount\": \"0.016491\",\n                \"breakdown\": {\n                    \"storage\": \"0.007302\",\n                    \"computation\": \"0.009189\",\n                    \"data_transfer_in\": \"0.000000\"\n                }\n            },\n            \"refunded_amount\": \"0.000000\"\n        }\n    ],\n    \"links\": [\n        {\n            \"href\": \"https://api.sbgenomics.com/v2/billing/groups/ec1dc1e3-12a3-4b56-789c-e3f2dca0c6f7/breakdown/analysis?offset=1&amp;limit=1\",\n            \"rel\": \"next\",\n            \"method\": \"GET\"\n        }\n    ]\n}"
+              schema:
+                type: object
+                properties:
+                  href:
+                    type: string
+                    example: https://api.sbgenomics.com/v2/billing/groups/ec1dc1e3-12a3-4b56-789c-e3f2dca0c6f7/breakdown/analysis?offset=0&amp;limit=1
+                  items:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        analysis_type:
+                          type: string
+                          example: TASK
+                        analysis_id:
+                          type: string
+                          example: 470ceb64-6f37-4e0d-18ad-9c31d5292177
+                        project_locked:
+                          type: boolean
+                          example: true
+                          default: true
+                        analysis_cost:
+                          type: object
+                          properties:
+                            currency:
+                              type: string
+                              example: USD
+                            amount:
+                              type: string
+                              example: '0.016491'
+                            breakdown:
+                              type: object
+                              properties:
+                                storage:
+                                  type: string
+                                  example: '0.007302'
+                                computation:
+                                  type: string
+                                  example: '0.009189'
+                                data_transfer_in:
+                                  type: string
+                                  example: '0.000000'
+                        refunded_amount:
+                          type: string
+                          example: '0.000000'
+                  links:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        href:
+                          type: string
+                          example: https://api.sbgenomics.com/v2/billing/groups/ec1dc1e3-12a3-4b56-789c-e3f2dca0c6f7/breakdown/analysis?offset=1&amp;limit=1
+                        rel:
+                          type: string
+                          example: next
+                        method:
+                          type: string
+                          example: GET
+      deprecated: false
+      x-readme:
+        code-samples:
+        - language: python
+          code: "from sevenbridges import Api\n\napi = Api(url='https://api.sbgenomics.com/v2',\n          token='3210a98c1db9318fa9d9273156740f74')\n\nbilling_group = api.billing_groups.get(\n    id='ec1dc1e3-12a3-4b56-789c-e3f2dca0c6f7'\n)\n\n# send GET request to SB API\nbreakdown = billing_group.breakdown()\n\nprint(breakdown.total_spending.currency, breakdown.total_spending.amount)\nfor project_breakdown in breakdown.project_breakdown:\n    print(project_breakdown.analysis_spending.currency,\n          project_breakdown.analysis_spending.amount)\n    print(len(project_breakdown.task_breakdown))"
+        samples-languages:
+        - python
+      tags:
+      - Billing
+    servers:
+    - url: https://api.sbgenomics.com/v2
+  /billing/groups/{billing_group}/breakdown/storage:
+    get:
+      summary: Get storage breakdown for a billing group
+      description: 'This call returns a storage breakdown for a billing group.
+
+
+        To find the `billing_group`, use the call [list billing groups](ref:list-your-billing-groups) to list all your billing groups.'
+      operationId: get-storage-breakdown-for-a-billing-group
+      parameters:
+      - name: X-SBG-Auth-Token
+        in: header
+        description: Your Seven Bridges Platform [authentication token](doc:get-your-authentication-token). For security reasons, token will not be automatically populated in the generated code sample. Please replace `<your-token-here>` with your token before executing this call.
+        required: true
+        schema:
+          type: string
+      - name: billing_group
+        in: path
+        description: The ID of the billing group.
+        schema:
+          type: string
+        required: true
+      - name: limit
+        in: query
+        description: The maximum number of collection items to return for a single request.  The default value is 50, while the maximum value is 100.  This is a pagination-specific attribute.
+        schema:
+          type: integer
+          format: int32
+          default: 50
+      - name: offset
+        in: query
+        description: The zero-based starting index in the entire collection of the first item to return.  The default value is 0. This is a pagination-specific attribute.
+        schema:
+          type: integer
+          format: int32
+          default: 0
+      - name: fields
+        in: query
+        description: Selector specifying a subset of fields to include in the response.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: date_from
+        in: query
+        description: 'Specify the starting date for retrieving storage analysis in the following format: mm-dd-yyyy.'
+        schema:
+          type: string
+      - name: date_to
+        in: query
+        description: 'Specify the ending date for retrieving storage analysis in the following format: mm-dd-yyyy.'
+        schema:
+          type: string
+      - name: invoice_id
+        in: query
+        description: Specify Invoice ID to show a breakdown for the specific invoice.  If omitted, the current spending breakdown is returned.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{\n   \"href\": \"https://api.sbgenomics.com/v2/billing/groups/ec1dc1e3-12a3-4b46-789c-e3f3fca0c6f7/breakdown/storage?offset=0&limit=2\",\n   \"items\": [\n     {\n        \"project_name\": \"my project\",\n        \"project_locked\": false,\n        \"project_created_by\":\"voluptatem-pariatu/rfranklin\",\n        \"active\": {\n            \"size\": \"0.032300\",\n            \"unit\": \"GB/Month\",\n            \"cost\" {\n                \"amount\": \"0.0023\",\n                \"currency\": \"USD\"\n            }\n        },\n        \"archived\": {\n            \"size\": \"0.000000\",\n            \"unit\": \"GB/Month\",\n            \"cost\" {\n                \"amount\": \"0.0023\",\n                \"currency\": \"USD\"\n            }\n        },\n        \"location\": \"aws:us-east-1\"\n      },\n      {\n         \"project_name\": \"my project\",\n         \"project_locked\": false\n         \"project_created_by\": \"div/rfranklin\",\n         \"active\": {\n             \"size\": \"0.032300\",\n             \"unit\": \"GB/Month\",\n             \"cost\" {\n                \"amount\": \"0.0023\",\n                \"currency\": \"USD\"\n            }\n          },\n         \"archived\": {\n             \"size\": \"0.000000\"\n              \"unit\": \"GB/Month\",\n              \"cost\" {\n                \"amount\": \"0.0023\",\n                \"currency\": \"USD\",\n            }\n         },\n        \"location\": \"aws:us-east-1\"\n     }\n   ],\n \"links\": [\n     {\n         \"href\": \"https://api.sbgenomics.com/v2/billing/groups/ec2dc1e3-13a3-4b66-789c-e3f3dca0c6f7/breakdown/storage?offset=2&limit=2\",\n         \"rel\": \"next\",\n         \"method\": \"GET\"\n     }\n   ]\n}"
+                OK - Locked project:
+                  value: "{\n    \"href\": \"https://api.sbgenomics.com/v2/billing/groups/ec1dc1e3-12a3-4b56-789c-e3f2dca0c6f7/breakdown/storage?offset=0&amp;limit=5\",\n    \"items\": [\n        {\n            \"active\": {\n                \"size\": \"0.032300\",\n                \"unit\": \"GB/Month\"\n            },\n          \n           {\n             \"cost\" {\n                \"amount\": \"0.0023\",\n                \"currency\": \"USD\"\n            },\n            \"archived\": {\n                \"size\": \"0.000000\",\n                \"unit\": \"GB/Month\"\n            },\n            \"project_locked\": true\n        }\n    ],\n    \"links\": []\n}"
+      deprecated: false
+      x-readme:
+        code-samples:
+        - language: python
+          code: "from sevenbridges import Api\n\napi = Api(url='https://api.sbgenomics.com/v2',\n          token='3210a98c1db9318fa9d9273156740f74')\n\nbilling_group = api.billing_groups.get(\n    id='ec1dc1e3-12a3-4b56-789c-e3f2dca0c6f7'\n)\n\n# send GET request to SB API\nbreakdown = billing_group.breakdown()\n\nprint(breakdown.total_spending.currency, breakdown.total_spending.amount)\nfor project_breakdown in breakdown.project_breakdown:\n    print(project_breakdown.analysis_spending.currency,\n          project_breakdown.analysis_spending.amount)\n    print(len(project_breakdown.task_breakdown))"
+        samples-languages:
+        - python
+      tags:
+      - Billing
+    servers:
+    - url: https://api.sbgenomics.com/v2
+  /billing/groups/{billing_group}/breakdown/egress:
+    get:
+      summary: Get egress breakdown for a billing group
+      description: 'This call returns an egress breakdown for a billing group.
+
+
+        To find the `billing_group`, use the call [list billing groups](ref:list-your-billing-groups) to list all your billing groups.'
+      operationId: get-egress-breakdown-for-a-billing-group
+      parameters:
+      - name: X-SBG-Auth-Token
+        in: header
+        description: Your Seven Bridges Platform [authentication token](doc:get-your-authentication-token). For security reasons, token will not be automatically populated in the generated code sample. Please replace `<your-token-here>` with your token before executing this call.
+        required: true
+        schema:
+          type: string
+      - name: billing_group
+        in: path
+        description: The ID of the billing group.
+        schema:
+          type: string
+        required: true
+      - name: limit
+        in: query
+        description: The maximum number of collection items to return for a single request.  The default value is 50, while the maximum value is 100.  This is a pagination-specific attribute.
+        schema:
+          type: integer
+          format: int32
+          default: 50
+      - name: offset
+        in: query
+        description: The zero-based starting index in the entire collection of the first item to return.  The default value is 0. This is a pagination-specific attribute.
+        schema:
+          type: integer
+          format: int32
+          default: 0
+      - name: fields
+        in: query
+        description: Selector specifying a subset of fields to include in the response.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: date_from
+        in: query
+        description: 'Specify the starting date for retrieving egress analysis in the following format: mm-dd-yyyy.'
+        schema:
+          type: string
+      - name: date_to
+        in: query
+        description: 'Specify the ending date for retrieving egress analysis in the following format: mm-dd-yyyy.'
+        schema:
+          type: string
+      - name: invoice_id
+        in: query
+        description: Specify Invoice ID to show a breakdown for the specific invoice.  If omitted, the current spending breakdown is returned.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{\n  \"href\":\" https://api.sbgenomics.com/v2/billing/groups/ec1dc1e3-12a3-4b56-789c-e3f2dca0c6f7/breakdown/egress?offset=0&limit=1\",\n  \"items\": [\n    {\n      \"project_name\": \"my project\",\n      \"project_locked\": false,\n      \"downloaded_by\":\"rfranklin\",\n      \"downloaded\": {\n          \"size\": \"0.005730\",\n          \"unit\": \"GB\"\n      }\n      \"egress_cost\": {\n          \"currency\": \"USD\",\n          \"amount\": \"0.000516\"\n      }\n    }\n  ],\n  \"links\": [\n     {\n       \"href\": \"https://api.sbgenomics.com/v2/billing/groups/ec1dc1e3-12a3-4b56-789c-e3f2dca0c6f7/breakdown/egress?offset=1&amp;limit=1\",\n       \"rel\": \"next\",\n       \"method\": \"GET\"\n     }\n  ]\n}"
+                OK - Locked project:
+                  value: "{\n    \"href\": \"https://api.sbgenomics.com/v2/billing/groups/ec1dc1e3-12a3-4b56-789c-e3f2dca0c6f7/breakdown/egress?offset=0&amp;limit=1\",\n    \"items\": [\n        {\n            \"project_locked\": true,\n            \"downloaded\": {\n                \"size\": \"0.005730\",\n                \"unit\": \"GB\"\n            },\n            \"egress_cost\": {\n                \"currency\": \"USD\",\n                \"amount\": \"0.000516\"\n            }\n        }\n    ],\n    \"links\": [\n     {\n       \"href\": \"https://api.sbgenomics.com/v2/billing/groups/ec1dc1e3-12a3-4b56-789c-e3f2dca0c6f7/breakdown/egress?offset=1&limit=1\",\n       \"rel\": \"next\",\n       \"method\": \"GET\"\n     }\n  ]\n}"
+              schema:
+                type: object
+                properties:
+                  href:
+                    type: string
+                    example: https://api.sbgenomics.com/v2/billing/groups/ec1dc1e3-12a3-4b56-789c-e3f2dca0c6f7/breakdown/egress?offset=0&amp;limit=1
+                  items:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        project_locked:
+                          type: boolean
+                          example: true
+                          default: true
+                        downloaded:
+                          type: object
+                          properties:
+                            size:
+                              type: string
+                              example: '0.005730'
+                            unit:
+                              type: string
+                              example: GB
+                        egress_cost:
+                          type: object
+                          properties:
+                            currency:
+                              type: string
+                              example: USD
+                            amount:
+                              type: string
+                              example: '0.000516'
+                  links:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        href:
+                          type: string
+                          example: https://api.sbgenomics.com/v2/billing/groups/ec1dc1e3-12a3-4b56-789c-e3f2dca0c6f7/breakdown/egress?offset=1&limit=1
+                        rel:
+                          type: string
+                          example: next
+                        method:
+                          type: string
+                          example: GET
+      deprecated: false
+      x-readme:
+        code-samples:
+        - language: python
+          code: "from sevenbridges import Api\n\napi = Api(url='https://api.sbgenomics.com/v2',\n          token='3210a98c1db9318fa9d9273156740f74')\n\nbilling_group = api.billing_groups.get(\n    id='ec1dc1e3-12a3-4b56-789c-e3f2dca0c6f7'\n)\n\n# send GET request to SB API\nbreakdown = billing_group.breakdown()\n\nprint(breakdown.total_spending.currency, breakdown.total_spending.amount)\nfor project_breakdown in breakdown.project_breakdown:\n    print(project_breakdown.analysis_spending.currency,\n          project_breakdown.analysis_spending.amount)\n    print(len(project_breakdown.task_breakdown))"
+        samples-languages:
+        - python
+      tags:
+      - Billing
+    servers:
+    - url: https://api.sbgenomics.com/v2
+  /billing/invoices/{invoice_id}:
+    get:
+      summary: Get a specific invoice
+      description: 'This call retrieves information about a selected invoice, including the costs for analysis and storage, and the invoice period.
+
+
+        Use the call [to list invoices](ref:list-invoices) to retrieve the `invoice_id`s for a specified billing group.'
+      operationId: get-a-specific-invoice
+      parameters:
+      - name: X-SBG-Auth-Token
+        in: header
+        description: Your Platform [authentication token](doc:get-your-authentication-token). For security reasons, token will not be automatically populated in the generated code sample. Please replace `<your-token-here>` with your token before executing this call.
+        required: true
+        schema:
+          type: string
+      - name: fields
+        in: query
+        description: Selector specifying a subset of fields to include in the response.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: invoice_id
+        in: path
+        description: The ID of the invoice you are querying.
+        schema:
+          type: string
+        required: true
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{\n    \"href\": \"https://api.sbgenomics.com/v2/billing/invoices/7123418961\",\n    \"invoice_id\": \"7123418961\",\n    \"pending\": false,\n    \"approval_date\": \"2015-03-26T00:00:00Z\",\n    \"invoice_period\": {\n        \"from\": \"2015-03-26T13:55:26Z\",\n        \"to\": \"2015-03-27T00:00:00Z\"\n    },\n    \"analysis_costs\": {\n        \"currency\": \"USD\",\n        \"amount\": \"1.64\"\n    },\n    \"storage_costs\": {\n        \"currency\": \"USD\",\n        \"amount\": \"0.00\"\n    },\n    \"total\": {\n        \"currency\": \"USD\",\n        \"amount\": \"1.64\"\n    }\n}"
+              schema:
+                type: object
+                properties:
+                  href:
+                    type: string
+                    example: https://api.sbgenomics.com/v2/billing/invoices/7123418961
+                  invoice_id:
+                    type: string
+                    example: '7123418961'
+                  pending:
+                    type: boolean
+                    example: false
+                    default: true
+                  approval_date:
+                    type: string
+                    example: '2015-03-26T00:00:00Z'
+                  invoice_period:
+                    type: object
+                    properties:
+                      from:
+                        type: string
+                        example: '2015-03-26T13:55:26Z'
+                      to:
+                        type: string
+                        example: '2015-03-27T00:00:00Z'
+                  analysis_costs:
+                    type: object
+                    properties:
+                      currency:
+                        type: string
+                        example: USD
+                      amount:
+                        type: string
+                        example: '1.64'
+                  storage_costs:
+                    type: object
+                    properties:
+                      currency:
+                        type: string
+                        example: USD
+                      amount:
+                        type: string
+                        example: '0.00'
+                  total:
+                    type: object
+                    properties:
+                      currency:
+                        type: string
+                        example: USD
+                      amount:
+                        type: string
+                        example: '1.64'
+      deprecated: false
+      x-readme:
+        code-samples:
+        - language: python
+          code: "from sevenbridges import Api\n\napi = Api(url='https://api.sbgenomics.com/v2',\n          token='3210a98c1db9318fa9d9273156740f74')\n\n# send GET request to SB API\ninvoice = api.invoices.get(id='7123418961')\n\nprint(invoice.invoice_period.from_, invoice.invoice_period.to)\nprint(invoice.total.currency, invoice.total.amount)"
+        samples-languages:
+        - python
+      tags:
+      - Billing
+    servers:
+    - url: https://api.sbgenomics.com/v2
+x-refined-from:
+- seven-bridges-cgc-openapi.json
+- seven-bridges-platform-openapi.json
+x-readme:
+  headers: []
+x-readme-fauxas: true

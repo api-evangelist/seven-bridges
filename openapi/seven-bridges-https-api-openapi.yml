@@ -1,0 +1,43 @@
+openapi: 3.2.0
+info:
+  title: 'Settings Https: API'
+  version: unknown
+servers:
+- url: https://cgc-api.sbgenomics.com/v2
+security:
+- {}
+tags:
+- name: 'Https:'
+paths:
+  https://cgc-api.sbgenomics.com/v2/billing/groups/{billing_group}:
+    get:
+      summary: Get a single billing group
+      description: /billing/groups/{billing_group}
+      operationId: get-a-single-billing-group
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: '{}'
+              schema:
+                type: object
+                properties: {}
+        '400':
+          description: '400'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: '{}'
+              schema:
+                type: object
+                properties: {}
+      deprecated: false
+      tags:
+      - 'Https:'
+x-readme:
+  headers: []
+x-readme-fauxas: true
