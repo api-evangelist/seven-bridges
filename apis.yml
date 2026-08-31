@@ -37,6 +37,19 @@ tags:
 - Healthcare
 - Cloud Computing
 - Data Analysis
+- Workflow-Automation
+- Research
+- Precision Medicine
+- Common Workflow Language
+- File Storage
+- Company
+tags_raw:
+- Genomics
+- Bioinformatics
+- Life Sciences
+- Healthcare
+- Cloud Computing
+- Data Analysis
 - Workflow Automation
 - Research
 - Precision Medicine
@@ -128,6 +141,8 @@ apis:
   humanURL: https://docs.sevenbridges.com/reference/the-api
   baseURL: https://api.sbgenomics.com/v2
   tags:
+  - Application
+  tags_raw:
   - Apps
   properties:
   - type: OpenAPI
@@ -212,6 +227,8 @@ apis:
   humanURL: https://docs.sevenbridges.com/reference/the-api
   baseURL: https://api.sbgenomics.com/v2
   tags:
+  - File
+  tags_raw:
   - Files
   properties:
   - type: OpenAPI
@@ -240,6 +257,8 @@ apis:
   humanURL: https://docs.sevenbridges.com/reference/the-api
   baseURL: https://api.sbgenomics.com/v2
   tags:
+  - HTTPS
+  tags_raw:
   - 'Https:'
   properties:
   - type: OpenAPI
@@ -268,6 +287,8 @@ apis:
   humanURL: https://docs.sevenbridges.com/reference/the-api
   baseURL: https://api.sbgenomics.com/v2
   tags:
+  - Project
+  tags_raw:
   - Projects
   properties:
   - type: OpenAPI
@@ -296,6 +317,8 @@ apis:
   humanURL: https://docs.sevenbridges.com/reference/the-api
   baseURL: https://api.sbgenomics.com/v2
   tags:
+  - Rate-Limit
+  tags_raw:
   - Rate Limit
   properties:
   - type: OpenAPI
@@ -409,6 +432,8 @@ apis:
   humanURL: https://docs.sevenbridges.com/reference/the-api
   baseURL: https://api.sbgenomics.com/v2
   tags:
+  - Task
+  tags_raw:
   - Tasks
   properties:
   - type: OpenAPI
@@ -493,6 +518,8 @@ apis:
   humanURL: https://docs.sevenbridges.com/reference/the-api
   baseURL: https://api.sbgenomics.com/v2
   tags:
+  - User
+  tags_raw:
   - Users
   properties:
   - type: OpenAPI
