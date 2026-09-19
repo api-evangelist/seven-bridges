@@ -271,7 +271,7 @@ apis:
   humanURL: https://docs.sevenbridges.com/reference/the-api
   baseURL: https://api.sbgenomics.com/v2
   tags:
-  - HTTPS
+  - HTTP
   tags_raw:
   - 'Https:'
   properties:
