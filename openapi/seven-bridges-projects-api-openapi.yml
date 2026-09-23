@@ -221,7 +221,7 @@ paths:
       - Projects
     patch:
       summary: Edit a project
-      description: 'This call edits a project on the Seven Bridges Platform.  As a project Admin you can use it to change the name, settings, tags or billing group of the project.
+      description: 'This call edits a project on the Seven Bridges Platform. As a project Admin you can use it to change the name, settings, tags or billing group of the project.
 
 
         Users with `write` permissions in the project can change the project description.'
@@ -615,7 +615,12 @@ paths:
   /projects/{project_owner}/{project}/members:
     get:
       summary: List members of a project
-      description: "This call returns a list of the members of the specified project. For each member, the response lists:\n\n  * The member's username on the Seven Bridges Platform\n  * The member's permissions in the project specified"
+      description: 'This call returns a list of the members of the specified project. For each member, the response lists:
+
+
+        * The member''s username on the Seven Bridges Platform
+
+        * The member''s permissions in the project specified'
       operationId: list-members-of-a-project
       parameters:
       - name: X-SBG-Auth-Token
@@ -727,7 +732,23 @@ paths:
       - Projects
     post:
       summary: Add a member to a project
-      description: "This call adds a new user to a specified project. It can only be successfully made by a user who has admin permissions in the project.\n\nUsers may have the following permissions on the Platform:\n  * Read\n  * Write\n  * Copy\n  * Execute\n  * Admin\n\nFor more information, see the documentation on [setting project member permissions](ref:modify-a-project-members-permissions). Note that some user permissions imply others: for example, if you give a user admin permission, then they automatically receive read, write, copy and execute permissions."
+      description: 'This call adds a new user to a specified project. It can only be successfully made by a user who has admin permissions in the project.
+
+
+        Users may have the following permissions on the Platform:
+
+        * Read
+
+        * Write
+
+        * Copy
+
+        * Execute
+
+        * Admin
+
+
+        For more information, see the documentation on setting project member permissions. Note that some user permissions imply others: for example, if you give a user admin permission, then they automatically receive read, write, copy and execute permissions.'
       operationId: add-a-member-to-a-project
       parameters:
       - name: X-SBG-Auth-Token
@@ -950,7 +971,7 @@ paths:
       description: 'This call removes a project member from a project. It can only be successfully run by a user who has admin privileges in the project.
 
 
-        For more information on permissions on the Seven Bridges Platform, see the documentation on [setting permissions](ref:modify-a-project-members-permissions).'
+        For more information on permissions on the Seven Bridges Platform, see the documentation on setting permissions.'
       operationId: remove-a-project-member
       parameters:
       - name: X-SBG-Auth-Token
@@ -988,7 +1009,26 @@ paths:
       - Projects
     get:
       summary: Get a project member's permissions
-      description: "This returns the permissions of a specified user within a specified project.\n\nUsers may have the following permissions on the Seven Bridges Platform:\n  * Read\n  * Write\n  * Copy\n  * Execute\n  * Admin\n\nPermissions are granted at the project-level. You may, for instance, have admin permission in one project, execute permission in another, and read-only permission in a third.\n\nFor more information on permissions on the Seven Bridges Platform, see the documentation on [setting permissions](ref:modify-a-project-members-permissions)."
+      description: 'This returns the permissions of a specified user within a specified project.
+
+
+        Users may have the following permissions on the Seven Bridges Platform:
+
+        * Read
+
+        * Write
+
+        * Copy
+
+        * Execute
+
+        * Admin
+
+
+        Permissions are granted at the project-level. You may, for instance, have admin permission in one project, execute permission in another, and read-only permission in a third.
+
+
+        For more information on permissions on the Seven Bridges Platform, see the documentation on setting permissions.'
       operationId: get-a-project-members-permissions
       parameters:
       - name: X-SBG-Auth-Token
@@ -1174,7 +1214,23 @@ paths:
       - Projects
     put:
       summary: Overwrite a project member's permissions
-      description: "This call changes a project member's permissions for a specified project.\n\nUsers may have the following permissions on the Seven Bridges Platform:\n  * Read\n  * Write\n  * Copy\n  * Execute\n  * Admin\n\nFor more information, see the documentation on [setting project member permissions](ref:modify-a-project-members-permissions). Note that some user permissions imply others: for example, if you give a user admin permission, then they automatically receive read, write, copy and execute permissions."
+      description: 'This call changes a project member''s permissions for a specified project.
+
+
+        Users may have the following permissions on the Seven Bridges Platform:
+
+        * Read
+
+        * Write
+
+        * Copy
+
+        * Execute
+
+        * Admin
+
+
+        For more information, see the documentation on setting project member permissions. Note that some user permissions imply others: for example, if you give a user admin permission, then they automatically receive read, write, copy and execute permissions.'
       operationId: overwrite-a-project-members-permissions
       parameters:
       - name: X-SBG-Auth-Token
@@ -1280,7 +1336,7 @@ paths:
   /projects/{project_owner}/{project}/files:
     get:
       summary: List files (secondary method)
-      description: This call lists the files in the specified project. It is an alias for the call [list files](ref:list-files-primary-method) and redirects to that path.
+      description: This call lists the files in the specified project. It is an alias for the call list files and redirects to that path.
       operationId: list-files-secondary-method-1
       parameters:
       - name: X-SBG-Auth-Token
@@ -1370,7 +1426,7 @@ paths:
   /projects/{project_owner}/{project}/tasks:
     get:
       summary: List tasks in a project (secondary method)
-      description: This call lists the tasks in the specified project. It is an alias for the call to [get tasks](ref:list-tasks-you-can-access) and redirects to that path.
+      description: This call lists the tasks in the specified project. It is an alias for the call to get tasks and redirects to that path.
       operationId: list-tasks-in-a-project-secondary-method
       parameters:
       - name: X-SBG-Auth-Token

@@ -86,7 +86,7 @@ paths:
   /billing/groups/{billing_group}:
     get:
       summary: Get a single billing group
-      description: This call retrieves a single billing group, specified by `{billing_group}`. To find the `billing_group`, use the call [list billing groups](ref:list-your-billing-groups) to list all your billing groups. The information returned includes the billing group owner, the total balance, and the status of the billing group (pending or confirmed).
+      description: This call retrieves a single billing group, specified by `{billing_group}`. To find the `billing_group`, use the call list billing groups to list all your billing groups. The information returned includes the billing group owner, the total balance, and the status of the billing group (pending or confirmed).
       operationId: get-a-single-billing-group
       parameters:
       - name: X-SBG-Auth-Token
@@ -239,7 +239,10 @@ paths:
   /billing/groups/{billing_group}/breakdown/analysis:
     get:
       summary: Get analysis breakdown for a billing group
-      description: "This call returns an analysis breakdown for a billing group which contains information on both the tasks and Cruncher analysis. \n\nTo find the `billing_group`, use the call [list billing groups](ref:list-your-billing-groups) to list all your billing groups."
+      description: 'This call returns an analysis breakdown for a billing group which contains information on both the tasks and Cruncher analysis.
+
+
+        To find the `billing_group`, use the call list billing groups to list all your billing groups.'
       operationId: get-analysis-breakdown-for-a-billing-group
       parameters:
       - name: X-SBG-Auth-Token
@@ -376,7 +379,7 @@ paths:
       description: 'This call returns a storage breakdown for a billing group.
 
 
-        To find the `billing_group`, use the call [list billing groups](ref:list-your-billing-groups) to list all your billing groups.'
+        To find the `billing_group`, use the call list billing groups to list all your billing groups.'
       operationId: get-storage-breakdown-for-a-billing-group
       parameters:
       - name: X-SBG-Auth-Token
@@ -454,7 +457,7 @@ paths:
       description: 'This call returns an egress breakdown for a billing group.
 
 
-        To find the `billing_group`, use the call [list billing groups](ref:list-your-billing-groups) to list all your billing groups.'
+        To find the `billing_group`, use the call list billing groups to list all your billing groups.'
       operationId: get-egress-breakdown-for-a-billing-group
       parameters:
       - name: X-SBG-Auth-Token
@@ -579,7 +582,7 @@ paths:
       description: 'This call retrieves information about a selected invoice, including the costs for analysis and storage, and the invoice period.
 
 
-        Use the call [to list invoices](ref:list-invoices) to retrieve the `invoice_id`s for a specified billing group.'
+        Use the call to list invoices to retrieve the `invoice_id`s for a specified billing group.'
       operationId: get-a-specific-invoice
       parameters:
       - name: X-SBG-Auth-Token

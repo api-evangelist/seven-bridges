@@ -257,7 +257,10 @@ paths:
   /storage/volumes:
     post:
       summary: Create a volume
-      description: "This call creates a new volume. Volumes authorize the Platform to access and query objects on a specified cloud storage (Amazon Web Services or Google Cloud Storage) on your behalf. \n\nLearn more about using the Volumes API for [Amazon S3](doc:aws-cloud-storage-tutorial) and for [Google Cloud Storage](doc:google-cloud-storage-tutorial). These tutorials also detail how to configure your bucket."
+      description: 'This call creates a new volume. Volumes authorize the Platform to access and query objects on a specified cloud storage (Amazon Web Services or Google Cloud Storage) on your behalf.
+
+
+        Learn more about using the Volumes API for Amazon S3 and for Google Cloud Storage. These tutorials also detail how to configure your bucket.'
       operationId: create-a-volume-v2
       parameters:
       - name: X-SBG-Auth-Token
@@ -420,10 +423,10 @@ paths:
       description: 'This call lists all the volumes you''ve registered.
 
 
-        See also [get details of a volume](ref:get-details-of-a-volume-v2) for a detailed explanation of the fields in the response.
+        See also get details of a volume for a detailed explanation of the fields in the response.
 
 
-        Learn more about using the Volumes API for [Amazon S3](doc:aws-cloud-storage-tutorial) and for [Google Cloud Storage](doc:google-cloud-storage-tutorial).'
+        Learn more about using the Volumes API for Amazon S3 and for Google Cloud Storage.'
       operationId: list-volumes-v2
       parameters:
       - name: X-SBG-Auth-Token
@@ -482,7 +485,7 @@ paths:
   /storage/volumes/{volume_owner}/{volume_name}:
     get:
       summary: Get details of a volume
-      description: This call returns details of the specified volume. The volume is referred to by its ID, which you can obtain by making the call to [list all the volumes you've registered](ref:list-volumes-v2).
+      description: This call returns details of the specified volume. The volume is referred to by its ID, which you can obtain by making the call to list all the volumes you've registered.
       operationId: get-details-of-a-volume-v2
       parameters:
       - name: volume_owner
@@ -583,7 +586,7 @@ paths:
       description: 'This call updates the details of a specific volume.
 
 
-        Learn more about using the Volumes API for [Amazon S3](doc:aws-cloud-storage-tutorial) and for [Google Cloud Storage](doc:google-cloud-storage-tutorial).'
+        Learn more about using the Volumes API for Amazon S3 and for Google Cloud Storage.'
       operationId: update-a-volume-v2
       parameters:
       - name: X-SBG-Auth-Token
@@ -744,7 +747,7 @@ paths:
       - Storage
     delete:
       summary: Delete a volume
-      description: "This call deletes a [volume you've created\uFEFF\uFEFF](ref:create-a-volume-v2) to refer to storage on Amazon Web Services or Google Cloud Storage.\n\nTo be able to delete a volume, you first need to [deactivate](doc:deactivate-a-volume) it and then delete all files on the Platform that were previously imported from the volume.\n\nLearn more about using the Volumes API for [Amazon S3](doc:aws-cloud-storage-tutorial) and for [Google Cloud Storage](doc:google-cloud-storage-tutorial)."
+      description: "This call deletes a volume you've created\uFEFF\uFEFF to refer to storage on Amazon Web Services or Google Cloud Storage.\n\nTo be able to delete a volume, you first need to deactivate it and then delete all files on the Platform that were previously imported from the volume.\n\nLearn more about using the Volumes API for Amazon S3 and for Google Cloud Storage."
       operationId: delete-a-volume-v2
       parameters:
       - name: X-SBG-Auth-Token
@@ -785,7 +788,7 @@ paths:
   /storage/volumes/{volume_owner_username}/{volume_name}:
     patch:
       summary: Deactivate a volume
-      description: 'This call deactivates a volume. Note that this request is based off of the `PATCH` request to [update a volume](ref:update-a-volume-v2).
+      description: 'This call deactivates a volume. Note that this request is based off of the `PATCH` request to update a volume.
 
 
         Once deactivated, you cannot import from, export to, or browse within a volume. As such, the content of the files imported from this volume will no longer be accessible on the Platform. However, you can update the volume and manage members. Note that you cannot deactivate the volume if you have running imports or exports unless you force the operation using the query parameter `force=true`, as described below.
@@ -1010,10 +1013,10 @@ paths:
         If successful, an alias will be created on the Platform. Aliases appear on the Platform and can be copied, executed, and modified as such. They refer back to the respective item on the given volume.
 
 
-        If you want to import multiple files, the recommended way is to do it in bulk considering the API rate limit ([learn more](doc:api-rate-limit)).
+        If you want to import multiple files, the recommended way is to do it in bulk considering the API rate limit (learn more).
 
 
-        Learn more about using the Volumes API for [Amazon S3](doc:aws-cloud-storage-tutorial) and for [Google Cloud Storage](doc:google-cloud-storage-tutorial).'
+        Learn more about using the Volumes API for Amazon S3 and for Google Cloud Storage.'
       operationId: start-an-import-job-v2
       parameters:
       - name: X-SBG-Auth-Token
@@ -1265,7 +1268,7 @@ paths:
         Note that when you import a file from your volume on your cloud storage provider (Amazon Web Services or Google Cloud Storage), you are creating an alias on the Platform which points to the file in your cloud storage bucket. Aliases appear as files on the Platform and can be copied, executed, and modified as such. They refer back to the respective file on the given volume.
 
 
-        Learn more about using the Volumes API for [Amazon S3](doc:aws-cloud-storage-tutorial) and for [Google Cloud Storage](doc:google-cloud-storage-tutorial).'
+        Learn more about using the Volumes API for Amazon S3 and for Google Cloud Storage.'
       operationId: list-import-jobs
       parameters:
       - name: X-SBG-Auth-Token
@@ -1324,7 +1327,13 @@ paths:
   /storage/imports/{import_id}:
     get:
       summary: Get details of an import job
-      description: "This call will return the details of an import job. \n\nNote that when you import a file from your volume on your cloud storage provider (Amazon Web Services or Google Cloud Storage), you are creating an alias on the Platform which points to the file in your cloud storage bucket. Aliases appear as files on the Platform and can be copied, executed, and modified as such. They refer back to the respective file on the given volume.\n\nLearn more about using the Volumes API for [Amazon S3](doc:aws-cloud-storage-tutorial) and for [Google Cloud Storage](doc:google-cloud-storage-tutorial)."
+      description: 'This call will return the details of an import job.
+
+
+        Note that when you import a file from your volume on your cloud storage provider (Amazon Web Services or Google Cloud Storage), you are creating an alias on the Platform which points to the file in your cloud storage bucket. Aliases appear as files on the Platform and can be copied, executed, and modified as such. They refer back to the respective file on the given volume.
+
+
+        Learn more about using the Volumes API for Amazon S3 and for Google Cloud Storage.'
       operationId: get-details-of-an-import-job-v2
       parameters:
       - name: X-SBG-Auth-Token
@@ -1524,16 +1533,16 @@ paths:
   /storage/exports:
     post:
       summary: Start an export job
-      description: 'This call lets you queue a job to export a file from a project on the Platform into a volume. The file selected for export must not be a public file or an alias. Aliases are objects stored in your cloud storage bucket which have been made available on the Platform. The volume you are exporting to must be configured for read-write access. To do this, set the `access_mode` parameter to `RW` when [creating](doc:create-a-volume-v2) or [modifying](doc:update-a-volume-v2) a volume.
+      description: 'This call lets you queue a job to export a file from a project on the Platform into a volume. The file selected for export must not be a public file or an alias. Aliases are objects stored in your cloud storage bucket which have been made available on the Platform. The volume you are exporting to must be configured for read-write access. To do this, set the `access_mode` parameter to `RW` when creating or modifying a volume.
 
 
         Essentially, the call writes to your cloud storage bucket via the volume. If this call is successful, the original project file will become an alias to the newly exported object on the volume. The source file will be deleted from the Platform and, if no more copies of this file exist, it will no longer count towards your total storage price on the Platform. In summary, once you export a file from the Platform to a volume, it is no longer part of the storage on the Platform and cannot be exported again.
 
 
-        If you want to export multiple files, the recommended way is to do it in bulk considering the API rate limit ([learn more](doc:api-rate-limit)).
+        If you want to export multiple files, the recommended way is to do it in bulk considering the API rate limit (learn more).
 
 
-        Learn more about using the Volumes API for [Amazon S3](doc:aws-cloud-storage-tutorial).'
+        Learn more about using the Volumes API for Amazon S3.'
       operationId: start-an-export-job-v2
       parameters:
       - name: copy_only
@@ -1665,7 +1674,7 @@ paths:
         Note that when you export a file from a project on the Platform into a volume, you write to your cloud storage bucket.
 
 
-        Learn more about using the Volumes API for [Amazon S3](doc:aws-cloud-storage-tutorial).'
+        Learn more about using the Volumes API for Amazon S3.'
       operationId: list-export-jobs-v2
       parameters:
       - name: X-SBG-Auth-Token
@@ -1727,7 +1736,7 @@ paths:
       description: 'This call overwrites the permissions for a member of a specific volume. The volume is specified as `volume_id` and consists of the owner and name of a volume (for example `rfranklin/my-first-volume`).
 
 
-        Note that this **overwrites** all previously set permissions for the member. Refer to the request to [modify a volume member''s permissions](ref:modify-a-volume-members-permissions)to update rather than overwrite permissions.'
+        Note that this **overwrites** all previously set permissions for the member. Refer to the request to modify a volume member''s permissionsto update rather than overwrite permissions.'
       operationId: overwrite-a-volume-members-permissions
       parameters:
       - name: volume_owner
@@ -1822,7 +1831,7 @@ paths:
       description: 'This call modifies the permissions for a member of a specific volume. The volume is specified as `volume_id` and consists of the owner and name of a volume (for example `rfranklin/my-first-volume`).
 
 
-        Note that this **does not overwrite** all previously set permissions for the member. Refer to the request to [overwrite a volume members'' permissions](ref:overwrite-a-volume-members-permissions) to overwrite rather than update permissions.'
+        Note that this **does not overwrite** all previously set permissions for the member. Refer to the request to overwrite a volume members'' permissions to overwrite rather than update permissions.'
       operationId: modify-a-volume-members-permissions
       parameters:
       - name: volume_owner

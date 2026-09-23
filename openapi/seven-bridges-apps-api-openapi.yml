@@ -1369,7 +1369,10 @@ paths:
   /apps/{project_owner}/{project}/{app_short_name}/raw:
     get:
       summary: Get raw CWL for an app
-      description: "This call returns information about the specified app, as raw CWL. The call differs from the call to [ get details of an app](ref:get-details-of-an-app) by returning a JSON object that is the CWL. \n\nThe app should be one in a project that you can access. This could be an app that has been uploaded to the Seven Bridges Platform by a project member, or a publicly available app that has been copied to the project."
+      description: 'This call returns information about the specified app, as raw CWL. The call differs from the call to get details of an app by returning a JSON object that is the CWL.
+
+
+        The app should be one in a project that you can access. This could be an app that has been uploaded to the Seven Bridges Platform by a project member, or a publicly available app that has been copied to the project.'
       operationId: get-raw-cwl-for-an-app
       parameters:
       - name: project_owner
@@ -1811,7 +1814,7 @@ paths:
       - Apps
     get:
       summary: Get raw CWL for an app revision
-      description: 'This call returns information about the specified app revision, as raw CWL. The call differs from the call to [get details of an app revision](ref:get-details-of-an-app-revision) by returning a JSON object that is the CWL description of the app revision.
+      description: 'This call returns information about the specified app revision, as raw CWL. The call differs from the call to get details of an app revision by returning a JSON object that is the CWL description of the app revision.
 
 
         The app should be in a project that you can access. This could be an app that has been uploaded to the Seven Bridges Platform by a project member, or a publicly available app that has been copied to the project.'

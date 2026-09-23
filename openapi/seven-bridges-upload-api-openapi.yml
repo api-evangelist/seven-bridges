@@ -177,7 +177,7 @@ paths:
       description: 'This call will return the details of an active multipart upload.
 
 
-        The upload is referenced by its ID as returned by a call to [initialize a multipart upload](ref:initialize-a-multipart-upload) or [list current multipart uploads](ref:list-current-multipart-uploads).'
+        The upload is referenced by its ID as returned by a call to initialize a multipart upload or list current multipart uploads.'
       operationId: get-details-of-a-multipart-upload
       parameters:
       - name: X-SBG-Auth_Token
@@ -534,7 +534,7 @@ paths:
       description: 'This call must be issued to report the completion of a file upload.
 
 
-        An optional list of remaining parts may be given in the body of this request. The format of this list is the same as described in [report uploaded parts](ref:report-that-all-file-parts-have-uploaded).'
+        An optional list of remaining parts may be given in the body of this request. The format of this list is the same as described in report uploaded parts.'
       operationId: finalize-a-multipart-upload
       parameters:
       - name: X-SBG-Auth_Token

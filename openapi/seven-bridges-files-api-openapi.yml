@@ -42,7 +42,7 @@ paths:
       - Files
     delete:
       summary: Delete a file
-      description: This call removes a file from the Seven Bridges Platform. Files are specified by their IDs, which you can obtain by making the API call to [list files](ref:list-files-primary-method).
+      description: This call removes a file from the Seven Bridges Platform. Files are specified by their IDs, which you can obtain by making the API call to list files.
       operationId: delete-a-file
       parameters:
       - name: X-SBG-Auth-Token
@@ -72,10 +72,10 @@ paths:
       description: 'This call updates the name, the full set metadata, and tags for a specified file.
 
 
-        Files are specified by their IDs, which you can obtain by making the API call to [list files in a project](ref:list-files-primary-method).
+        Files are specified by their IDs, which you can obtain by making the API call to list files in a project.
 
 
-        If you want to update metadata for multiple files, the recommended way is to do it in bulk considering the API rate limit ([learn more](doc:api-rate-limit)).'
+        If you want to update metadata for multiple files, the recommended way is to do it in bulk considering the API rate limit (learn more).'
       operationId: update-file-details
       parameters:
       - name: X-SBG-Auth-Token
@@ -417,7 +417,16 @@ paths:
   /files:
     get:
       summary: List files (primary method)
-      description: "This call returns a list of files and subdirectories in a specified project or directory within a project, with specified properties that you can access. The project or directory whose contents you want to list is specified as a query parameter in the call. Further properties to filter by can also be specified as query parameters. \n\nNote that this call lists both files and subdirectories in the specified project or directory within a project, but not the contents of the subdirectories. To list the contents of a subdirectory, make a new call and specify the subdirectory ID as the `parent` parameter.\n\nDon't forget that projects on the Platform are specified by their [short names](doc:the-api#identifying-projects-users-apps-files-tasks-and-inputs).\n\nFurther file properties to filter by can also be specified as query parameters."
+      description: 'This call returns a list of files and subdirectories in a specified project or directory within a project, with specified properties that you can access. The project or directory whose contents you want to list is specified as a query parameter in the call. Further properties to filter by can also be specified as query parameters.
+
+
+        Note that this call lists both files and subdirectories in the specified project or directory within a project, but not the contents of the subdirectories. To list the contents of a subdirectory, make a new call and specify the subdirectory ID as the `parent` parameter.
+
+
+        Don''t forget that projects on the Platform are specified by their short names.
+
+
+        Further file properties to filter by can also be specified as query parameters.'
       operationId: list-files-primary-method
       parameters:
       - name: project
@@ -513,7 +522,7 @@ paths:
       - Files
     post:
       summary: Create a folder
-      description: 'This call creates a new folder.Every project on the Seven Bridges Platform is represented by a root folder which contains all the files associated with a particular project. You can create nesting folders and subfolders within this root folder by using this API request.Once you''ve created a folder, you can [move](ref:move-a-file-between-folders) or [copy](ref:copy-a-file)  files between folders to populate your newly created folder.To list the contents of the main project folder, first make the API request to [get project details](ref:get-project-details) which will return the ID of the main folder (key: `root_folder`). Next, use the [list folder contents](ref:list-folder-contents) call and specify this ID.'
+      description: 'This call creates a new folder.Every project on the Seven Bridges Platform is represented by a root folder which contains all the files associated with a particular project. You can create nesting folders and subfolders within this root folder by using this API request.Once you''ve created a folder, you can move or copy files between folders to populate your newly created folder.To list the contents of the main project folder, first make the API request to get project details which will return the ID of the main folder (key: `root_folder`). Next, use the list folder contents call and specify this ID.'
       operationId: create-a-folder
       parameters:
       - name: X-SBG-Auth-Token
@@ -642,16 +651,16 @@ paths:
   /files/{file_id}/tags:
     put:
       summary: Add tags to a file
-      description: 'This call allows you to tag files on the Platform. You can tag your files on the Platform with keywords to make it easier to identify and organize files you’ve imported from public datasets or copied between projects. Learn more about [tagging your files](doc:tag-your-files).
+      description: 'This call allows you to tag files on the Platform. You can tag your files on the Platform with keywords to make it easier to identify and organize files you’ve imported from public datasets or copied between projects. Learn more about tagging your files.
 
 
         In addition to tagging your files, you can do the following via the API:
 
-        * [Update previously added tags](ref:update-file-details)
+        * Update previously added tags
 
-        * [View tags you''ve set on your files](ref:get-file-details)
+        * View tags you''ve set on your files
 
-        * Filter by tags, using [list files](ref:list-files-primary-method) and specifying the required tag'
+        * Filter by tags, using list files and specifying the required tag'
       operationId: add-tags-to-a-file
       parameters:
       - name: X-SBG-Auth-Token

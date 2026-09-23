@@ -45,7 +45,7 @@ paths:
   /action/files/copy:
     post:
       summary: Copy multiple files between projects
-      description: This call allows you to copy files between projects. Unlike the call to [copy a file between projects](ref:copy-a-file), this call lets you batch the copy operation and copy a list of files at a time.
+      description: This call allows you to copy files between projects. Unlike the call to copy a file between projects, this call lets you batch the copy operation and copy a list of files at a time.
       operationId: copy-files-between-projects
       parameters:
       - name: X-SBG-Auth-Token

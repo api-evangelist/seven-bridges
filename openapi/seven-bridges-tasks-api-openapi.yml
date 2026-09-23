@@ -101,7 +101,7 @@ paths:
       - Tasks
     delete:
       summary: Delete a task
-      description: This call deletes the specified task. The task is referred to by its ID, which you can obtain by making the call to [list all tasks you can access](ref:list-tasks-you-can-access).
+      description: This call deletes the specified task. The task is referred to by its ID, which you can obtain by making the call to list all tasks you can access.
       operationId: delete-a-task
       parameters:
       - name: X-SBG-Auth-Token
@@ -127,7 +127,7 @@ paths:
       - Tasks
     get:
       summary: Get details of a task
-      description: 'This call returns details of the specified task. The task is referred to by its ID, which you can obtain by making the call to [list all tasks you can access](ref:list-tasks-you-can-access).
+      description: 'This call returns details of the specified task. The task is referred to by its ID, which you can obtain by making the call to list all tasks you can access.
 
 
         The task details include its creator, its start and end time, the number of jobs completed in it, and its input and output files. You can also see the status of the task.'
@@ -330,7 +330,7 @@ paths:
   /tasks/{task_id}/inputs:
     get:
       summary: Get task inputs
-      description: This call returns just the inputs provided to the specified task. The task is referred to by its ID, which you can obtain by making the call to [list all tasks you can access](ref:list-tasks-you-can-access).
+      description: This call returns just the inputs provided to the specified task. The task is referred to by its ID, which you can obtain by making the call to list all tasks you can access.
       operationId: get-task-inputs
       parameters:
       - name: X-SBG-Auth-Token
@@ -454,7 +454,7 @@ paths:
       - Tasks
     patch:
       summary: Modify task inputs
-      description: This call enables you to modify the inputs provided to the specified task. The task is referred to by its ID, which you can obtain by making the call to [list all tasks you can access](ref:list-tasks-you-can-access).
+      description: This call enables you to modify the inputs provided to the specified task. The task is referred to by its ID, which you can obtain by making the call to list all tasks you can access.
       operationId: modify-task-inputs
       parameters:
       - name: X-SBG-Auth-Token
@@ -640,7 +640,7 @@ paths:
         A **parent task** is a task that specifies criteria by which to batch its inputs into a series of further sub-tasks, called **child tasks**.
 
 
-        See the documentation on [batching tasks](doc:about-batch-analyses) for more details on batching criteria.'
+        See the documentation on batching tasks for more details on batching criteria.'
       operationId: create-a-new-task
       parameters:
       - name: fields
@@ -953,7 +953,13 @@ paths:
   /tasks/{task_id}/execution_details:
     get:
       summary: Get task execution details
-      description: "This call returns execution details of the specified task. The task is referred to by its ID, which you can obtain by making the [call to list all tasks you can access](ref:list-tasks-you-can-access). \n\nThe call breaks down the information into the task's distinct jobs. A job is a single subprocess carried out in a task.\n\nThe information returned by this call is broadly similar to that which can be found in the [task stats and logs provided on the Platform](doc:review-task-page)."
+      description: 'This call returns execution details of the specified task. The task is referred to by its ID, which you can obtain by making the call to list all tasks you can access.
+
+
+        The call breaks down the information into the task''s distinct jobs. A job is a single subprocess carried out in a task.
+
+
+        The information returned by this call is broadly similar to that which can be found in the task stats and logs provided on the Platform.'
       operationId: get-task-execution-details
       parameters:
       - name: X-SBG-Auth-Token
@@ -1210,7 +1216,7 @@ paths:
   /tasks/{task_id}/actions/clone:
     post:
       summary: Rerun a task
-      description: This call reruns (executes) the specified task.  Once rerun, the task can either be in draft mode or immediately ran, using the Action query parameter (see below).
+      description: This call reruns (executes) the specified task. Once rerun, the task can either be in draft mode or immediately ran, using the Action query parameter (see below).
       operationId: rerun-a-task
       parameters:
       - name: X-SBG-Auth-Token
