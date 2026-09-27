@@ -641,7 +641,7 @@ paths:
 
 
         See the documentation on batching tasks for more details on batching criteria.'
-      operationId: create-a-new-task
+      operationId: postTasks
       parameters:
       - name: fields
         in: query
@@ -822,10 +822,12 @@ paths:
         - python
       tags:
       - Tasks
+      x-operation-id-source: normalized
+      x-operation-id-original: create-a-new-task
     get:
       summary: List tasks you can access
       description: This call returns a list of tasks that you can access.
-      operationId: list-tasks-you-can-access
+      operationId: getTasks
       parameters:
       - name: X-SBG-Auth-Token
         in: header
@@ -948,6 +950,8 @@ paths:
         - python
       tags:
       - Tasks
+      x-operation-id-source: normalized
+      x-operation-id-original: list-tasks-you-can-access
     servers:
     - url: https://api.sbgenomics.com/v2
   /tasks/{task_id}/execution_details:

@@ -51,7 +51,7 @@ tags:
 - Healthcare
 - Cloud Computing
 - Data Analysis
-- Workflow-Automation
+- Workflow Automation
 - Research
 - Precision Medicine
 - Common Workflow Language
@@ -70,6 +70,7 @@ tags_raw:
 - Common Workflow Language
 - File Storage
 - Company
+- Workflow-Automation
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com

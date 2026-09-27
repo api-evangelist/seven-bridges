@@ -108,7 +108,7 @@ paths:
     get:
       summary: Get details of a file within a volume
       description: This call lists the details of a file (object) in a specific volume. The volume is specified as `volume_id` and consists of the owner and name of a volume (for example `rfranklin/my-first-volume`).
-      operationId: get-details-of-a-file-within-a-volume
+      operationId: getStorageVolumesByVolumeOwnerByVolumeNameByObjectId
       parameters:
       - name: volume_owner
         in: path
@@ -252,6 +252,8 @@ paths:
         - python
       tags:
       - Storage
+      x-operation-id-source: normalized
+      x-operation-id-original: get-details-of-a-file-within-a-volume
     servers:
     - url: https://api.sbgenomics.com/v2
   /storage/volumes:
@@ -913,7 +915,7 @@ paths:
     get:
       summary: List the contents of a volume
       description: This call lists the contents of a specific volume. The volume is specified as `volume_id` and consists of the owner and name of a volume (for example `rfranklin/my-first-volume`).
-      operationId: list-the-contents-of-a-volume
+      operationId: getStorageVolumesByVolumeOwnerByVolumeNameList
       parameters:
       - name: volume_owner
         in: path
@@ -1002,6 +1004,8 @@ paths:
         - python
       tags:
       - Storage
+      x-operation-id-source: normalized
+      x-operation-id-original: list-the-contents-of-a-volume
     servers:
     - url: https://api.sbgenomics.com/v2
   /storage/imports:
